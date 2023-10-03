@@ -2,23 +2,29 @@
 # platform :ios, '9.0'
 
 target 'iOS-TicketTimer' do
-  # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
-  pod 'KakaoSDKAuth'
-  pod 'KakaoSDKUser'
-  pod 'KakaoSDKCommon'
-  pod 'FSCalendar'
-  # Pods for iOS-TicketTimer
-
-  target 'iOS-TicketTimerTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'iOS-TicketTimerUITests' do
-    # Pods for testing
-  end
+	# Comment the next line if you don't want to use dynamic frameworks
+	use_frameworks!
+	# Pods for iOS-TicketTimer
+	pod 'RxSwift'
+	pod 'RxCocoa'
+	pod 'RxGesture'
+	pod 'RxDataSources', '~> 5.0'
+	pod 'SnapKit', '~> 5.6.0'
+	pod 'KakaoSDKAuth'
+	pod 'KakaoSDKUser'
+	pod 'KakaoSDKCommon'
+	pod 'FSCalendar'
 end
+
+target 'iOS-TicketTimerTests' do
+	inherit! :search_paths
+	# Pods for testing
+end
+
+target 'iOS-TicketTimerUITests' do
+	# Pods for testing
+end
+
 
 post_install do |installer|
     installer.generated_projects.each do |project|

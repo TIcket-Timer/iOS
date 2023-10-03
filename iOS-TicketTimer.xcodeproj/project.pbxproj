@@ -7,30 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E3FCC0368786D9E3A08A4DA /* Pods_iOS_TicketTimer_iOS_TicketTimerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F768EE958A8768C06544BFA /* Pods_iOS_TicketTimer_iOS_TicketTimerUITests.framework */; };
+		219DB3D19DEE0C57647A8AF9 /* libPods-iOS-TicketTimerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 061058DA079D7CC55821609E /* libPods-iOS-TicketTimerTests.a */; };
 		2E54C13F9D384C01994CC8AD /* Pods_iOS_TicketTimer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59B0BE61CD81AFDBD1B58026 /* Pods_iOS_TicketTimer.framework */; };
-		650FBAE32A8372FE002FCC2C /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650FBAE22A8372FE002FCC2C /* SearchViewController.swift */; };
-		650FBAE52A837D5F002FCC2C /* RecentSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650FBAE42A837D5F002FCC2C /* RecentSearchCell.swift */; };
-		6542D4FE2A8390A3009618BD /* ResultSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6542D4FD2A8390A3009618BD /* ResultSearchCell.swift */; };
-		6542D5012A83CA24009618BD /* SearchStoryBoard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6542D5002A83CA24009618BD /* SearchStoryBoard.storyboard */; };
-		6542D5032A83D428009618BD /* TicketingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6542D5022A83D428009618BD /* TicketingViewController.swift */; };
 		65709A112A91D2E200A9DF7A /* KakaoLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65709A102A91D2E200A9DF7A /* KakaoLogin.swift */; };
-		658727C52A838C3E0025016F /* ResultSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658727C42A838C3E0025016F /* ResultSearchViewController.swift */; };
 		658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86542A78E04D002C65F0 /* AppDelegate.swift */; };
 		658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86562A78E04D002C65F0 /* SceneDelegate.swift */; };
-		658C865C2A78E04D002C65F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658C865A2A78E04D002C65F0 /* Main.storyboard */; };
 		658C865E2A78E051002C65F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 658C865D2A78E051002C65F0 /* Assets.xcassets */; };
 		658C86612A78E051002C65F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 658C865F2A78E051002C65F0 /* LaunchScreen.storyboard */; };
 		658C866C2A78E052002C65F0 /* iOS_TicketTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C866B2A78E052002C65F0 /* iOS_TicketTimerTests.swift */; };
 		658C86762A78E052002C65F0 /* iOS_TicketTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86752A78E052002C65F0 /* iOS_TicketTimerUITests.swift */; };
 		658C86782A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */; };
-		658C86852A7A7029002C65F0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86842A7A7029002C65F0 /* HomeViewController.swift */; };
-		658C86872A7A708C002C65F0 /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86862A7A708C002C65F0 /* ShowViewController.swift */; };
-		658C86892A7A70E6002C65F0 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86882A7A70E6002C65F0 /* CalendarViewController.swift */; };
-		658C868B2A7A7D0B002C65F0 /* ShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C868A2A7A7D0B002C65F0 /* ShowCell.swift */; };
-		658C868D2A7A852F002C65F0 /* exampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C868C2A7A852F002C65F0 /* exampleData.swift */; };
-		65CDBF472A9C633900A5D741 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CDBF462A9C633900A5D741 /* CalendarCell.swift */; };
-		E34090722BE596CEDEF58596 /* Pods_iOS_TicketTimerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C431DE97A97762B0AF46C9FF /* Pods_iOS_TicketTimerTests.framework */; };
+		8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */; };
+		9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD32ACC48E9002C4B0A /* LoginViewModel.swift */; };
+		9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD52ACC48FE002C4B0A /* LoginViewController.swift */; };
+		9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD72ACC490C002C4B0A /* TabBarViewModel.swift */; };
+		9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD92ACC4917002C4B0A /* TabBarViewController.swift */; };
+		9AB92BDC2ACC4921002C4B0A /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BDB2ACC4921002C4B0A /* HomeViewModel.swift */; };
+		9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BDD2ACC492A002C4B0A /* HomeViewController.swift */; };
+		9AB92BE52ACC4A10002C4B0A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BE42ACC4A10002C4B0A /* SettingsViewController.swift */; };
+		9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BE82ACC4A2C002C4B0A /* CalendarViewController.swift */; };
+		9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BEA2ACC4A37002C4B0A /* CalendarViewModel.swift */; };
+		9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BEC2ACC4A40002C4B0A /* SettingsViewModel.swift */; };
+		9AB92BF12ACC4A5D002C4B0A /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */; };
+		9AB92BF32ACC4A69002C4B0A /* ShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */; };
+		9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF52ACC4B7C002C4B0A /* Extension.swift */; };
+		9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF72ACC4BC8002C4B0A /* Enum.swift */; };
+		9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF92ACC4D61002C4B0A /* AuthService.swift */; };
+		9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */; };
+		9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,21 +55,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		061058DA079D7CC55821609E /* libPods-iOS-TicketTimerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iOS-TicketTimerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29C40C320A9AA505E194F9D7 /* Pods-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iOS-TicketTimerUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		409CDA5F37B6D9FF005D7864 /* Pods-iOS-TicketTimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer/Pods-iOS-TicketTimer.release.xcconfig"; sourceTree = "<group>"; };
 		59B0BE61CD81AFDBD1B58026 /* Pods_iOS_TicketTimer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_TicketTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F768EE958A8768C06544BFA /* Pods_iOS_TicketTimer_iOS_TicketTimerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_TicketTimer_iOS_TicketTimerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		648225ACAF4DA1330E58EFF8 /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
-		650FBAE22A8372FE002FCC2C /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		650FBAE42A837D5F002FCC2C /* RecentSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentSearchCell.swift; sourceTree = "<group>"; };
-		6542D4FD2A8390A3009618BD /* ResultSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSearchCell.swift; sourceTree = "<group>"; };
-		6542D5002A83CA24009618BD /* SearchStoryBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchStoryBoard.storyboard; sourceTree = "<group>"; };
-		6542D5022A83D428009618BD /* TicketingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketingViewController.swift; sourceTree = "<group>"; };
 		65709A102A91D2E200A9DF7A /* KakaoLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLogin.swift; sourceTree = "<group>"; };
-		658727C42A838C3E0025016F /* ResultSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSearchViewController.swift; sourceTree = "<group>"; };
 		658C86512A78E04D002C65F0 /* iOS-TicketTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-TicketTimer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C86542A78E04D002C65F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		658C86562A78E04D002C65F0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		658C865B2A78E04D002C65F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		658C865D2A78E051002C65F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		658C86602A78E051002C65F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		658C86622A78E051002C65F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -74,17 +73,28 @@
 		658C86712A78E052002C65F0 /* iOS-TicketTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-TicketTimerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C86752A78E052002C65F0 /* iOS_TicketTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_TicketTimerUITests.swift; sourceTree = "<group>"; };
 		658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_TicketTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		658C86842A7A7029002C65F0 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		658C86862A7A708C002C65F0 /* ShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
-		658C86882A7A70E6002C65F0 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		658C868A2A7A7D0B002C65F0 /* ShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowCell.swift; sourceTree = "<group>"; };
-		658C868C2A7A852F002C65F0 /* exampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = exampleData.swift; sourceTree = "<group>"; };
-		65CDBF462A9C633900A5D741 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		9AB92BD32ACC48E9002C4B0A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		9AB92BD52ACC48FE002C4B0A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9AB92BD72ACC490C002C4B0A /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		9AB92BD92ACC4917002C4B0A /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		9AB92BDB2ACC4921002C4B0A /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		9AB92BDD2ACC492A002C4B0A /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		9AB92BE42ACC4A10002C4B0A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9AB92BE82ACC4A2C002C4B0A /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		9AB92BEA2ACC4A37002C4B0A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		9AB92BEC2ACC4A40002C4B0A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
+		9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewModel.swift; sourceTree = "<group>"; };
+		9AB92BF52ACC4B7C002C4B0A /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		9AB92BF72ACC4BC8002C4B0A /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		9AB92BF92ACC4D61002C4B0A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		9C912B141105A893374DFADD /* Pods-iOS-TicketTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer/Pods-iOS-TicketTimer.debug.xcconfig"; sourceTree = "<group>"; };
 		BB5665413DCB1AD673F2B4E5 /* Pods-iOS-TicketTimerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C431DE97A97762B0AF46C9FF /* Pods_iOS_TicketTimerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_TicketTimerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E34090722BE596CEDEF58596 /* Pods_iOS_TicketTimerTests.framework in Frameworks */,
+				219DB3D19DEE0C57647A8AF9 /* libPods-iOS-TicketTimerTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,28 +118,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E3FCC0368786D9E3A08A4DA /* Pods_iOS_TicketTimer_iOS_TicketTimerUITests.framework in Frameworks */,
+				8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6542D4FF2A83934C009618BD /* SearchGroup */ = {
-			isa = PBXGroup;
-			children = (
-				6542D5002A83CA24009618BD /* SearchStoryBoard.storyboard */,
-				658C86862A7A708C002C65F0 /* ShowViewController.swift */,
-				658C868A2A7A7D0B002C65F0 /* ShowCell.swift */,
-				650FBAE22A8372FE002FCC2C /* SearchViewController.swift */,
-				650FBAE42A837D5F002FCC2C /* RecentSearchCell.swift */,
-				658727C42A838C3E0025016F /* ResultSearchViewController.swift */,
-				6542D4FD2A8390A3009618BD /* ResultSearchCell.swift */,
-				6542D5022A83D428009618BD /* TicketingViewController.swift */,
-			);
-			path = SearchGroup;
-			sourceTree = "<group>";
-		};
 		658C86482A78E04D002C65F0 = {
 			isa = PBXGroup;
 			children = (
@@ -155,16 +150,12 @@
 		658C86532A78E04D002C65F0 /* iOS-TicketTimer */ = {
 			isa = PBXGroup;
 			children = (
-				658C86542A78E04D002C65F0 /* AppDelegate.swift */,
-				658C86562A78E04D002C65F0 /* SceneDelegate.swift */,
-				658C868C2A7A852F002C65F0 /* exampleData.swift */,
-				658C865A2A78E04D002C65F0 /* Main.storyboard */,
-				658C86842A7A7029002C65F0 /* HomeViewController.swift */,
-				65709A102A91D2E200A9DF7A /* KakaoLogin.swift */,
-				6542D4FF2A83934C009618BD /* SearchGroup */,
-				65DAA23D2A8E0F17001147F1 /* CalendarGroup */,
-				658C865D2A78E051002C65F0 /* Assets.xcassets */,
-				658C865F2A78E051002C65F0 /* LaunchScreen.storyboard */,
+				9AB92BC92ACC4822002C4B0A /* Model */,
+				9AB92BC52ACC475A002C4B0A /* Service */,
+				9AB92BC72ACC47AE002C4B0A /* Presentation */,
+				9AB92BFD2ACC4F87002C4B0A /* Utils */,
+				9AB92BC22ACC4601002C4B0A /* Resources */,
+				9AB92BC12ACC458A002C4B0A /* Application */,
 				658C86622A78E051002C65F0 /* Info.plist */,
 			);
 			path = "iOS-TicketTimer";
@@ -187,15 +178,6 @@
 			path = "iOS-TicketTimerUITests";
 			sourceTree = "<group>";
 		};
-		65DAA23D2A8E0F17001147F1 /* CalendarGroup */ = {
-			isa = PBXGroup;
-			children = (
-				658C86882A7A70E6002C65F0 /* CalendarViewController.swift */,
-				65CDBF462A9C633900A5D741 /* CalendarCell.swift */,
-			);
-			path = CalendarGroup;
-			sourceTree = "<group>";
-		};
 		75708162DC93CD30BF6E17E0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,16 +187,227 @@
 				648225ACAF4DA1330E58EFF8 /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.release.xcconfig */,
 				BB5665413DCB1AD673F2B4E5 /* Pods-iOS-TicketTimerTests.debug.xcconfig */,
 				6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */,
+				29C40C320A9AA505E194F9D7 /* Pods-iOS-TicketTimerUITests.debug.xcconfig */,
+				986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		9AB92BC12ACC458A002C4B0A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				658C86542A78E04D002C65F0 /* AppDelegate.swift */,
+				658C86562A78E04D002C65F0 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		9AB92BC22ACC4601002C4B0A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				658C865D2A78E051002C65F0 /* Assets.xcassets */,
+				658C865F2A78E051002C65F0 /* LaunchScreen.storyboard */,
+				65709A102A91D2E200A9DF7A /* KakaoLogin.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9AB92BC52ACC475A002C4B0A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BF92ACC4D61002C4B0A /* AuthService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		9AB92BC72ACC47AE002C4B0A /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BE12ACC49F5002C4B0A /* SettingsScene */,
+				9AB92BE02ACC49D8002C4B0A /* CalendarScene */,
+				9AB92BDF2ACC49C3002C4B0A /* ShowScene */,
+				9AB92BD02ACC48C1002C4B0A /* LoginScene */,
+				9AB92BCA2ACC486D002C4B0A /* TabBar */,
+				9AB92BCB2ACC488D002C4B0A /* HomeScene */,
+			);
+			name = Presentation;
+			path = Service/Presentation;
+			sourceTree = "<group>";
+		};
+		9AB92BC92ACC4822002C4B0A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9AB92BCA2ACC486D002C4B0A /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BCD2ACC48A7002C4B0A /* ViewModel */,
+				9AB92BCC2ACC48A0002C4B0A /* View */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		9AB92BCB2ACC488D002C4B0A /* HomeScene */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BCF2ACC48B9002C4B0A /* ViewModel */,
+				9AB92BCE2ACC48B2002C4B0A /* View */,
+			);
+			path = HomeScene;
+			sourceTree = "<group>";
+		};
+		9AB92BCC2ACC48A0002C4B0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BD92ACC4917002C4B0A /* TabBarViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9AB92BCD2ACC48A7002C4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BD72ACC490C002C4B0A /* TabBarViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9AB92BCE2ACC48B2002C4B0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BDD2ACC492A002C4B0A /* HomeViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9AB92BCF2ACC48B9002C4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BDB2ACC4921002C4B0A /* HomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9AB92BD02ACC48C1002C4B0A /* LoginScene */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BD22ACC48D9002C4B0A /* ViewModel */,
+				9AB92BD12ACC48D3002C4B0A /* View */,
+			);
+			path = LoginScene;
+			sourceTree = "<group>";
+		};
+		9AB92BD12ACC48D3002C4B0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BD52ACC48FE002C4B0A /* LoginViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9AB92BD22ACC48D9002C4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BD32ACC48E9002C4B0A /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9AB92BDF2ACC49C3002C4B0A /* ShowScene */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BEF2ACC4A4D002C4B0A /* ViewModel */,
+				9AB92BEE2ACC4A45002C4B0A /* View */,
+			);
+			path = ShowScene;
+			sourceTree = "<group>";
+		};
+		9AB92BE02ACC49D8002C4B0A /* CalendarScene */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BE72ACC4A1C002C4B0A /* ViewModel */,
+				9AB92BE62ACC4A15002C4B0A /* View */,
+			);
+			path = "\U0010CalendarScene";
+			sourceTree = "<group>";
+		};
+		9AB92BE12ACC49F5002C4B0A /* SettingsScene */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BE32ACC4A04002C4B0A /* ViewModel */,
+				9AB92BE22ACC49FF002C4B0A /* View */,
+			);
+			path = SettingsScene;
+			sourceTree = "<group>";
+		};
+		9AB92BE22ACC49FF002C4B0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BE42ACC4A10002C4B0A /* SettingsViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9AB92BE32ACC4A04002C4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BEC2ACC4A40002C4B0A /* SettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9AB92BE62ACC4A15002C4B0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BE82ACC4A2C002C4B0A /* CalendarViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9AB92BE72ACC4A1C002C4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BEA2ACC4A37002C4B0A /* CalendarViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9AB92BEE2ACC4A45002C4B0A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9AB92BEF2ACC4A4D002C4B0A /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9AB92BFD2ACC4F87002C4B0A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9AB92BF52ACC4B7C002C4B0A /* Extension.swift */,
+				9AB92BF72ACC4BC8002C4B0A /* Enum.swift */,
+				9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		EA9894B8AAD5B08300E1CFAD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				59B0BE61CD81AFDBD1B58026 /* Pods_iOS_TicketTimer.framework */,
-				5F768EE958A8768C06544BFA /* Pods_iOS_TicketTimer_iOS_TicketTimerUITests.framework */,
-				C431DE97A97762B0AF46C9FF /* Pods_iOS_TicketTimerTests.framework */,
+				061058DA079D7CC55821609E /* libPods-iOS-TicketTimerTests.a */,
+				3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -268,7 +461,6 @@
 				658C866D2A78E052002C65F0 /* Sources */,
 				658C866E2A78E052002C65F0 /* Frameworks */,
 				658C866F2A78E052002C65F0 /* Resources */,
-				D2B34437D59094A99A032421 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -329,9 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				658C86612A78E051002C65F0 /* LaunchScreen.storyboard in Resources */,
-				6542D5012A83CA24009618BD /* SearchStoryBoard.storyboard in Resources */,
 				658C865E2A78E051002C65F0 /* Assets.xcassets in Resources */,
-				658C865C2A78E04D002C65F0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +557,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-iOS-TicketTimer-iOS-TicketTimerUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-iOS-TicketTimerUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -418,23 +608,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D2B34437D59094A99A032421 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		FB9149272EECAD7252191CE8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -459,20 +632,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				658C868B2A7A7D0B002C65F0 /* ShowCell.swift in Sources */,
-				65CDBF472A9C633900A5D741 /* CalendarCell.swift in Sources */,
-				6542D5032A83D428009618BD /* TicketingViewController.swift in Sources */,
-				650FBAE52A837D5F002FCC2C /* RecentSearchCell.swift in Sources */,
-				658C86892A7A70E6002C65F0 /* CalendarViewController.swift in Sources */,
-				650FBAE32A8372FE002FCC2C /* SearchViewController.swift in Sources */,
-				658C868D2A7A852F002C65F0 /* exampleData.swift in Sources */,
+				9AB92BF32ACC4A69002C4B0A /* ShowViewModel.swift in Sources */,
+				9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */,
+				9AB92BF12ACC4A5D002C4B0A /* ShowViewController.swift in Sources */,
+				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
+				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
+				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,
-				6542D4FE2A8390A3009618BD /* ResultSearchCell.swift in Sources */,
-				658727C52A838C3E0025016F /* ResultSearchViewController.swift in Sources */,
+				9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */,
 				65709A112A91D2E200A9DF7A /* KakaoLogin.swift in Sources */,
+				9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */,
+				9AB92BE52ACC4A10002C4B0A /* SettingsViewController.swift in Sources */,
+				9AB92BDC2ACC4921002C4B0A /* HomeViewModel.swift in Sources */,
+				9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */,
+				9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */,
+				9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */,
+				9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */,
+				9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */,
+				9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */,
 				658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */,
-				658C86852A7A7029002C65F0 /* HomeViewController.swift in Sources */,
-				658C86872A7A708C002C65F0 /* ShowViewController.swift in Sources */,
+				9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,14 +688,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		658C865A2A78E04D002C65F0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				658C865B2A78E04D002C65F0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		658C865F2A78E051002C65F0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -655,7 +826,6 @@
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -684,7 +854,6 @@
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -744,7 +913,7 @@
 		};
 		658C86822A78E052002C65F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */;
+			baseConfigurationReference = 29C40C320A9AA505E194F9D7 /* Pods-iOS-TicketTimerUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -763,7 +932,7 @@
 		};
 		658C86832A78E052002C65F0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 648225ACAF4DA1330E58EFF8 /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.release.xcconfig */;
+			baseConfigurationReference = 986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
