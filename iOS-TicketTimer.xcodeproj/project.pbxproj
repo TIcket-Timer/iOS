@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -60,7 +60,7 @@
 		6542D4FD2A8390A3009618BD /* ResultSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSearchCell.swift; sourceTree = "<group>"; };
 		6542D5002A83CA24009618BD /* SearchStoryBoard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchStoryBoard.storyboard; sourceTree = "<group>"; };
 		6542D5022A83D428009618BD /* TicketingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketingViewController.swift; sourceTree = "<group>"; };
-		65709A102A91D2E200A9DF7A /* KakaoLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KakaoLogin.swift; path = "/Users/jinhyung/iOS_Project/iOS-TicketTimer/iOS-TicketTimer/KakaoLogin.swift"; sourceTree = "<absolute>"; };
+		65709A102A91D2E200A9DF7A /* KakaoLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLogin.swift; sourceTree = "<group>"; };
 		658727C42A838C3E0025016F /* ResultSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSearchViewController.swift; sourceTree = "<group>"; };
 		658C86512A78E04D002C65F0 /* iOS-TicketTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-TicketTimer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		658C86542A78E04D002C65F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -163,7 +163,6 @@
 				65709A102A91D2E200A9DF7A /* KakaoLogin.swift */,
 				6542D4FF2A83934C009618BD /* SearchGroup */,
 				65DAA23D2A8E0F17001147F1 /* CalendarGroup */,
-				65DAA23E2A8F8C97001147F1 /* SettingsGroup */,
 				658C865D2A78E051002C65F0 /* Assets.xcassets */,
 				658C865F2A78E051002C65F0 /* LaunchScreen.storyboard */,
 				658C86622A78E051002C65F0 /* Info.plist */,
@@ -195,13 +194,6 @@
 				65CDBF462A9C633900A5D741 /* CalendarCell.swift */,
 			);
 			path = CalendarGroup;
-			sourceTree = "<group>";
-		};
-		65DAA23E2A8F8C97001147F1 /* SettingsGroup */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SettingsGroup;
 			sourceTree = "<group>";
 		};
 		75708162DC93CD30BF6E17E0 /* Pods */ = {
@@ -312,7 +304,7 @@
 				};
 			};
 			buildConfigurationList = 658C864C2A78E04D002C65F0 /* Build configuration list for PBXProject "iOS-TicketTimer" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
