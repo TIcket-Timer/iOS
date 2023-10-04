@@ -230,8 +230,7 @@
 				9AB92BCA2ACC486D002C4B0A /* TabBar */,
 				9AB92BCB2ACC488D002C4B0A /* HomeScene */,
 			);
-			name = Presentation;
-			path = Service/Presentation;
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		9AB92BC92ACC4822002C4B0A /* Model */ = {
