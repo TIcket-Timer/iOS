@@ -34,6 +34,12 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setTabBar()
+		self.navigationController?.isNavigationBarHidden = true
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.navigationController?.setNavigationBarHidden(true, animated: false)
 	}
 	
 	// MARK: - 탭바 세팅

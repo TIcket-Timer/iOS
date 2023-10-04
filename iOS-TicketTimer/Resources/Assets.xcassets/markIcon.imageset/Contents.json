@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "interpark.png",
+      "filename" : "mark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "interpark 1.png",
+      "filename" : "mark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "interpark 2.png",
+      "filename" : "mark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
