@@ -23,6 +23,7 @@ class HomeTableViewCell: UITableViewCell {
 	
 	override func prepareForReuse() {
 		super.prepareForReuse()
+        label.text = ""
 	}
 
 	private func setUI() {

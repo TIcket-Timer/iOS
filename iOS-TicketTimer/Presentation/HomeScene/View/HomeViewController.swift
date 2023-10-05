@@ -27,9 +27,12 @@ class HomeViewController: UIViewController {
 	private let tableView = UITableView()
 	private let shadowView = UIView()
 	private let showOpenLabel = UILabel()
+    private let flowLayout = UICollectionViewFlowLayout()
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
 	
-	// tableView datasource
+	// datasource
 	private let tableViewData: [String] = ["뮤지컬1", "뮤지컬2", "뮤지컬3", "뮤지컬4"]
+    private let collectionViewData: [String] = ["opera", "hest", "farinelli", "opera", "hest", "farinelli", "opera", "hest", "farinelli"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +50,8 @@ class HomeViewController: UIViewController {
 		
 		self.view.addSubview(scrollView)
 		scrollView.addSubview(contentView)
-		contentView.addSubviews([shadowView, showOpenLabel])
-		shadowView.addSubviews([topBgView, calendarView, markIconImageView, ticketLabel, tableView,])
+		contentView.addSubviews([shadowView, showOpenLabel, collectionView])
+		shadowView.addSubviews([topBgView, calendarView, markIconImageView, ticketLabel, tableView])
         topBgView.addSubview(logoImageView)
         calendarView.addSubview(calendar)
 		
@@ -88,10 +91,18 @@ class HomeViewController: UIViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
-		tableView.backgroundColor = .gray
 		tableView.rowHeight = 42
 		
 		showOpenLabel.text = "공연 오픈 소식"
+        
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.itemSize = CGSize(width: 125, height: 165)
+        flowLayout.minimumLineSpacing = 12
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     private func setAutoLayout() {
@@ -149,8 +160,15 @@ class HomeViewController: UIViewController {
 		showOpenLabel.snp.makeConstraints {
 			$0.top.equalTo(shadowView.snp.bottom).offset(40)
 			$0.leading.equalToSuperview().offset(24)
-			$0.bottom.equalToSuperview().offset(-20)
 		}
+        
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(showOpenLabel.snp.bottom).offset(18)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(180)
+            $0.bottom.equalToSuperview().offset(-24)
+        }
     }
 }
 
@@ -183,4 +201,19 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		return cell
 	}
+}
+
+// MARK: - 콜렉션뷰
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return collectionViewData.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.imageView.image = UIImage(named: collectionViewData[indexPath.row])
+        
+        return cell
+    }
 }

@@ -36,6 +36,7 @@
 		9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF92ACC4D61002C4B0A /* AuthService.swift */; };
 		9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */; };
 		9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */; };
+		A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95CEE852ACE8CA100DED768 /* HomeCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
 		9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		9C912B141105A893374DFADD /* Pods-iOS-TicketTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer/Pods-iOS-TicketTimer.debug.xcconfig"; sourceTree = "<group>"; };
+		A95CEE852ACE8CA100DED768 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		BB5665413DCB1AD673F2B4E5 /* Pods-iOS-TicketTimerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				9A16AC032ACD99C0007C5570 /* HomeTableViewCell.swift */,
+				A95CEE852ACE8CA100DED768 /* HomeCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -659,6 +662,7 @@
 				9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */,
 				9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */,
 				9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */,
+				A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */,
 				9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */,
 				9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */,
 				658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */,
@@ -836,9 +840,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -865,9 +870,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
