@@ -1,5 +1,32 @@
-# ios
-# Ticket Timer
-### Home, Search, Calendar, Settings
-### CocoaPods 사용해서 필요 라이브러리 설치
-### 대부분 Storyboard를 사용해서 진행 ( 공부하면서 Storyboard 안쓰고 코드로만 쓴 부분도 조금 있음 )
+# Ticket Timer - ios
+
+## Getting Started
+
+1. Install Xcode
+2. Install SDK
+
+        CocoaPods 사용 > pod install
+
+3. Open Project
+
+        open .xcworkspace
+
+4. Run
+
+        command + r
+
+## Architecture & Library
+- Asynchronous Programming: RxSwift
+- UI: SnapKit
+- Network: Alamofire
+- Design Pattern: MVVM, Observer pattern
+
+
+
+## Convention
+
+### Code Convention
+- TBD
+
+### Commit Convention
+- TBD
