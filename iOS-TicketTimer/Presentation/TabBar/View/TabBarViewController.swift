@@ -18,10 +18,10 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 	private lazy var output = viewModel.transform(input: input)
 	
 	private var tabBarItems: [Tab: UITabBarItem] {
-		let home = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-		let show = UITabBarItem(title: "공연", image: UIImage(systemName: "ticket"), selectedImage: UIImage(systemName: "ticket.fill"))
-		let calendar = UITabBarItem(title: "캘린더", image: UIImage(systemName: "calendar"), selectedImage: UIImage(systemName: "calendar.fill"))
-		let settings = UITabBarItem(title: "설정", image: UIImage(systemName: "gearshape"), selectedImage: UIImage(systemName: "gearshape.fill"))
+		let home = UITabBarItem(title: "홈", image: UIImage(named: "house"), selectedImage: UIImage(named: "houseFill"))
+		let show = UITabBarItem(title: "공연", image: UIImage(named: "ticket"), selectedImage: UIImage(named: "ticketFill"))
+		let calendar = UITabBarItem(title: "캘린더", image: UIImage(named: "calendar"), selectedImage: UIImage(named: "calendarFill"))
+		let settings = UITabBarItem(title: "설정", image: UIImage(named: "gear"), selectedImage: UIImage(named: "gearFill"))
 		
 		return [
 			.Home: home,
