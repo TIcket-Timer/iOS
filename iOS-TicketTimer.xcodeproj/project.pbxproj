@@ -29,8 +29,8 @@
 		9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BE82ACC4A2C002C4B0A /* CalendarViewController.swift */; };
 		9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BEA2ACC4A37002C4B0A /* CalendarViewModel.swift */; };
 		9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BEC2ACC4A40002C4B0A /* SettingsViewModel.swift */; };
-		9AB92BF12ACC4A5D002C4B0A /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */; };
-		9AB92BF32ACC4A69002C4B0A /* ShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */; };
+		9AB92BF12ACC4A5D002C4B0A /* MusicalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */; };
+		9AB92BF32ACC4A69002C4B0A /* MusicalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */; };
 		9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF52ACC4B7C002C4B0A /* Extension.swift */; };
 		9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF72ACC4BC8002C4B0A /* Enum.swift */; };
 		9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF92ACC4D61002C4B0A /* AuthService.swift */; };
@@ -89,8 +89,8 @@
 		9AB92BE82ACC4A2C002C4B0A /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		9AB92BEA2ACC4A37002C4B0A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		9AB92BEC2ACC4A40002C4B0A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
-		9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewModel.swift; sourceTree = "<group>"; };
+		9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalViewController.swift; sourceTree = "<group>"; };
+		9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalViewModel.swift; sourceTree = "<group>"; };
 		9AB92BF52ACC4B7C002C4B0A /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		9AB92BF72ACC4BC8002C4B0A /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		9AB92BF92ACC4D61002C4B0A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -238,7 +238,7 @@
 			children = (
 				9AB92BE12ACC49F5002C4B0A /* SettingsScene */,
 				9AB92BE02ACC49D8002C4B0A /* CalendarScene */,
-				9AB92BDF2ACC49C3002C4B0A /* ShowScene */,
+				9AB92BDF2ACC49C3002C4B0A /* MusicalScene */,
 				9AB92BD02ACC48C1002C4B0A /* LoginScene */,
 				9AB92BCA2ACC486D002C4B0A /* TabBar */,
 				9AB92BCB2ACC488D002C4B0A /* HomeScene */,
@@ -330,13 +330,13 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		9AB92BDF2ACC49C3002C4B0A /* ShowScene */ = {
+		9AB92BDF2ACC49C3002C4B0A /* MusicalScene */ = {
 			isa = PBXGroup;
 			children = (
 				9AB92BEF2ACC4A4D002C4B0A /* ViewModel */,
 				9AB92BEE2ACC4A45002C4B0A /* View */,
 			);
-			path = ShowScene;
+			path = MusicalScene;
 			sourceTree = "<group>";
 		};
 		9AB92BE02ACC49D8002C4B0A /* CalendarScene */ = {
@@ -392,7 +392,7 @@
 		9AB92BEE2ACC4A45002C4B0A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */,
+				9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -400,7 +400,7 @@
 		9AB92BEF2ACC4A4D002C4B0A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */,
+				9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -645,9 +645,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AB92BF32ACC4A69002C4B0A /* ShowViewModel.swift in Sources */,
+				9AB92BF32ACC4A69002C4B0A /* MusicalViewModel.swift in Sources */,
 				9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */,
-				9AB92BF12ACC4A5D002C4B0A /* ShowViewController.swift in Sources */,
+				9AB92BF12ACC4A5D002C4B0A /* MusicalViewController.swift in Sources */,
 				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
 				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,

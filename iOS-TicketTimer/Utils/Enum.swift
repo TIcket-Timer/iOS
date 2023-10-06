@@ -25,3 +25,9 @@ enum Execution<T> {
 	case success(_ data: T)
 	case error(_ errorMessage: String)
 }
+
+enum platform: String {
+    case interpark = "인터파크"
+    case melon = "멜론"
+    case yes24 = "yse24"
+}
