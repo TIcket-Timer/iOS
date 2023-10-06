@@ -94,6 +94,8 @@ class HomeViewController: UIViewController {
 		tableView.rowHeight = 42
 		
 		showOpenLabel.text = "공연 오픈 소식"
+        showOpenLabel.font = .systemFont(ofSize: 17, weight: .bold)
+        showOpenLabel.textColor = .gray100
         
         flowLayout.scrollDirection = .horizontal
         flowLayout.itemSize = CGSize(width: 125, height: 165)
