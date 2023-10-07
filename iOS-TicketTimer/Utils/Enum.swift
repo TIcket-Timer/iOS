@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum Server: String, Codable {
 	case baseUrl = "http://43.202.78.122:8080"
@@ -26,8 +27,30 @@ enum Execution<T> {
 	case error(_ errorMessage: String)
 }
 
-enum platform: String {
+enum Platform: String {
     case interpark = "인터파크"
     case melon = "멜론"
     case yes24 = "yse24"
+    
+    var ticket: String {
+        switch self {
+        case .interpark:
+            return "인터파크 티켓"
+        case .melon:
+            return "멜론 티켓"
+        case .yes24:
+            return "yes24 티켓"
+        }
+    }
+    
+    var color: UIColor {
+        switch self {
+        case .interpark:
+            return UIColor("#8447DF")
+        case .melon:
+            return UIColor.mainColor
+        case .yes24:
+            return UIColor("#377EF7")
+        }
+    }
 }
