@@ -14,7 +14,7 @@ class MusicalService {
 	private let baseUrl = Server.baseUrl.rawValue
 	
 	// MARK: - 마감 기한이 임박한 공지 조회
-	func getDeadlineMusicals(page: Int, size: Int) -> Observable<Response<MusicalNotice>> {
+	func getDeadlineMusicalNotices(page: Int, size: Int) -> Observable<Response<MusicalNotice>> {
 		let path = "/api/musicalNotices/deadline?page=\(page)&size=\(size)"
 		let url = baseUrl + path
 		
@@ -24,13 +24,11 @@ class MusicalService {
 				.responseDecodable(of: Response<MusicalNotice>.self) { response in
 					switch response.result {
 					case .success(let data):
-						print("[getDeadlineMusicals 성공]")
-						dump(data)
+						print("[getDeadlineMusicalNotices 성공] \(data)")
 						observer.onNext(data)
 						observer.onCompleted()
 					case .failure(let error):
-						print("[getDeadlineMusicals 실패]")
-						print(error)
+						print("[getDeadlineMusicalNotices 실패] \(error)")
 						observer.onError(error)
 						observer.onCompleted()
 					}
@@ -43,23 +41,25 @@ class MusicalService {
 	}
 	
 	// MARK: - 최근 등록된 공지 조회
-	func getLatestMusicals(page: Int, size: Int) -> Observable<Response<MusicalNotice>> {
+	func getLatestMusicalNotices(page: Int, size: Int) -> Observable<Response<[MusicalNotice]>> {
 		let path = "/api/musicalNotices/latest?page=\(page)&size=\(size)"
 		let url = baseUrl + path
+        
+        let header: HTTPHeaders = [
+            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
+        ]
 		
-		let observable = Observable<Response<MusicalNotice>>.create { observer -> Disposable in
+		let observable = Observable<Response<[MusicalNotice]>>.create { observer -> Disposable in
 			
-			AF.request(url, method: .get)
-				.responseDecodable(of: Response<MusicalNotice>.self) { response in
+			AF.request(url, method: .get, headers: header)
+				.responseDecodable(of: Response<[MusicalNotice]>.self) { response in
 					switch response.result {
 					case .success(let data):
-						print("[getLatestMusicals 성공]")
-						dump(data)
+						print("[getLatestMusicalNotices 성공] \(data)")
 						observer.onNext(data)
 						observer.onCompleted()
 					case .failure(let error):
-						print("[getLatestMusicals 실패]")
-						print(error)
+						print("[getLatestMusicalNotices 실패] \(error)")
 						observer.onError(error)
 						observer.onCompleted()
 					}
@@ -70,4 +70,35 @@ class MusicalService {
 		
 		return observable
 	}
+    
+    // MARK: - 최근 등록된 뮤지컬 정보 조회
+    func getLatestMusicals(page: Int, size: Int) -> Observable<Response<[Musicals]>> {
+        let path = "/api/musicals/latest?page=\(page)&size=\(size)"
+        let url = baseUrl + path
+        
+        let header: HTTPHeaders = [
+            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
+        ]
+        
+        let observable = Observable<Response<[Musicals]>>.create { observer -> Disposable in
+            
+            AF.request(url, method: .get, headers: header)
+                .responseDecodable(of: Response<[Musicals]>.self) { response in
+                    switch response.result {
+                    case .success(let data):
+                        print("[getLatestMusicals 성공] \(data)")
+                        observer.onNext(data)
+                        observer.onCompleted()
+                    case .failure(let error):
+                        print("[getLatestMusicals 실패] \(error)")
+                        observer.onError(error)
+                        observer.onCompleted()
+                    }
+                }
+            
+            return Disposables.create()
+        }
+        
+        return observable
+    }
 }

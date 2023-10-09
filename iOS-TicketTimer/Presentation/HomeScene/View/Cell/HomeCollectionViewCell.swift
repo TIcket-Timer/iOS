@@ -5,10 +5,15 @@
 //  Created by 김지현 on 2023/10/05.
 //
 
+import RxSwift
 import SnapKit
+import Kingfisher
 
 class HomeCollectionViewCell: UICollectionViewCell {
     static let identifier = "homeCollectionViewCell"
+    
+    var cellData = PublishSubject<Musicals>()
+    private let bag = DisposeBag()
     
     let imageView = UIImageView()
     
@@ -20,6 +25,15 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setUI()
+        
+        cellData
+            .observe(on: MainScheduler.instance)
+            .withUnretained(self)
+            .subscribe(onNext: { (self, data) in
+                let url = URL(string: data.posterUrl ?? "")
+                self.imageView.kf.setImage(with: url)
+            })
+            .disposed(by: bag)
     }
     
     override func prepareForReuse() {
