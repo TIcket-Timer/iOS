@@ -25,6 +25,8 @@
 		8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */; };
 		8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034942AD3E258001FEC71 /* SearchResultView.swift */; };
 		8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */; };
+		8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */; };
+		8FA0349F2AD3FC08001FEC71 /* CastingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349E2AD3FC08001FEC71 /* CastingInfoView.swift */; };
 		9A16AC042ACD99C0007C5570 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A16AC032ACD99C0007C5570 /* HomeTableViewCell.swift */; };
 		9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD32ACC48E9002C4B0A /* LoginViewModel.swift */; };
 		9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD52ACC48FE002C4B0A /* LoginViewController.swift */; };
@@ -91,6 +93,8 @@
 		8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchInactiveView.swift; sourceTree = "<group>"; };
 		8FA034942AD3E258001FEC71 /* SearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyResearchedTableViewCell.swift; sourceTree = "<group>"; };
+		8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalDetailViewController.swift; sourceTree = "<group>"; };
+		8FA0349E2AD3FC08001FEC71 /* CastingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastingInfoView.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A16AC032ACD99C0007C5570 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		9AB92BD32ACC48E9002C4B0A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -421,6 +425,8 @@
 				8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */,
 				8FA034922AD3E258001FEC71 /* SearchResultEmptyView.swift */,
 				8FA034942AD3E258001FEC71 /* SearchResultView.swift */,
+				8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */,
+				8FA0349E2AD3FC08001FEC71 /* CastingInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -678,6 +684,7 @@
 				9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */,
 				9AB92BF12ACC4A5D002C4B0A /* MusicalViewController.swift in Sources */,
 				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
+				8FA0349F2AD3FC08001FEC71 /* CastingInfoView.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
 				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,
@@ -694,6 +701,7 @@
 				8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */,
 				8F70CD162AD00D6A00586847 /* MusicalPopularTableViewCell.swift in Sources */,
 				9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */,
+				8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */,
 				A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */,
 				8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */,
 				8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */,

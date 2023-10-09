@@ -41,6 +41,8 @@ class MusicalViewController: UIViewController {
         searchController.searchBar.tintColor = .black
         searchController.searchBar.autocapitalizationType = .none
         searchController.hidesNavigationBarDuringPresentation = false
+        
+        searchInactiveView.delegate = self
     }
 
     private func setAutoLayout() {
@@ -92,5 +94,12 @@ extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func deleteSearchView() {
         searchReadyView.removeFromSuperview()
         searchResultView.removeFromSuperview()
+    }
+}
+
+extension MusicalViewController: SearchInactiveViewDelegate {
+    func didTapCell(_: SearchInactiveView, indexPath: IndexPath) {
+        let VC = MusicalDetailViewController()
+        navigationController?.pushViewController(VC, animated: true)
     }
 }

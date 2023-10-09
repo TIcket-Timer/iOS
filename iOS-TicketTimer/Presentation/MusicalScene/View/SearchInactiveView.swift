@@ -8,6 +8,10 @@
 import UIKit
 import SnapKit
 
+protocol SearchInactiveViewDelegate: AnyObject {
+    func didTapCell(_: SearchInactiveView, indexPath: IndexPath)
+}
+
 class SearchInactiveView: UIView {
     
     private let scrollView = UIScrollView()
@@ -22,6 +26,8 @@ class SearchInactiveView: UIView {
     private let yes24Button = UIButton()
     
     private let popularTableView = UITableView()
+    
+    weak var delegate: SearchInactiveViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -164,5 +170,9 @@ extension SearchInactiveView: UITableViewDelegate, UITableViewDataSource {
         cell.musicalImageView.image = UIImage(named: "opera")
 
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didTapCell(self, indexPath: indexPath)
     }
 }
