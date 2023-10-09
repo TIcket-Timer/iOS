@@ -27,7 +27,7 @@ enum Execution<T> {
 	case error(_ errorMessage: String)
 }
 
-enum Platform: String {
+enum Platform: String, CaseIterable {
     case interpark = "인터파크"
     case melon = "멜론"
     case yes24 = "yse24"
