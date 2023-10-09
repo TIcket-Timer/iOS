@@ -52,7 +52,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 		tabBar.unselectedItemTintColor = .gray60
 		
 		let homeTab = UINavigationController(rootViewController: HomeViewController())
-		let showTab = UINavigationController(rootViewController: ShowViewController())
+		let showTab = UINavigationController(rootViewController: MusicalViewController())
 		let calendarTab = UINavigationController(rootViewController: CalendarViewController())
 		let settingsTab = UINavigationController(rootViewController: SettingsViewController())
 		

@@ -1,14 +1,14 @@
 PODS:
-  - Alamofire (5.6.4)
+  - Alamofire (5.8.0)
   - Differentiator (5.0.0)
   - FSCalendar (2.8.4)
-  - KakaoSDKAuth (2.14.0):
-    - KakaoSDKCommon (= 2.14.0)
-  - KakaoSDKCommon (2.14.0):
-    - KakaoSDKCommon/Common (= 2.14.0)
-    - KakaoSDKCommon/Network (= 2.14.0)
-  - KakaoSDKCommon/Common (2.14.0)
-  - KakaoSDKCommon/Network (2.14.0):
+  - KakaoSDKAuth (2.18.0):
+    - KakaoSDKCommon (= 2.18.0)
+  - KakaoSDKCommon (2.18.0):
+    - KakaoSDKCommon/Common (= 2.18.0)
+    - KakaoSDKCommon/Network (= 2.18.0)
+  - KakaoSDKCommon/Common (2.18.0)
+  - KakaoSDKCommon/Network (2.18.0):
     - Alamofire (~> 5.1)
     - KakaoSDKCommon/Common (= 2.14.0)
   - KakaoSDKUser (2.14.0):
@@ -24,9 +24,9 @@ PODS:
   - RxGesture (4.0.4):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
-  - RxRelay (6.5.0):
-    - RxSwift (= 6.5.0)
-  - RxSwift (6.5.0)
+  - RxRelay (6.6.0):
+    - RxSwift (= 6.6.0)
+  - RxSwift (6.6.0)
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
@@ -58,7 +58,7 @@ SPEC REPOS:
     - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: 4e95d97098eacb88856099c4fc79b526a299e48c
+  Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   KakaoSDKAuth: 8fca87815de22062a23297983f327613b087b8bb
@@ -68,8 +68,8 @@ SPEC CHECKSUMS:
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
-  RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
-  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
 PODFILE CHECKSUM: 375305e490b6f4738d30cb61220a377f3b34b6d1

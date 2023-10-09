@@ -18,6 +18,15 @@
 		658C86762A78E052002C65F0 /* iOS_TicketTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86752A78E052002C65F0 /* iOS_TicketTimerUITests.swift */; };
 		658C86782A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */; };
 		8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */; };
+		8F70CD162AD00D6A00586847 /* MusicalPopularTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F70CD152AD00D6A00586847 /* MusicalPopularTableViewCell.swift */; };
+		8FA0347F2AD0F324001FEC71 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */; };
+		8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */; };
+		8FA034952AD3E258001FEC71 /* SearchResultEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034922AD3E258001FEC71 /* SearchResultEmptyView.swift */; };
+		8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */; };
+		8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034942AD3E258001FEC71 /* SearchResultView.swift */; };
+		8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */; };
+		8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */; };
+		8FA0349F2AD3FC08001FEC71 /* CastingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349E2AD3FC08001FEC71 /* CastingInfoView.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
 		9A00CD952AD12FC300E9813F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD942AD12FC300E9813F /* Response.swift */; };
 		9A00CD972AD1314400E9813F /* Musicals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD962AD1314400E9813F /* Musicals.swift */; };
@@ -32,8 +41,8 @@
 		9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BE82ACC4A2C002C4B0A /* CalendarViewController.swift */; };
 		9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BEA2ACC4A37002C4B0A /* CalendarViewModel.swift */; };
 		9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BEC2ACC4A40002C4B0A /* SettingsViewModel.swift */; };
-		9AB92BF12ACC4A5D002C4B0A /* ShowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */; };
-		9AB92BF32ACC4A69002C4B0A /* ShowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */; };
+		9AB92BF12ACC4A5D002C4B0A /* MusicalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */; };
+		9AB92BF32ACC4A69002C4B0A /* MusicalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */; };
 		9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF52ACC4B7C002C4B0A /* Extension.swift */; };
 		9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF72ACC4BC8002C4B0A /* Enum.swift */; };
 		9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF92ACC4D61002C4B0A /* AuthService.swift */; };
@@ -80,6 +89,15 @@
 		658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_TicketTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F70CD152AD00D6A00586847 /* MusicalPopularTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalPopularTableViewCell.swift; sourceTree = "<group>"; };
+		8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyViewdCollectionViewCell.swift; sourceTree = "<group>"; };
+		8FA034922AD3E258001FEC71 /* SearchResultEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultEmptyView.swift; sourceTree = "<group>"; };
+		8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchInactiveView.swift; sourceTree = "<group>"; };
+		8FA034942AD3E258001FEC71 /* SearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
+		8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyResearchedTableViewCell.swift; sourceTree = "<group>"; };
+		8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalDetailViewController.swift; sourceTree = "<group>"; };
+		8FA0349E2AD3FC08001FEC71 /* CastingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastingInfoView.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A00CD922AD12BDA00E9813F /* MusicalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalService.swift; sourceTree = "<group>"; };
 		9A00CD942AD12FC300E9813F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -95,8 +113,8 @@
 		9AB92BE82ACC4A2C002C4B0A /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		9AB92BEA2ACC4A37002C4B0A /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		9AB92BEC2ACC4A40002C4B0A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewController.swift; sourceTree = "<group>"; };
-		9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewModel.swift; sourceTree = "<group>"; };
+		9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalViewController.swift; sourceTree = "<group>"; };
+		9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalViewModel.swift; sourceTree = "<group>"; };
 		9AB92BF52ACC4B7C002C4B0A /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		9AB92BF72ACC4BC8002C4B0A /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		9AB92BF92ACC4D61002C4B0A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -203,6 +221,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8F70CD142AD00CEC00586847 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8F70CD152AD00D6A00586847 /* MusicalPopularTableViewCell.swift */,
+				8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */,
+				8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		9A16AC022ACD99A1007C5570 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,7 +273,7 @@
 			children = (
 				9AB92BE12ACC49F5002C4B0A /* SettingsScene */,
 				9AB92BE02ACC49D8002C4B0A /* CalendarScene */,
-				9AB92BDF2ACC49C3002C4B0A /* ShowScene */,
+				9AB92BDF2ACC49C3002C4B0A /* MusicalScene */,
 				9AB92BD02ACC48C1002C4B0A /* LoginScene */,
 				9AB92BCA2ACC486D002C4B0A /* TabBar */,
 				9AB92BCB2ACC488D002C4B0A /* HomeScene */,
@@ -339,13 +367,13 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		9AB92BDF2ACC49C3002C4B0A /* ShowScene */ = {
+		9AB92BDF2ACC49C3002C4B0A /* MusicalScene */ = {
 			isa = PBXGroup;
 			children = (
 				9AB92BEF2ACC4A4D002C4B0A /* ViewModel */,
 				9AB92BEE2ACC4A45002C4B0A /* View */,
 			);
-			path = ShowScene;
+			path = MusicalScene;
 			sourceTree = "<group>";
 		};
 		9AB92BE02ACC49D8002C4B0A /* CalendarScene */ = {
@@ -401,7 +429,13 @@
 		9AB92BEE2ACC4A45002C4B0A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9AB92BF02ACC4A5D002C4B0A /* ShowViewController.swift */,
+				8F70CD142AD00CEC00586847 /* Cell */,
+				9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */,
+				8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */,
+				8FA034922AD3E258001FEC71 /* SearchResultEmptyView.swift */,
+				8FA034942AD3E258001FEC71 /* SearchResultView.swift */,
+				8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */,
+				8FA0349E2AD3FC08001FEC71 /* CastingInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -409,7 +443,7 @@
 		9AB92BEF2ACC4A4D002C4B0A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				9AB92BF22ACC4A69002C4B0A /* ShowViewModel.swift */,
+				9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -420,6 +454,7 @@
 				9AB92BF52ACC4B7C002C4B0A /* Extension.swift */,
 				9AB92BF72ACC4BC8002C4B0A /* Enum.swift */,
 				9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */,
+				8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -654,10 +689,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AB92BF32ACC4A69002C4B0A /* ShowViewModel.swift in Sources */,
+				9AB92BF32ACC4A69002C4B0A /* MusicalViewModel.swift in Sources */,
 				9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */,
-				9AB92BF12ACC4A5D002C4B0A /* ShowViewController.swift in Sources */,
+				9AB92BF12ACC4A5D002C4B0A /* MusicalViewController.swift in Sources */,
 				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
+				8FA0349F2AD3FC08001FEC71 /* CastingInfoView.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
 				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,
@@ -668,17 +704,25 @@
 				9A16AC042ACD99C0007C5570 /* HomeTableViewCell.swift in Sources */,
 				9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */,
 				9AB92BE52ACC4A10002C4B0A /* SettingsViewController.swift in Sources */,
+				8FA0347F2AD0F324001FEC71 /* PaddingLabel.swift in Sources */,
 				9A00CD952AD12FC300E9813F /* Response.swift in Sources */,
 				9AB92BDC2ACC4921002C4B0A /* HomeViewModel.swift in Sources */,
 				9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */,
 				9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */,
 				9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */,
+				8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */,
+				8F70CD162AD00D6A00586847 /* MusicalPopularTableViewCell.swift in Sources */,
 				9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */,
+				8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */,
 				A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */,
+				8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */,
+				8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */,
 				9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */,
 				9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */,
 				658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */,
+				8FA034952AD3E258001FEC71 /* SearchResultEmptyView.swift in Sources */,
 				9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */,
+				8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
