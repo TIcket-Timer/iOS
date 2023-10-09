@@ -18,6 +18,9 @@
 		658C86762A78E052002C65F0 /* iOS_TicketTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86752A78E052002C65F0 /* iOS_TicketTimerUITests.swift */; };
 		658C86782A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */; };
 		8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */; };
+		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
+		9A00CD952AD12FC300E9813F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD942AD12FC300E9813F /* Response.swift */; };
+		9A00CD972AD1314400E9813F /* Musicals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD962AD1314400E9813F /* Musicals.swift */; };
 		9A16AC042ACD99C0007C5570 /* HomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A16AC032ACD99C0007C5570 /* HomeTableViewCell.swift */; };
 		9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD32ACC48E9002C4B0A /* LoginViewModel.swift */; };
 		9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BD52ACC48FE002C4B0A /* LoginViewController.swift */; };
@@ -78,6 +81,9 @@
 		6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
+		9A00CD922AD12BDA00E9813F /* MusicalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalService.swift; sourceTree = "<group>"; };
+		9A00CD942AD12FC300E9813F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		9A00CD962AD1314400E9813F /* Musicals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Musicals.swift; sourceTree = "<group>"; };
 		9A16AC032ACD99C0007C5570 /* HomeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTableViewCell.swift; sourceTree = "<group>"; };
 		9AB92BD32ACC48E9002C4B0A /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		9AB92BD52ACC48FE002C4B0A /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				9AB92BF92ACC4D61002C4B0A /* AuthService.swift */,
+				9A00CD922AD12BDA00E9813F /* MusicalService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -250,6 +257,8 @@
 			isa = PBXGroup;
 			children = (
 				9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */,
+				9A00CD962AD1314400E9813F /* Musicals.swift */,
+				9A00CD942AD12FC300E9813F /* Response.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -653,10 +662,13 @@
 				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,
 				9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */,
+				9A00CD972AD1314400E9813F /* Musicals.swift in Sources */,
+				9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */,
 				65709A112A91D2E200A9DF7A /* KakaoLogin.swift in Sources */,
 				9A16AC042ACD99C0007C5570 /* HomeTableViewCell.swift in Sources */,
 				9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */,
 				9AB92BE52ACC4A10002C4B0A /* SettingsViewController.swift in Sources */,
+				9A00CD952AD12FC300E9813F /* Response.swift in Sources */,
 				9AB92BDC2ACC4921002C4B0A /* HomeViewModel.swift in Sources */,
 				9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */,
 				9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */,

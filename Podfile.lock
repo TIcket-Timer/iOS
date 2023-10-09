@@ -13,6 +13,7 @@ PODS:
     - KakaoSDKCommon/Common (= 2.14.0)
   - KakaoSDKUser (2.14.0):
     - KakaoSDKAuth (= 2.14.0)
+  - Kingfisher (7.6.2)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -33,6 +34,7 @@ DEPENDENCIES:
   - KakaoSDKAuth
   - KakaoSDKCommon
   - KakaoSDKUser
+  - Kingfisher (~> 7.6.2)
   - RxCocoa
   - RxDataSources (~> 5.0)
   - RxGesture
@@ -47,6 +49,7 @@ SPEC REPOS:
     - KakaoSDKAuth
     - KakaoSDKCommon
     - KakaoSDKUser
+    - Kingfisher
     - RxCocoa
     - RxDataSources
     - RxGesture
@@ -61,6 +64,7 @@ SPEC CHECKSUMS:
   KakaoSDKAuth: 8fca87815de22062a23297983f327613b087b8bb
   KakaoSDKCommon: 0ce638f7a2e49704943c0b74a087a9f8067bba1c
   KakaoSDKUser: 2ca18314ce72e6690f76cb1f6f9fbc771d31a803
+  Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
@@ -68,6 +72,6 @@ SPEC CHECKSUMS:
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 733eeca8326dab66223880b9c0d09aa50868fd03
+PODFILE CHECKSUM: 375305e490b6f4738d30cb61220a377f3b34b6d1
 
 COCOAPODS: 1.11.3

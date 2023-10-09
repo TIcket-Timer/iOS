@@ -5,10 +5,19 @@
 //  Created by 김지현 on 2023/10/03.
 //
 
+import RxSwift
+import RxDataSources
 import SnapKit
 import FSCalendar
 
 class HomeViewController: UIViewController {
+    
+    private let bag = DisposeBag()
+    private var viewModel = HomeViewModel()
+    private lazy var input = HomeViewModel.Input(getDeadlineMusicalNotices: .create(bufferSize: 1),
+                                                 getLatestMusicals: .create(bufferSize: 1),
+                                                 loadMoreMusicals: .create(bufferSize: 1))
+    private lazy var output = viewModel.transform(input: input)
 	
 	// 상단 노치 값 구하기
 	let scenes = UIApplication.shared.connectedScenes
@@ -32,12 +41,21 @@ class HomeViewController: UIViewController {
 	
 	// datasource
 	private let tableViewData: [String] = ["뮤지컬1", "뮤지컬2", "뮤지컬3", "뮤지컬4"]
-    private let collectionViewData: [String] = ["opera", "hest", "farinelli", "opera", "hest", "farinelli", "opera", "hest", "farinelli"]
+    private let latestMusicalsDataSource = RxCollectionViewSectionedReloadDataSource<MusicalsSection>(configureCell: { dataSource, collectionView, indexPath, item in
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
+                                                            for: indexPath) as? HomeCollectionViewCell else { fatalError("unable to dequeue cell") }
+        cell.cellData.onNext(item)
+        return cell
+    })
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        input.getLatestMusicals.onNext(.trigger)
+        
         setUI()
         setAutoLayout()
+        bindRx()
     }
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -100,10 +118,9 @@ class HomeViewController: UIViewController {
         flowLayout.scrollDirection = .horizontal
         flowLayout.itemSize = CGSize(width: 125, height: 165)
         flowLayout.minimumLineSpacing = 12
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
+    
         collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        collectionView.rx.setDelegate(self).disposed(by: bag)
         collectionView.showsHorizontalScrollIndicator = false
     }
     
@@ -172,6 +189,13 @@ class HomeViewController: UIViewController {
             $0.bottom.equalToSuperview().offset(-24)
         }
     }
+    
+    private func bindRx() {
+        output.bindLatestMusicals
+            .observe(on: MainScheduler.asyncInstance)
+            .bind(to: collectionView.rx.items(dataSource: self.latestMusicalsDataSource))
+            .disposed(by: bag)
+    }
 }
 
 // MARK: - 캘린더
@@ -205,17 +229,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 }
 
-// MARK: - 콜렉션뷰
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionViewData.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as? HomeCollectionViewCell else { return UICollectionViewCell() }
-        
-        cell.imageView.image = UIImage(named: collectionViewData[indexPath.row])
-        
-        return cell
+// MARK: - 스크롤 이벤트 (페이징 처리)
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if collectionView.contentOffset.x != collectionView.contentSize.width &&
+            (collectionView.contentOffset.x + 350) > collectionView.contentSize.width {
+            input.loadMoreMusicals.onNext(.trigger)
+        }
     }
 }
