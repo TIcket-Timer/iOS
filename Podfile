@@ -14,6 +14,7 @@ target 'iOS-TicketTimer' do
 	pod 'KakaoSDKUser'
 	pod 'KakaoSDKCommon'
 	pod 'FSCalendar'
+  pod 'Kingfisher', '~> 7.6.2'
 end
 
 target 'iOS-TicketTimerTests' do

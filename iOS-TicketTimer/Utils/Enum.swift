@@ -53,4 +53,9 @@ enum Platform: String, CaseIterable {
             return UIColor("#377EF7")
         }
     }
+enum TestToken: String {
+    case accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzZXJ2ZXJJZCI6Imtha2FvMjgwMzE2MzU4NyIsImlkIjoxLCJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJpYXQiOjE2OTY1OTI4MDIsImV4cCI6MTY5OTU5MjgwMn0.8fVYvhAI2LP_RsgR0VNIYljLSuv6cCv5tkV3NunKJL4"
+    case refreshToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic2VydmVySWQiOiJrYWthbzI4MDMxNjM1ODciLCJ0eXBlIjoicmVmcmVzaFRva2VuIiwiaWF0IjoxNjk2NTkyODAyLCJleHAiOjE3MDI1OTI4MDJ9.a0hmTd92_Cw3OA1XdDTl65eqbChz8bo9c4oWMPK967c"
+    case accessToken_expired = "eyJhbGciOiJIUzI1NiJ9.eyJzZXJ2ZXJJZCI6Imtha2FvMjgwMzE2MzU4NyIsImlkIjoxLCJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJpYXQiOjE2OTY3NDg2OTYsImV4cCI6MTY5Njc0ODY5Nn0.MKPwZnIsZ4a7qCJjefHCw-_vsqCw9G4DdLyeeF6-lo8"
+    case refreshToken_expired = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic2VydmVySWQiOiJrYWthbzI4MDMxNjM1ODciLCJ0eXBlIjoicmVmcmVzaFRva2VuIiwiaWF0IjoxNjk2NzQ4Njk2LCJleHAiOjE2OTY3NDg2OTZ9.DqTWSY9pDqAB-iz3w0mjaIDJygwWau8XOOISN7OJDOs"
 }

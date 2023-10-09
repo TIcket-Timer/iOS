@@ -12,13 +12,22 @@ extension UIColor {
 	class var mainColor: UIColor {
 		return UIColor(named: "mainColor")!
 	}
+    class var gray100: UIColor {
+        return UIColor(named: "gray100")!
+    }
+	class var gray80: UIColor {
+		return UIColor(named: "gray80")!
+	}
 	class var gray60: UIColor {
 		return UIColor(named: "gray60")!
 	}
-	class var gray40: UIColor {
-		return UIColor(named: "gray40")!
-	}
-    
+    class var gray40: UIColor {
+        return UIColor(named: "gray40")!
+    }
+    class var gray20: UIColor {
+        return UIColor(named: "gray20")!
+    }
+
     convenience init(_ hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()

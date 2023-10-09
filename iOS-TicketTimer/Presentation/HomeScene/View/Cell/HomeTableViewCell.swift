@@ -30,6 +30,9 @@ class HomeTableViewCell: UITableViewCell {
 		self.selectionStyle = .none
 		
 		contentView.addSubviews([label])
+        
+        label.textColor = .gray100
+        label.font = .systemFont(ofSize: 15)
 		
 		label.snp.makeConstraints {
 			$0.edges.equalToSuperview()
