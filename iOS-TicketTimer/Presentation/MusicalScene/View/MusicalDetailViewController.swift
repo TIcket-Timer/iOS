@@ -12,6 +12,7 @@ class MusicalDetailViewController: UIViewController {
     private let bgView = UIImageView()
     
     private let imageView = UIImageView()
+    private let platfomrLabel = PlatformLabel(platform: .interpark)
     private let viewMusicalDetailButton = UIButton()
     private let viewMusicalDetailButtonBottom = UIView()
 
@@ -29,8 +30,6 @@ class MusicalDetailViewController: UIViewController {
     lazy private var stackViewContainer = UIStackView(arrangedSubviews: [venueStackView, durationStackView, reservationScheduleStackView])
     
     private let divider = UIView()
-    
-    private let castingInfoView = CastingInfoView()
     
     private let addAlarmButton = UIButton()
 
@@ -53,41 +52,40 @@ class MusicalDetailViewController: UIViewController {
         
         imageView.image = UIImage(named: "opera")
         
+        viewMusicalDetailButton.setTitle("공연 상세정보 보기", for: .normal)
+        viewMusicalDetailButton.setTitleColor(.gray80, for: .normal)
+        viewMusicalDetailButton.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        viewMusicalDetailButton.addTarget(self, action: #selector(viewMusicalDetailButtonTapped), for: .touchUpInside)
+        viewMusicalDetailButtonBottom.backgroundColor = .gray80
+        
         titleLabel.text = "뮤지컬 <오페라의 유령> - 서울"
-        titleLabel.textColor = .gray
+        titleLabel.textColor = .gray100
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         
         venueLabel.text = "공연장"
         venueLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        venueLabel.textColor = .gray60
+        venueLabel.textColor = .gray100
         
         venueDetail.text = "샤롯데씨어터"
         venueDetail.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        venueDetail.textColor = .gray60
+        venueDetail.textColor = .gray80
         
         durationLabel.text = "공연기간"
         durationLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        durationLabel.textColor = .gray60
+        durationLabel.textColor = .gray100
         
         durationDetail.text = "2023.07.21 ~ 2023.11.17"
         durationDetail.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        durationDetail.textColor = .gray60
+        durationDetail.textColor = .gray80
         
         reservationScheduleLabel.text = "애매일정"
         reservationScheduleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        reservationScheduleLabel.textColor = .gray60
+        reservationScheduleLabel.textColor = .gray100
         
         reservationScheduleDetail.text = "2023.07.12 14:00"
         reservationScheduleDetail.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        reservationScheduleDetail.textColor = .gray60
-
-        viewMusicalDetailButton.setTitle("공연 상세정보 보기", for: .normal)
-        viewMusicalDetailButton.setTitleColor(.gray60, for: .normal)
-        viewMusicalDetailButton.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        viewMusicalDetailButton.addTarget(self, action: #selector(viewMusicalDetailButtonTapped), for: .touchUpInside)
+        reservationScheduleDetail.textColor = .gray80
         
-        viewMusicalDetailButtonBottom.backgroundColor = .gray60
-
         venueStackView.axis = .horizontal
         venueStackView.spacing = 36
         venueStackView.alignment = .center
@@ -104,7 +102,7 @@ class MusicalDetailViewController: UIViewController {
         stackViewContainer.spacing = 8
         stackViewContainer.alignment = .leading
         
-        divider.backgroundColor = .gray
+        divider.backgroundColor = .gray20
         
         addAlarmButton.setTitle("예매알람 추가하기", for: .normal)
         addAlarmButton.backgroundColor = .mainColor
@@ -112,7 +110,7 @@ class MusicalDetailViewController: UIViewController {
     }
             
     private func setAutoLayout() {
-        self.view.addSubviews([bgView, imageView, viewMusicalDetailButton, titleLabel, stackViewContainer, divider, castingInfoView, addAlarmButton])
+        self.view.addSubviews([bgView, imageView, platfomrLabel, viewMusicalDetailButton, titleLabel, stackViewContainer, divider, addAlarmButton])
         viewMusicalDetailButton.addSubview(viewMusicalDetailButtonBottom)
         
         bgView.snp.makeConstraints { make in
@@ -126,8 +124,13 @@ class MusicalDetailViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
         }
         
+        platfomrLabel.snp.makeConstraints { make in
+            make.top.equalTo(bgView.snp.bottom).offset(12)
+            make.leading.equalTo(imageView.snp.trailing).offset(16)
+        }
+        
         viewMusicalDetailButton.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(190)
+            make.top.equalTo(bgView.snp.bottom).offset(14)
             make.trailing.equalToSuperview().offset(-24)
             make.height.equalTo(13)
         }
@@ -158,12 +161,6 @@ class MusicalDetailViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             make.height.equalTo(56)
-        }
-
-        castingInfoView.snp.makeConstraints { make in
-            make.top.equalTo(divider.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(addAlarmButton.snp.top).offset(-10)
         }
     }
     

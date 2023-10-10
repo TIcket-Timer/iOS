@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol SearchResultViewDelegate: AnyObject {
+    func didTapCell(_: SearchResultView, indexPath: IndexPath)
+    func didTapAlarmSetting()
+}
+
 class SearchResultView: UIView {
     
     private let emptyLabel = UILabel()
@@ -14,15 +19,20 @@ class SearchResultView: UIView {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private let numberOfResult = 0
-    private let researchResultLable = UILabel()
-    
     private let filterButton = UIButton()
     private let filterView = FilterView()
     
-    private let tableView = UITableView()
+    private let numberOfNoticeResult = 0
+    private let noticeResultLable = UILabel()
+    private let noticeTableView = UITableView()
+    
+    private let numberOfMusicalResult = 0
+    private let musicalResultLable = UILabel()
+    private let musicalTableView = UITableView()
     
     private var selectedPlatforms: [Platform] = Platform.allCases
+    
+    weak var delegate: SearchResultViewDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,13 +47,10 @@ class SearchResultView: UIView {
     private func setUI() {
         self.backgroundColor = .white
         
-        emptyLabel.text = "검색 결과가 있습니다."
+        emptyLabel.text = "검색 결과가 없습니다."
         
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
-        
-        researchResultLable.text = "검색결과 \(numberOfResult)건"
-        researchResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         
         filterButton.setTitle("전체", for: .normal)
         filterButton.setTitleColor(.black, for: .normal)
@@ -63,18 +70,44 @@ class SearchResultView: UIView {
             self?.toggleFilterButtonArrow()
         }
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(MusicalPopularTableViewCell.self,
+        noticeResultLable.text = "검색결과 \(numberOfMusicalResult)건"
+        noticeResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        
+        noticeTableView.delegate = self
+        noticeTableView.dataSource = self
+        noticeTableView.register(NoticeTableViewCell.self,
+                                  forCellReuseIdentifier: NoticeTableViewCell.identifier)
+        noticeTableView.rowHeight = 40
+        noticeTableView.isScrollEnabled = false
+        
+        musicalResultLable.text = "검색결과 \(numberOfMusicalResult)건"
+        musicalResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        
+        musicalTableView.delegate = self
+        musicalTableView.dataSource = self
+        musicalTableView.register(MusicalPopularTableViewCell.self,
                                   forCellReuseIdentifier: MusicalPopularTableViewCell.identifier)
-        tableView.rowHeight = 184
+        musicalTableView.rowHeight = 184
+        musicalTableView.isScrollEnabled = false
     }
     
     private func setAutoLayout() {
         self.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews([emptyLabel, researchResultLable, filterButton, tableView])
-        contentView.addSubview(filterView)
+        contentView.addSubviews([noticeResultLable, noticeTableView, musicalResultLable, musicalTableView])
+        
+//        contentView.addSubviews(filterButton)
+//        contentView.addSubview(filterView)
+//        filterButton.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(2)
+//            make.trailing.equalToSuperview().offset(-24)
+//        }
+//
+//        filterView.snp.makeConstraints { make in
+//            make.top.equalTo(filterButton.snp.bottom).offset(16)
+//            make.leading.trailing.equalToSuperview()
+//            make.height.equalTo(140)
+//        }
         
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -85,27 +118,27 @@ class SearchResultView: UIView {
             make.width.equalToSuperview()
         }
         
-        researchResultLable.snp.makeConstraints { make in
+        noticeResultLable.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(24)
         }
         
-        filterButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(2)
-            make.trailing.equalToSuperview().offset(-24)
-        }
-        
-        filterView.snp.makeConstraints { make in
-            make.top.equalTo(filterButton.snp.bottom).offset(16)
+        noticeTableView.snp.makeConstraints { make in
+            make.top.equalTo(noticeResultLable.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(140)
+            make.height.equalTo(160)
         }
         
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(researchResultLable.snp.bottom).offset(12)
+        musicalResultLable.snp.makeConstraints { make in
+            make.top.equalTo(noticeTableView.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(24)
+        }
+        
+        musicalTableView.snp.makeConstraints { make in
+            make.top.equalTo(musicalResultLable.snp.bottom).offset(10)//.offset(12)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview().offset(-12)
-            make.height.equalTo(184 * 5)
+            make.height.equalTo(184 * 2)
         }
     }
     
@@ -127,20 +160,56 @@ class SearchResultView: UIView {
     }
 }
 
+//MARK: - TableView
+
 extension SearchResultView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        switch tableView {
+        case noticeTableView:
+            return 4
+        case musicalTableView:
+            return 2
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MusicalPopularTableViewCell.identifier, for: indexPath) as! MusicalPopularTableViewCell
-
-        cell.musicalImageView.image = UIImage(named: "opera")
-
-        return cell
+        
+        
+        switch tableView {
+        case noticeTableView:
+            let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
+            
+            //cell.titleLabel.text = "뮤지컬 <오페라의 유령 유령 유령 유령 유령>"
+            cell.titleLabel.text = "뮤지컬"
+            cell.dateLabel.text = "2023.7.12"
+            cell.timeLabel.text = "14:00"
+            cell.alarmSettingButtonAction = {
+                self.delegate?.didTapAlarmSetting()
+            }
+            
+            return cell
+        case musicalTableView:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalPopularTableViewCell.identifier, for: indexPath) as! MusicalPopularTableViewCell
+            
+            cell.musicalImageView.image = UIImage(named: "opera")
+            
+            return cell
+        default:
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.didTapCell(self, indexPath: indexPath)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
+
+//MARK: - FilterView
 
 class FilterView: UIView {
 

@@ -1,5 +1,5 @@
 //
-//  SearchResultEmptyView.swift
+//  SearchReadyView.swift
 //  iOS-TicketTimer
 //
 //  Created by 심현석 on 2023/10/07.
@@ -7,6 +7,10 @@
 
 import UIKit
 import SnapKit
+
+protocol SearchReadyViewDelegate: AnyObject {
+    func didTapCell(_: SearchReadyView, indexPath: IndexPath)
+}
 
 class SearchReadyView: UIView {
     
@@ -23,6 +27,8 @@ class SearchReadyView: UIView {
     private let recentlyViewedLabel = UILabel()
     private let flowLayout = UICollectionViewFlowLayout()
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
+    
+    weak var delegate: SearchReadyViewDelegate?
     
     var searchList: [String] = ["오페라10", "오페라9", "오페라8", "오페라7", "오페라6", "오페라5", "오페라4", "오페라3", "오페라2", "오페라1"] {
         didSet {
@@ -160,5 +166,9 @@ extension SearchReadyView: UICollectionViewDelegate, UICollectionViewDataSource 
         cell.imageView.image = UIImage(named: "opera")
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.didTapCell(self, indexPath: indexPath)
     }
 }

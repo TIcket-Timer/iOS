@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 
 class RecentlyResearchedTableViewCell: UITableViewCell {
-    static let identifier = "recentlyResearchedTableViewCell"
+    static let identifier = "RecentlyResearchedTableViewCell"
     
     let recentlySearchedTextLabel = UILabel()
     let deleteButton = UIButton()

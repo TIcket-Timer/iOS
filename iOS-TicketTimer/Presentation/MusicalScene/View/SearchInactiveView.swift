@@ -45,23 +45,24 @@ class SearchInactiveView: UIView {
         scrollView.showsVerticalScrollIndicator = false
 
         popularMusicalLabel.text = "인기공연 TOP 10"
+        popularMusicalLabel.textColor = .gray100
         popularMusicalLabel.font = .systemFont(ofSize: 15, weight: .bold)
 
-        platformButtonContainer.backgroundColor = .gray40
+        platformButtonContainer.backgroundColor = .gray20
         platformButtonContainer.layer.cornerRadius = 16
         
         interparkButton.setTitle("인터파크", for: .normal)
-        interparkButton.setTitleColor(.gray60, for: .normal)
+        interparkButton.setTitleColor(.gray80, for: .normal)
         interparkButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         interparkButton.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
 
         melonButton.setTitle("멜론", for: .normal)
-        melonButton.setTitleColor(.gray60, for: .normal)
+        melonButton.setTitleColor(.gray80, for: .normal)
         melonButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         melonButton.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
         
         yes24Button.setTitle("yes24", for: .normal)
-        yes24Button.setTitleColor(.gray60, for: .normal)
+        yes24Button.setTitleColor(.gray80, for: .normal)
         yes24Button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         yes24Button.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
         
@@ -174,5 +175,7 @@ extension SearchInactiveView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.didTapCell(self, indexPath: indexPath)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
