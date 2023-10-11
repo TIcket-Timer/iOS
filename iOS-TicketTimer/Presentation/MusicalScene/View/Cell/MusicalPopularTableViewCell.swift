@@ -1,3 +1,10 @@
+//
+//  MusicalPopularTableViewCell.swift
+//  iOS-TicketTimer
+//
+//  Created by 심현석 on 2023/10/07.
+//
+
 import UIKit
 import SnapKit
 
@@ -38,15 +45,15 @@ class MusicalPopularTableViewCell: UITableViewCell {
 
         titleLabel.text = "뮤지컬 <오페라의 유령>"
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        titleLabel.textColor = UIColor.gray60
+        titleLabel.textColor = UIColor.gray100
 
         placeLabel.text = "샤롯씨어터"
         placeLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        placeLabel.textColor = UIColor.gray40
+        placeLabel.textColor = UIColor.gray80
 
         dateLabel.text = "2000.00.00 00:00"
         dateLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        dateLabel.textColor = UIColor.gray40
+        dateLabel.textColor = UIColor.gray80
     }
 
     private func setAutoLayout() {

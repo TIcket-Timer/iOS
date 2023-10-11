@@ -27,9 +27,12 @@ class MusicalViewController: UIViewController {
         setUI()
         setAutoLayout()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationItem.title = "검색"
+    }
 
     private func setUI() {
-        navigationItem.title = "검색"
         self.view.backgroundColor = .white
 
         navigationItem.searchController = searchController
@@ -41,8 +44,11 @@ class MusicalViewController: UIViewController {
         searchController.searchBar.tintColor = .black
         searchController.searchBar.autocapitalizationType = .none
         searchController.hidesNavigationBarDuringPresentation = false
+        navigationItem.hidesSearchBarWhenScrolling = false
         
         searchInactiveView.delegate = self
+        searchReadyView.delegate = self
+        searchResultView.delegate = self
     }
 
     private func setAutoLayout() {
@@ -99,7 +105,35 @@ extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
 extension MusicalViewController: SearchInactiveViewDelegate {
     func didTapCell(_: SearchInactiveView, indexPath: IndexPath) {
-        let VC = MusicalDetailViewController()
-        navigationController?.pushViewController(VC, animated: true)
+        let vc = MusicalDetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension MusicalViewController: SearchReadyViewDelegate {
+    func didTapCell(_: SearchReadyView, indexPath: IndexPath) {
+        let vc = MusicalDetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+extension MusicalViewController: SearchResultViewDelegate {
+    func didTapCell(_: SearchResultView, indexPath: IndexPath) {
+        let vc = MusicalDetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func didTapAlarmSetting() {
+        let vc = AlarmSettingViewController(platform: .interpark)
+        vc.navigationItem.title = "알람 설정"
+        
+        let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.modalPresentationStyle = .automatic
+        
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+        }
+        
+        self.present(navigationController, animated: true, completion: nil)
     }
 }
