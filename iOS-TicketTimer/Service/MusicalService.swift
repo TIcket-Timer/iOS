@@ -101,4 +101,31 @@ class MusicalService {
         
         return observable
     }
+    
+    //MARK: - 인기 뮤지컬 조회
+    func getPopularMusicals(platform: Platform) -> Observable<Response<[Musicals]>> {
+        let path = "/api/musicals/site/\(platform.site)?page=1&size=10"
+        let url = baseUrl + path
+
+        let header: HTTPHeaders = [
+            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
+        ]
+        
+        return Observable.create { observer in
+            AF.request(url, headers: header)
+                .responseDecodable(of: Response<[Musicals]>.self) { response in
+                    switch response.result {
+                    case .success(let musicals):
+                        print("[getPopularMusicals 성공 - \(platform.rawValue)]")
+                        observer.onNext(musicals)
+                        observer.onCompleted()
+                    case .failure(let error):
+                        print("[getPopularMusicals 실패] \(error)")
+                        observer.onError(error)
+                        observer.onCompleted()
+                    }
+                }
+            return Disposables.create()
+        }
+    }
 }

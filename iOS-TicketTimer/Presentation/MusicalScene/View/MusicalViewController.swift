@@ -10,11 +10,14 @@ import SnapKit
 
 class MusicalViewController: UIViewController {
     
+    private let viewModel = MusicalViewModel()
+    private lazy var searchInactiveView = SearchInactiveView(viewModel: viewModel)
+    private lazy var searchReadyView = SearchReadyView()
+    private lazy var searchResultView = SearchResultView()
+    
     private let searchController = UISearchController()
 
-    private let searchInactiveView = SearchInactiveView()
-    private let searchReadyView = SearchReadyView()
-    private let searchResultView = SearchResultView()
+    
     
     private var searchQuery = ""
     

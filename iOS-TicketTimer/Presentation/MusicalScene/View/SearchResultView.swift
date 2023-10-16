@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import SnapKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 
 protocol SearchResultViewDelegate: AnyObject {
     func didTapCell(_: SearchResultView, indexPath: IndexPath)

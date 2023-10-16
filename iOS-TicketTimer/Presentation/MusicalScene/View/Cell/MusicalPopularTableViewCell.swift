@@ -7,9 +7,15 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import Kingfisher
 
 class MusicalPopularTableViewCell: UITableViewCell {
     static let identifier = "MusicalPopularTableViewCell"
+    
+    let cellData = PublishSubject<Musicals>()
+    private let main = MainScheduler.instance
+    private var disposeBag = DisposeBag()
 
     let musicalImageView = UIImageView()
     let platform: Platform = .interpark
@@ -22,10 +28,25 @@ class MusicalPopularTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
         setAutoLayout()
+        bindData()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    private func bindData() {
+        cellData
+            .observe(on: main)
+            .withUnretained(self)
+            .subscribe(onNext: { (self, data) in
+                self.titleLabel.text = data.title
+                self.placeLabel.text = data.place
+                self.dateLabel.text = data.startDate
+                let url = URL(string: data.posterUrl ?? "")
+                self.musicalImageView.kf.setImage(with: url)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setUI() {

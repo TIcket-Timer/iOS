@@ -32,6 +32,17 @@ enum Platform: String, CaseIterable {
     case melon = "멜론"
     case yes24 = "yse24"
     
+    var site: String {
+        switch self {
+        case .interpark:
+            return "interpark"
+        case .melon:
+            return "melon"
+        case .yes24:
+            return "yes24"
+        }
+    }
+    
     var ticket: String {
         switch self {
         case .interpark:

@@ -7,6 +7,9 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 
 protocol SearchInactiveViewDelegate: AnyObject {
     func didTapCell(_: SearchInactiveView, indexPath: IndexPath)
@@ -14,6 +17,11 @@ protocol SearchInactiveViewDelegate: AnyObject {
 
 class SearchInactiveView: UIView {
     
+    private let disposeBag = DisposeBag()
+    var viewModel: MusicalViewModel
+    private lazy var input = MusicalViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
+        
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
@@ -29,17 +37,20 @@ class SearchInactiveView: UIView {
     
     weak var delegate: SearchInactiveViewDelegate?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: MusicalViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setUI()
         setAutoLayout()
         selectPlatformButton(interparkButton)
+        
+        input.getPopularMusicals.onNext(.interpark)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setUI() {
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
@@ -66,11 +77,45 @@ class SearchInactiveView: UIView {
         yes24Button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         yes24Button.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
         
-        popularTableView.delegate = self
-        popularTableView.dataSource = self
         popularTableView.register(MusicalPopularTableViewCell.self,
                                   forCellReuseIdentifier: MusicalPopularTableViewCell.identifier)
         popularTableView.rowHeight = 184
+        
+        let dataSource = RxTableViewSectionedReloadDataSource<MusicalsSection> {
+            dataSource, tableView, indexPath, item  in
+            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalPopularTableViewCell.identifier, for: indexPath) as! MusicalPopularTableViewCell
+            cell.cellData.onNext(item)
+            return cell
+        }
+        
+        output.bindPopularMusicals
+            .bind(to: popularTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+        popularTableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.delegate?.didTapCell(self!, indexPath: indexPath)
+                self?.popularTableView.deselectRow(at: indexPath, animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        interparkButton.rx.tap
+            .subscribe(onNext:  { [weak self] in
+                self?.input.getPopularMusicals.onNext(.interpark)
+            })
+            .disposed(by: disposeBag)
+        
+        melonButton.rx.tap
+            .subscribe(onNext:  { [weak self] in
+                self?.input.getPopularMusicals.onNext(.melon)
+            })
+            .disposed(by: disposeBag)
+        
+        yes24Button.rx.tap
+            .subscribe(onNext:  { [weak self] in
+                self?.input.getPopularMusicals.onNext(.yes24)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setAutoLayout() {
@@ -154,28 +199,5 @@ class SearchInactiveView: UIView {
             sender.layer.cornerRadius = 16
             sender.backgroundColor = .white
         }
-    }
-}
-
-// MARK: - popularTableView
-
-extension SearchInactiveView: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: MusicalPopularTableViewCell.identifier, for: indexPath) as! MusicalPopularTableViewCell
-
-        cell.musicalImageView.image = UIImage(named: "opera")
-
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didTapCell(self, indexPath: indexPath)
-        
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
