@@ -79,6 +79,8 @@ class SearchReadyView: UIView {
         collectionView.dataSource = self
         collectionView.register(RecentlyViewdCollectionViewCell.self, forCellWithReuseIdentifier: RecentlyViewdCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
+        
+        
     }
     
     private func setAutoLayout() {

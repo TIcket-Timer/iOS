@@ -34,6 +34,7 @@ class SearchInactiveView: UIView {
     private let yes24Button = UIButton()
     
     private let popularTableView = UITableView()
+    private let popularTableViewRowHeight: CGFloat = 200
     
     weak var delegate: SearchInactiveViewDelegate?
     
@@ -77,13 +78,13 @@ class SearchInactiveView: UIView {
         yes24Button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         yes24Button.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
         
-        popularTableView.register(MusicalPopularTableViewCell.self,
-                                  forCellReuseIdentifier: MusicalPopularTableViewCell.identifier)
-        popularTableView.rowHeight = 184
+        popularTableView.register(MusicalTableViewCell.self,
+                                  forCellReuseIdentifier: MusicalTableViewCell.identifier)
+        popularTableView.rowHeight = popularTableViewRowHeight
         
         let dataSource = RxTableViewSectionedReloadDataSource<MusicalsSection> {
             dataSource, tableView, indexPath, item  in
-            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalPopularTableViewCell.identifier, for: indexPath) as! MusicalPopularTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalTableViewCell.identifier, for: indexPath) as! MusicalTableViewCell
             cell.cellData.onNext(item)
             return cell
         }
@@ -168,8 +169,8 @@ class SearchInactiveView: UIView {
         popularTableView.snp.makeConstraints { make in
             make.top.equalTo(platformButtonContainer.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-12)
-            make.height.equalTo(184 * 10)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(popularTableViewRowHeight * 10)
         }
     }
     

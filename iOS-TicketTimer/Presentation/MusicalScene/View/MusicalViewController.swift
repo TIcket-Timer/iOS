@@ -13,12 +13,10 @@ class MusicalViewController: UIViewController {
     private let viewModel = MusicalViewModel()
     private lazy var searchInactiveView = SearchInactiveView(viewModel: viewModel)
     private lazy var searchReadyView = SearchReadyView()
-    private lazy var searchResultView = SearchResultView()
+    private lazy var searchResultView = SearchResultView(viewModel: viewModel)
+    private lazy var searchAllResultsView = SearchAllResultsView(viewModel: viewModel)
     
     private let searchController = UISearchController()
-
-    
-    
     private var searchQuery = ""
     
     private var isActiveSearch: Bool {
@@ -52,6 +50,7 @@ class MusicalViewController: UIViewController {
         searchInactiveView.delegate = self
         searchReadyView.delegate = self
         searchResultView.delegate = self
+        searchAllResultsView.delegate = self
     }
 
     private func setAutoLayout() {
@@ -103,6 +102,7 @@ extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func deleteSearchView() {
         searchReadyView.removeFromSuperview()
         searchResultView.removeFromSuperview()
+        searchAllResultsView.removeFromSuperview()
     }
 }
 
@@ -121,12 +121,45 @@ extension MusicalViewController: SearchReadyViewDelegate {
 }
 
 extension MusicalViewController: SearchResultViewDelegate {
-    func didTapCell(_: SearchResultView, indexPath: IndexPath) {
+    func didTapCell(_ : SearchResultView,indexPath: IndexPath) {
         let vc = MusicalDetailViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func didTapAlarmSetting() {
+    func didTapAlarmSetting(_: SearchResultView, indexPath: IndexPath) {
+        let vc = AlarmSettingViewController(platform: .interpark)
+        vc.navigationItem.title = "알람 설정"
+        
+        let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.modalPresentationStyle = .automatic
+        
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+        }
+        
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
+    func didTapShowAllResults(resultType: ShowAllResultsType) {
+        searchAllResultsView.type = resultType
+        searchAllResultsView.resetFilter()
+        
+        self.view.addSubview(searchAllResultsView)
+        searchAllResultsView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+    }
+}
+
+extension MusicalViewController: SearchAllResultsViewDelegate {
+    func didTapCell(_ : SearchAllResultsView, indexPath: IndexPath) {
+        func didTapCell(indexPath: IndexPath) {
+            let vc = MusicalDetailViewController()
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func didTapAlarmSetting(_ : SearchAllResultsView, indexPath: IndexPath) {
         let vc = AlarmSettingViewController(platform: .interpark)
         vc.navigationItem.title = "알람 설정"
         
