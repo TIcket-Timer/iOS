@@ -7,10 +7,13 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 class MusicalViewController: UIViewController {
     
+    private let disposeBag = DisposeBag()
     private let viewModel = MusicalViewModel()
+    
     private lazy var searchInactiveView = SearchInactiveView(viewModel: viewModel)
     private lazy var searchReadyView = SearchReadyView()
     private lazy var searchResultView = SearchResultView(viewModel: viewModel)
@@ -108,21 +111,24 @@ extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
 extension MusicalViewController: SearchInactiveViewDelegate {
     func didTapCell(_: SearchInactiveView, indexPath: IndexPath) {
-        let vc = MusicalDetailViewController()
+        guard let musical = viewModel.selectedMusical else { return }
+        let vc = MusicalDetailViewController(musical: musical)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension MusicalViewController: SearchReadyViewDelegate {
     func didTapCell(_: SearchReadyView, indexPath: IndexPath) {
-        let vc = MusicalDetailViewController()
+        guard let musical = viewModel.selectedMusical else { return }
+        let vc = MusicalDetailViewController(musical: musical)
         navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension MusicalViewController: SearchResultViewDelegate {
     func didTapCell(_ : SearchResultView,indexPath: IndexPath) {
-        let vc = MusicalDetailViewController()
+        guard let musical = viewModel.selectedMusical else { return }
+        let vc = MusicalDetailViewController(musical: musical)
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -154,7 +160,8 @@ extension MusicalViewController: SearchResultViewDelegate {
 extension MusicalViewController: SearchAllResultsViewDelegate {
     func didTapCell(_ : SearchAllResultsView, indexPath: IndexPath) {
         func didTapCell(indexPath: IndexPath) {
-            let vc = MusicalDetailViewController()
+            guard let musical = viewModel.selectedMusical else { return }
+            let vc = MusicalDetailViewController(musical: musical)
             navigationController?.pushViewController(vc, animated: true)
         }
     }

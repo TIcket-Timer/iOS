@@ -190,7 +190,9 @@ extension SearchResultView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didTapCell(self, indexPath: indexPath)
+        if tableView == musicalTableView {
+            delegate?.didTapCell(self, indexPath: indexPath)
+        }
         
         tableView.deselectRow(at: indexPath, animated: true)
     }

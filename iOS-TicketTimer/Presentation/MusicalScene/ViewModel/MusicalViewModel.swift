@@ -13,6 +13,9 @@ class MusicalViewModel: ViewModelType {
     private let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .default)
     private let musicalService = MusicalService.shared
     
+    var musicalsSection = MusicalsSection(items: [])
+    var selectedMusical: Musicals? = nil
+    
     struct Input {
         var getPopularMusicals = PublishSubject<Platform>()
     }
@@ -44,7 +47,7 @@ class MusicalViewModel: ViewModelType {
                 }
             })
             .disposed(by: disposeBag)
-        
+
         return output
     }
 }

@@ -55,11 +55,11 @@ class SearchInactiveView: UIView {
     private func setUI() {
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
-
+        
         popularMusicalLabel.text = "인기공연 TOP 10"
         popularMusicalLabel.textColor = .gray100
         popularMusicalLabel.font = .systemFont(ofSize: 15, weight: .bold)
-
+        
         platformButtonContainer.backgroundColor = .gray20
         platformButtonContainer.layer.cornerRadius = 16
         
@@ -67,7 +67,7 @@ class SearchInactiveView: UIView {
         interparkButton.setTitleColor(.gray80, for: .normal)
         interparkButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         interparkButton.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
-
+        
         melonButton.setTitle("멜론", for: .normal)
         melonButton.setTitleColor(.gray80, for: .normal)
         melonButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
@@ -77,28 +77,6 @@ class SearchInactiveView: UIView {
         yes24Button.setTitleColor(.gray80, for: .normal)
         yes24Button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         yes24Button.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
-        
-        popularTableView.register(MusicalTableViewCell.self,
-                                  forCellReuseIdentifier: MusicalTableViewCell.identifier)
-        popularTableView.rowHeight = popularTableViewRowHeight
-        
-        let dataSource = RxTableViewSectionedReloadDataSource<MusicalsSection> {
-            dataSource, tableView, indexPath, item  in
-            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalTableViewCell.identifier, for: indexPath) as! MusicalTableViewCell
-            cell.cellData.onNext(item)
-            return cell
-        }
-        
-        output.bindPopularMusicals
-            .bind(to: popularTableView.rx.items(dataSource: dataSource))
-            .disposed(by: disposeBag)
-        
-        popularTableView.rx.itemSelected
-            .subscribe(onNext: { [weak self] indexPath in
-                self?.delegate?.didTapCell(self!, indexPath: indexPath)
-                self?.popularTableView.deselectRow(at: indexPath, animated: true)
-            })
-            .disposed(by: disposeBag)
         
         interparkButton.rx.tap
             .subscribe(onNext:  { [weak self] in
@@ -117,6 +95,45 @@ class SearchInactiveView: UIView {
                 self?.input.getPopularMusicals.onNext(.yes24)
             })
             .disposed(by: disposeBag)
+        
+        popularTableView.register(MusicalTableViewCell.self,
+                                  forCellReuseIdentifier: MusicalTableViewCell.identifier)
+        popularTableView.rowHeight = popularTableViewRowHeight
+        
+        let dataSource = RxTableViewSectionedReloadDataSource<MusicalsSection> {
+            dataSource, tableView, indexPath, item  in
+            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalTableViewCell.identifier, for: indexPath) as! MusicalTableViewCell
+            cell.cellData.onNext(item)
+            return cell
+        }
+        
+        output.bindPopularMusicals
+            .bind(to: popularTableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+        
+//        popularTableView.rx.itemSelected
+//            .subscribe(onNext: { [weak self] indexPath in
+//                self?.delegate?.didTapCell(self!, indexPath: indexPath)
+//                self?.popularTableView.deselectRow(at: indexPath, animated: true)
+//            })
+//            .disposed(by: disposeBag)
+//
+//        popularTableView.rx.modelSelected(Musicals.self)
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] musical in
+//                self?.viewModel.selectedMusical = musical
+//            })
+//            .disposed(by: disposeBag)
+        
+        Observable.zip(
+            popularTableView.rx.itemSelected,
+            popularTableView.rx.modelSelected(Musicals.self)
+        )
+        .bind { [weak self] indexPath, item in
+            self?.viewModel.selectedMusical = item
+            self?.delegate?.didTapCell(self!, indexPath: indexPath)
+            self?.popularTableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 
     private func setAutoLayout() {

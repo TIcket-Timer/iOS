@@ -233,6 +233,17 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8F1AFF082ADD05AD00972CFC /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */,
+				8FA034922AD3E258001FEC71 /* SearchReadyView.swift */,
+				8FA034942AD3E258001FEC71 /* SearchResultView.swift */,
+				8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		8F33E9262AD4D54400B7AD21 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,11 +473,8 @@
 			isa = PBXGroup;
 			children = (
 				8F70CD142AD00CEC00586847 /* Cell */,
+				8F1AFF082ADD05AD00972CFC /* Search */,
 				9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */,
-				8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */,
-				8FA034922AD3E258001FEC71 /* SearchReadyView.swift */,
-				8FA034942AD3E258001FEC71 /* SearchResultView.swift */,
-				8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */,
 				8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */,
 				8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */,
 			);
