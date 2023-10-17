@@ -14,7 +14,6 @@ class MusicalTableViewCell: UITableViewCell {
     static let identifier = "MusicalTableViewCell"
     
     let cellData = PublishSubject<Musicals>()
-    private let main = MainScheduler.instance
     private var disposeBag = DisposeBag()
 
     let musicalImageView = UIImageView()
@@ -38,9 +37,8 @@ class MusicalTableViewCell: UITableViewCell {
     
     private func bindData() {
         cellData
-            .observe(on: main)
             .withUnretained(self)
-            .subscribe(onNext: { (self, data) in
+            .bind(onNext: { (self, data) in
                 self.titleLabel.text = data.title
                 self.placeLabel.text = data.place
                 self.dateLabel.text = data.startDate

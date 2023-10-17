@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 
 protocol SearchInactiveViewDelegate: AnyObject {
-    func didTapCell(_: SearchInactiveView, indexPath: IndexPath)
+    func didTapCell(_: SearchInactiveView)
 }
 
 class SearchInactiveView: UIView {
@@ -129,11 +129,12 @@ class SearchInactiveView: UIView {
             popularTableView.rx.itemSelected,
             popularTableView.rx.modelSelected(Musicals.self)
         )
-        .bind { [weak self] indexPath, item in
+        .subscribe(onNext: { [weak self] indexPath, item in
             self?.viewModel.selectedMusical = item
-            self?.delegate?.didTapCell(self!, indexPath: indexPath)
+            self?.delegate?.didTapCell(self!)
             self?.popularTableView.deselectRow(at: indexPath, animated: true)
-        }
+        })
+        .disposed(by: disposeBag)
     }
 
     private func setAutoLayout() {

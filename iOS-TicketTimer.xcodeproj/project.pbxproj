@@ -19,6 +19,7 @@
 		658C86782A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */; };
 		8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */; };
 		8F1AFF072ADCD6E700972CFC /* SearchAllResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */; };
+		8F1AFF0A2ADE16D200972CFC /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */; };
 		8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */; };
 		8F33E9282AD4D55500B7AD21 /* PlatformLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9272AD4D55500B7AD21 /* PlatformLabel.swift */; };
 		8F33E92B2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92A2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift */; };
@@ -96,6 +97,7 @@
 		6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllResultsView.swift; sourceTree = "<group>"; };
+		8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
 		8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		8F33E9272AD4D55500B7AD21 /* PlatformLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformLabel.swift; sourceTree = "<group>"; };
 		8F33E92A2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorAssests.swift"; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 			children = (
 				9AB92BF92ACC4D61002C4B0A /* AuthService.swift */,
 				9A00CD922AD12BDA00E9813F /* MusicalService.swift */,
+				8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */,
 				8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */,
 				9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */,
+				8F1AFF0A2ADE16D200972CFC /* UserDefaultService.swift in Sources */,
 				9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */,
 				8F33E9312AD4EAC200B7AD21 /* NoticeTableViewCell.swift in Sources */,
 				658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */,

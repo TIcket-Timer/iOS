@@ -12,7 +12,7 @@ import RxCocoa
 import RxDataSources
 
 protocol SearchResultViewDelegate: AnyObject {
-    func didTapCell(_ : SearchResultView, indexPath: IndexPath)
+    func didTapCell(_ : SearchResultView)
     func didTapAlarmSetting(_ : SearchResultView, indexPath: IndexPath)
     func didTapShowAllResults(resultType: ShowAllResultsType)
 }
@@ -191,7 +191,7 @@ extension SearchResultView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == musicalTableView {
-            delegate?.didTapCell(self, indexPath: indexPath)
+            delegate?.didTapCell(self)
         }
         
         tableView.deselectRow(at: indexPath, animated: true)

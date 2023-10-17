@@ -11,11 +11,34 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
+struct SearchHistorySection {
+    var items: [Item]
+    
+    init(items: [Item]) {
+        self.items = items
+    }
+}
+
+extension SearchHistorySection: SectionModelType {
+    typealias Item = String
+    
+    init(original: SearchHistorySection, items: [String]) {
+        self = original
+        self.items = items
+    }
+}
+
 protocol SearchReadyViewDelegate: AnyObject {
-    func didTapCell(_: SearchReadyView, indexPath: IndexPath)
+    func didTapCell(_: SearchReadyView)
+    func didTapHistoryButton(_: SearchReadyView, history: String)
 }
 
 class SearchReadyView: UIView {
+    
+    private let disposeBag = DisposeBag()
+    var viewModel: MusicalViewModel
+    private lazy var input = MusicalViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -23,9 +46,6 @@ class SearchReadyView: UIView {
     private let recentlyResearchedLabel = UILabel()
     private let tableView = UITableView()
     private var tableViewHeightConstraint: Constraint?
-    private var tableViewNumberOfRow: Int {
-        return max(1, min(searchList.count, 5))
-    }
     
     private let recentlyViewedLabel = UILabel()
     private let flowLayout = UICollectionViewFlowLayout()
@@ -33,15 +53,9 @@ class SearchReadyView: UIView {
     
     weak var delegate: SearchReadyViewDelegate?
     
-    var searchList: [String] = ["오페라10", "오페라9", "오페라8", "오페라7", "오페라6", "오페라5", "오페라4", "오페라3", "오페라2", "오페라1"] {
-        didSet {
-            tableView.reloadData()
-            updateTableViewHeight()
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: MusicalViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         setUI()
         setAutoLayout()
     }
@@ -50,6 +64,12 @@ class SearchReadyView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        self.input.getSearchHistory.onNext([])
+        self.input.getMuscialHistory.onNext([])
+    }
+        
     private func setUI() {
         self.backgroundColor = .white
         
@@ -60,14 +80,41 @@ class SearchReadyView: UIView {
         recentlyResearchedLabel.text = "최근 검색어"
         recentlyResearchedLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         
-        tableView.delegate = self
-        tableView.dataSource = self
         tableView.register(RecentlyResearchedTableViewCell.self,
                                   forCellReuseIdentifier: RecentlyResearchedTableViewCell.identifier)
         tableView.rowHeight = 30
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         
+        let tableViewDataSource = RxTableViewSectionedReloadDataSource<SearchHistorySection> {
+            dataSource, tableView, indexPath, item  in
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: RecentlyResearchedTableViewCell.identifier, for: indexPath) as! RecentlyResearchedTableViewCell
+            
+            cell.cellData.onNext(item)
+            
+            cell.historyButtonAction = {
+                self.delegate?.didTapHistoryButton(self, history: item)
+            }
+            
+            cell.deleteButtonAction = { [weak self] in
+                self?.viewModel.deleteSearchHistory(query: item)
+                self?.input.getSearchHistory.onNext([])
+            }
+            
+            cell.selectionStyle = .none
+            
+            return cell
+        }
+        
+        output.bindSearchHistory
+            .do { [weak self] sections in
+                let newHeight = max(30, sections[0].items.count * 30)
+                self?.tableViewHeightConstraint?.update(offset: newHeight)
+            }
+            .bind(to: tableView.rx.items(dataSource: tableViewDataSource))
+            .disposed(by: disposeBag)
+                
         recentlyViewedLabel.text = "최근 본 상품"
         recentlyViewedLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
 
@@ -75,12 +122,29 @@ class SearchReadyView: UIView {
         flowLayout.itemSize = CGSize(width: 120, height: 160)
         flowLayout.minimumLineSpacing = 12
         
-        collectionView.delegate = self
-        collectionView.dataSource = self
         collectionView.register(RecentlyViewdCollectionViewCell.self, forCellWithReuseIdentifier: RecentlyViewdCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         
+        let collectionViewDataSource = RxCollectionViewSectionedReloadDataSource<MusicalsSection> {
+            dataSource, collectionView, indexPath, item  in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentlyViewdCollectionViewCell.identifier, for: indexPath) as! RecentlyViewdCollectionViewCell
+            cell.cellData.onNext(item)
+            return cell
+        }
         
+        output.bindMuscialHistory
+            .bind(to: collectionView.rx.items(dataSource: collectionViewDataSource))
+            .disposed(by: disposeBag)
+        
+        collectionView.rx.modelSelected(Musicals.self)
+            .subscribe(onNext: { [weak self] item in
+                guard let self = self else { return }
+                self.viewModel.selectedMusical = item
+                self.input.getMuscialHistory.onNext([])
+                self.delegate?.didTapCell(self)
+                self.collectionView.setContentOffset(.zero, animated: false)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setAutoLayout() {
@@ -106,8 +170,7 @@ class SearchReadyView: UIView {
             make.top.equalTo(recentlyResearchedLabel.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(30 * tableViewNumberOfRow)
-            tableViewHeightConstraint = make.height.equalTo(30 * tableViewNumberOfRow).constraint
+            tableViewHeightConstraint = make.height.equalTo(0).constraint
         }
 
         recentlyViewedLabel.snp.makeConstraints { make in
@@ -123,57 +186,5 @@ class SearchReadyView: UIView {
             make.height.equalTo(160)
         }
     }
-    
-    private func updateTableViewHeight() {
-        tableViewHeightConstraint?.update(offset: 30 * tableViewNumberOfRow)
-        layoutIfNeeded()
-    }
 }
 
-// MARK: - recentlyResearchedTableView
-
-extension SearchReadyView: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewNumberOfRow
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: RecentlyResearchedTableViewCell.identifier, for: indexPath) as! RecentlyResearchedTableViewCell
-
-        cell.selectionStyle = .none
-        
-        if searchList.isEmpty {
-            cell.recentlySearchedTextLabel.text = "검색 내역이 없습니다."
-            cell.deleteButton.isHidden = true
-        } else {
-            cell.recentlySearchedTextLabel.text = searchList[indexPath.row]
-            cell.deleteButton.isHidden = false
-            cell.deleteButtonAction = {
-                self.searchList.remove(at: indexPath.row)
-            }
-        }
-        
-        return cell
-    }
-}
-
-// MARK: - recentlyViewdCollectionView
-
-extension SearchReadyView: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentlyViewdCollectionViewCell.identifier, for: indexPath) as! RecentlyViewdCollectionViewCell
-        
-        cell.imageView.image = UIImage(named: "opera")
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.didTapCell(self, indexPath: indexPath)
-    }
-}

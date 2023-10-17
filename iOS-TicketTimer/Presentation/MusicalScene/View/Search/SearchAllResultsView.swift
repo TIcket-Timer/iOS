@@ -17,7 +17,7 @@ enum ShowAllResultsType {
 }
 
 protocol SearchAllResultsViewDelegate: AnyObject {
-    func didTapCell(_ : SearchAllResultsView, indexPath: IndexPath)
+    func didTapCell(_ : SearchAllResultsView)
     func didTapAlarmSetting(_ : SearchAllResultsView, indexPath: IndexPath)
 }
 
@@ -236,7 +236,7 @@ extension SearchAllResultsView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didTapCell(self, indexPath: indexPath)
+        delegate?.didTapCell(self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

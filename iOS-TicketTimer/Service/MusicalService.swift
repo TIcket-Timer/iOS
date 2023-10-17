@@ -111,7 +111,7 @@ class MusicalService {
             "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
         ]
         
-        return Observable.create { observer in
+        return Observable.create { observer -> Disposable in
             AF.request(url, headers: header)
                 .responseDecodable(of: Response<[Musicals]>.self) { response in
                     switch response.result {

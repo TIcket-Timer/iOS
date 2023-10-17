@@ -7,28 +7,27 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import Kingfisher
 
 class RecentlyViewdCollectionViewCell: UICollectionViewCell {
     static let identifier = "RecentlyViewdCollectionViewCell"
     
+    let cellData = PublishSubject<Musicals>()
+    private var disposeBag = DisposeBag()
+    
     let imageView = UIImageView()
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setUI()
-    }
-    
     override init(frame: CGRect) {
-        super.init(frame: .zero)
-        setUI()
+        super.init(frame: frame)
+        configure()
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        imageView.image = nil
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    private func setUI() {
+    private func configure() {
         contentView.addSubviews([imageView])
     
         imageView.layer.masksToBounds = false
@@ -41,5 +40,12 @@ class RecentlyViewdCollectionViewCell: UICollectionViewCell {
             $0.width.equalTo(120)
             $0.height.equalTo(160)
         }
+        
+        cellData
+            .bind(onNext: { [weak self] item in
+                let url = URL(string: item.posterUrl ?? "")
+                self?.imageView.kf.setImage(with: url)
+            })
+            .disposed(by: disposeBag)
     }
 }
