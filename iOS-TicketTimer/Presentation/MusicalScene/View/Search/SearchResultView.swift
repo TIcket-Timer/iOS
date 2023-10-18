@@ -94,9 +94,7 @@ class SearchResultView: UIView {
                 self?.noticeResultLable.text = sections[0].items.isEmpty
                 ? "오픈공지 검색결과가 없습니다."
                 : "오픈공지 검색결과"
-                self?.noticeResultShowAllButton.isHidden = sections[0].items.count <= 2
-                ? true
-                : false
+                self?.noticeResultShowAllButton.isHidden = sections[0].items.count < 2
             }
             .bind(to: noticeTableView.rx.items(dataSource: noticeDataSoure))
             .disposed(by: disposeBag)
@@ -130,9 +128,7 @@ class SearchResultView: UIView {
                 self?.musicalResultLable.text = sections[0].items.isEmpty
                 ? "공연상세 검색결과가 없습니다."
                 : "공연상세 검색결과"
-                self?.musicalResultShowAllButton.isHidden = sections[0].items.count <= 2
-                ? true
-                : false
+                self?.musicalResultShowAllButton.isHidden = sections[0].items.count < 2
             }
             .bind(to: musicalTableView.rx.items(dataSource: musicalDataSource))
             .disposed(by: disposeBag)

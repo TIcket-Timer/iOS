@@ -37,6 +37,10 @@ class MusicalViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "검색"
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        searchController.isActive = false
+    }
 
     private func setUI() {
         self.view.backgroundColor = .white
@@ -61,14 +65,12 @@ class MusicalViewController: UIViewController {
 
 // MARK: - SearchController
 
-extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
+extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-        if isReadySearch  {
-            updateView(type: .ready)
-        }
-        
-        if searchController.searchBar.text == "" {
-            searchResultView.removeFromSuperview()
+        if isReadySearch {
+            if searchReadyView.superview == nil {
+                updateView(type: .ready)
+            }
         }
     }
     

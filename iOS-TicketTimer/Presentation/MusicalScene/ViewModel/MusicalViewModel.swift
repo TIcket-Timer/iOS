@@ -116,6 +116,7 @@ class MusicalViewModel: ViewModelType {
             .observe(on: MainScheduler.instance)
             .flatMap { query -> Observable<Response<[Musicals]>> in
                 return self.musicalService.searchMusicalsWithAllSites(query: query)
+                //return self.musicalService.getPopularMusicals(platform: .interpark)
             }
             .subscribe { response in
                 print("[\(response.code)] \(response.message)")
@@ -171,10 +172,15 @@ class MusicalViewModel: ViewModelType {
     }
     
     func showMusicalDetailViewController(viewController: UIViewController) {
+        viewController.navigationItem.searchController?.isActive = false
+        
         guard let musical = self.selectedMusical else { return }
-        let vc = MusicalDetailViewController(musical: musical)
-        viewController.navigationController?.pushViewController(vc, animated: true)
         self.updateViewdMusicalHistory(musical: musical)
+        let vc = MusicalDetailViewController(musical: musical)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            viewController.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func presentAlarmSettingViewController(viewController: UIViewController, at: Int) {

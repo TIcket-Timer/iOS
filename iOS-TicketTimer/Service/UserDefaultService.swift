@@ -16,7 +16,6 @@ class UserDefaultService {
             if let searchHistory = UserDefaults.standard.array(forKey: "searchHistory") as? [String] {
                 if !searchHistory.isEmpty {
                     observer.onNext(searchHistory)
-                    print("[searchHistory 가져오기] \(searchHistory)")
                 } else {
                     observer.onNext(["검색 내역이 없습니다."])
                 }
@@ -38,7 +37,6 @@ class UserDefaultService {
         }
         
         UserDefaults.standard.set(searchHistory, forKey: "searchHistory")
-        print("[searchHistory 추가] \(searchHistory)")
     }
     
     //MARK: - 최근 검색기록 삭제
@@ -48,7 +46,6 @@ class UserDefaultService {
         searchHistory.removeAll(where: { $0 == query })
         
         UserDefaults.standard.set(searchHistory, forKey: "searchHistory")
-        print("[searchHistory 삭제] \(searchHistory)")
     }
     	
     //MARK: - 최근 본 뮤지컬 가져오기
