@@ -21,16 +21,25 @@ class MusicalViewModel: ViewModelType {
         }
     }
     
+    var query = ""
+    
     struct Input {
         var getPopularMusicals = PublishSubject<Platform>()
         var getSearchHistory = PublishSubject<[SearchHistorySection]>()
         var getMuscialHistory = PublishSubject<[MusicalsSection]>()
+        var getNoticSearch = PublishSubject<String>()
+        var getMusicalSearch = PublishSubject<String>()
+        var getMusicalSearchWithSite = PublishSubject<(Platform, String)>()
     }
     
     struct Output {
         var bindPopularMusicals = PublishSubject<[MusicalsSection]>()
         var bindSearchHistory = PublishSubject<[SearchHistorySection]>()
         var bindMuscialHistory = PublishSubject<[MusicalsSection]>()
+        var bindNoticeLimitedSearch = PublishSubject<[MusicalNoticeSection]>()
+        var bindNoticeAllSearch = PublishSubject<[MusicalNoticeSection]>()
+        var bindMusicalLimitedSearch = PublishSubject<[MusicalsSection]>()
+        var bindMusicalAllSearch = PublishSubject<[MusicalsSection]>()
     }
     
     func transform(input: Input) -> Output {
@@ -79,12 +88,75 @@ class MusicalViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
+        input.getNoticSearch
+            .observe(on: MainScheduler.instance)
+            .flatMap { query -> Observable<Response<[MusicalNotice]>> in
+                return self.musicalService.searchMusicalNotices(query: query)
+            }
+            .subscribe { response in
+                print("[\(response.code)] \(response.message)")
+                
+                if response.code == 200 {
+                    guard let result = response.result else { return }
+                    
+                    var limited = MusicalNoticeSection(items: [])
+                    limited.items.append(contentsOf: result.prefix(2))
+                    output.bindNoticeLimitedSearch.onNext([limited])
+                    
+                    var all = MusicalNoticeSection(items: [])
+                    all.items.append(contentsOf: result)
+                    output.bindNoticeAllSearch.onNext([all])
+                } else {
+                    print("[status code is not 200]")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        input.getMusicalSearch
+            .observe(on: MainScheduler.instance)
+            .flatMap { query -> Observable<Response<[Musicals]>> in
+                return self.musicalService.searchMusicalsWithAllSites(query: query)
+            }
+            .subscribe { response in
+                print("[\(response.code)] \(response.message)")
+                
+                if response.code == 200 {
+                    guard let result = response.result else { return }
+                    
+                    var limited = MusicalsSection(items: [])
+                    limited.items.append(contentsOf: result.prefix(2))
+                    output.bindMusicalLimitedSearch.onNext([limited])
+                    
+                    var all = MusicalsSection(items: [])
+                    all.items.append(contentsOf: result)
+                    output.bindMusicalAllSearch.onNext([all])
+                } else {
+                    print("[status code is not 200]")
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        input.getMusicalSearchWithSite
+            .observe(on: MainScheduler.instance)
+            .flatMap { site, query -> Observable<Response<[Musicals]>> in
+                return self.musicalService.searchMusicalsWithSite(platform: site, query: query)
+            }
+            .subscribe { response in
+                print("[\(response.code)] \(response.message)")
+                
+                if response.code == 200 {
+                    guard let result = response.result else { return }
+                    var section = MusicalsSection(items: [])
+                    section.items.append(contentsOf: result)
+                    output.bindMusicalAllSearch.onNext([section])
+                } else {
+                    print("[status code is not 200]")
+                }
+            }
+            .disposed(by: disposeBag)
+        
         return output
     }
-    
-//    func getSearchHistory() -> [String] {
-//        return userDefaultService.getSearchHistory()
-//    }
     
     func addSearchHistory(query: String) {
         userDefaultService.addSearchHistory(query: query)
@@ -93,11 +165,6 @@ class MusicalViewModel: ViewModelType {
     func deleteSearchHistory(query: String) {
         userDefaultService.deleteSearchHistory(query: query)
     }
-    
-//    func getMusicalHistory() -> [Musicals] {
-//        let musicals = userDefaultService.getMusicalHistory()
-//        return userDefaultService.getMusicalHistory()
-//    }
     
     func updateViewdMusicalHistory(musical: Musicals) {
         userDefaultService.updateMusicalHistory(musical: musical)

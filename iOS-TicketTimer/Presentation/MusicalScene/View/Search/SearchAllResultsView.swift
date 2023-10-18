@@ -11,11 +11,6 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-enum ShowAllResultsType {
-    case notice
-    case musical
-}
-
 protocol SearchAllResultsViewDelegate: AnyObject {
     func didTapCell(_ : SearchAllResultsView)
     func didTapAlarmSetting(_ : SearchAllResultsView, indexPath: IndexPath)
@@ -23,7 +18,12 @@ protocol SearchAllResultsViewDelegate: AnyObject {
 
 class SearchAllResultsView: UIView {
     
-    var type: ShowAllResultsType? = nil {
+    private let disposeBag = DisposeBag()
+    var viewModel: MusicalViewModel
+    private lazy var input = MusicalViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
+    
+    var type: SearchType? = nil {
         didSet {
             self.updateAutoLayout()
         }
@@ -34,28 +34,38 @@ class SearchAllResultsView: UIView {
     
     private let filterButton = UIButton()
     private let filterView = FilterView()
-    private var selectedPlatforms: [Platform] = Platform.allCases
+    private var selectedPlatforms: Platform? = nil
     
-    private let numberOfNoticeResult = 0
     private let noticeResultLable = UILabel()
     private let noticeTableView = UITableView()
-    private let noticeTableViewRowHeight: CGFloat = 72
+    private var noticeTableViewHeightConstraint: Constraint?
     
-    private let numberOfMusicalResult = 0
     private let musicalResultLable = UILabel()
     private let musicalTableView = UITableView()
-    private let musicalTableViewRowHeight: CGFloat = 200
+    private var musicalTableViewHeightConstraint: Constraint?
     
     weak var delegate: SearchAllResultsViewDelegate?
     
     init(viewModel: MusicalViewModel) {
+        self.viewModel = viewModel
         super.init(frame: .zero)
         setUI()
         setAutoLayout()
+        setFilter()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        let query = viewModel.query
+        if type == .notice {
+            input.getNoticSearch.onNext(query)
+        } else if type == .musical {
+            input.getMusicalSearch.onNext(query)
+        }
     }
     
     private func setUI() {
@@ -64,43 +74,69 @@ class SearchAllResultsView: UIView {
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
         
-        filterButton.setTitle("전체", for: .normal)
-        filterButton.setTitleColor(.gray100, for: .normal)
-        filterButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .light)
-        let image = UIImage(systemName: "chevron.up", withConfiguration: imageConfig)
-        filterButton.setImage(image, for: .normal)
-        filterButton.tintColor = .gray100
-        filterButton.semanticContentAttribute = .forceRightToLeft
-        filterButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -10)
-        filterButton.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
-        
-        filterView.isHidden = true
-        filterView.filterAction = { [weak self] platforms in
-            self?.selectedPlatforms = platforms
-            self?.filterView.isHidden = true
-            self?.toggleFilterButtonArrow()
-        }
-        
-        noticeResultLable.text = "오픈공지 검색결과 \(numberOfMusicalResult)건"
+        noticeResultLable.text = "오픈공지 검색결과 0건"
         noticeResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         
-        noticeTableView.delegate = self
-        noticeTableView.dataSource = self
         noticeTableView.register(NoticeTableViewCell.self,
                                   forCellReuseIdentifier: NoticeTableViewCell.identifier)
-        noticeTableView.rowHeight = noticeTableViewRowHeight
+        noticeTableView.rowHeight = 72
         noticeTableView.isScrollEnabled = false
         
-        musicalResultLable.text = "공연 상세 검색결과 \(numberOfMusicalResult)건"
+        let noticeDataSoure = RxTableViewSectionedReloadDataSource<MusicalNoticeSection> {
+            dataSource, tableView, indexPath, item  in
+            let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
+            cell.cellData.onNext(item)
+            cell.alarmSettingButtonAction = {
+                self.delegate?.didTapAlarmSetting(self, indexPath: indexPath)
+            }
+            return cell
+        }
+        
+        output.bindNoticeAllSearch
+            .do { [weak self] sections in
+                let newHeight = sections[0].items.count * 72
+                self?.noticeTableViewHeightConstraint?.update(offset: newHeight)
+                self?.noticeResultLable.text = "오픈공지 검색결과 \(sections[0].items.count)건"
+            }
+            .bind(to: noticeTableView.rx.items(dataSource: noticeDataSoure))
+            .disposed(by: disposeBag)
+        
+        musicalResultLable.text = "공연상세 검색결과 0건"
         musicalResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         
-        musicalTableView.delegate = self
-        musicalTableView.dataSource = self
         musicalTableView.register(MusicalTableViewCell.self,
                                   forCellReuseIdentifier: MusicalTableViewCell.identifier)
-        musicalTableView.rowHeight = musicalTableViewRowHeight
+        musicalTableView.rowHeight = 200
         musicalTableView.isScrollEnabled = false
+        
+        let musicalDataSource = RxTableViewSectionedReloadDataSource<MusicalsSection> {
+            dataSource, tableView, indexPath, item  in
+            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalTableViewCell.identifier, for: indexPath) as! MusicalTableViewCell
+            cell.cellData.onNext(item)
+            return cell
+        }
+        
+        output.bindMusicalAllSearch
+            .observe(on: MainScheduler.instance)
+            .do { [weak self] sections in
+                let newHeight = sections[0].items.count * 200
+                self?.musicalTableViewHeightConstraint?.update(offset: newHeight)
+                self?.musicalResultLable.text = "공연상세 검색결과 \(sections[0].items.count)건"
+            }
+            .bind(to: musicalTableView.rx.items(dataSource: musicalDataSource))
+            .disposed(by: disposeBag)
+        
+        Observable.zip(
+            musicalTableView.rx.itemSelected,
+            musicalTableView.rx.modelSelected(Musicals.self)
+        )
+        .subscribe(onNext: { [weak self] indexPath, item in
+            guard let self = self else { return }
+            self.viewModel.selectedMusical = item
+            self.delegate?.didTapCell(self)
+            self.musicalTableView.deselectRow(at: indexPath, animated: true)
+        })
+        .disposed(by: disposeBag)
     }
     
     private func setAutoLayout() {
@@ -116,25 +152,15 @@ class SearchAllResultsView: UIView {
             make.edges.equalToSuperview()
             make.width.equalToSuperview()
         }
-        
-        filterButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-24)
-        }
-
-        filterView.snp.makeConstraints { make in
-            make.top.equalTo(filterButton.snp.bottom).offset(16)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(140)
-        }
     }
     
     private func updateAutoLayout() {
         if type == .notice {
             musicalResultLable.removeFromSuperview()
             musicalTableView.removeFromSuperview()
+            filterButton.removeFromSuperview()
+            filterView.removeFromSuperview()
             contentView.addSubviews([noticeResultLable, noticeTableView])
-            contentView.addSubview(filterView)
 
             noticeResultLable.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(10)
@@ -145,12 +171,12 @@ class SearchAllResultsView: UIView {
                 make.top.equalTo(noticeResultLable.snp.bottom)
                 make.leading.trailing.equalToSuperview()
                 make.bottom.equalToSuperview()
-                make.height.equalTo(noticeTableViewRowHeight * 2)
+                noticeTableViewHeightConstraint = make.height.equalTo(0).constraint
             }
         } else if type == .musical {
             noticeResultLable.removeFromSuperview()
             noticeTableView.removeFromSuperview()
-            contentView.addSubviews([musicalResultLable, musicalTableView])
+            contentView.addSubviews([musicalResultLable, musicalTableView, filterButton])
             contentView.addSubview(filterView)
             
             musicalResultLable.snp.makeConstraints { make in
@@ -162,14 +188,83 @@ class SearchAllResultsView: UIView {
                 make.top.equalTo(musicalResultLable.snp.bottom).offset(8)
                 make.leading.trailing.equalToSuperview()
                 make.bottom.equalToSuperview()
-                make.height.equalTo(musicalTableViewRowHeight * 2)
+                musicalTableViewHeightConstraint = make.height.equalTo(0).constraint
+            }
+            
+            filterButton.snp.makeConstraints { make in
+                make.top.equalToSuperview().offset(10)
+                make.trailing.equalToSuperview().offset(-24)
+            }
+
+            filterView.snp.makeConstraints { make in
+                make.top.equalTo(filterButton.snp.bottom).offset(16)
+                make.leading.trailing.equalToSuperview()
+                make.height.equalTo(140)
             }
         }
     }
     
-    @objc func filterButtonTapped() {
-        filterView.isHidden.toggle()
-        toggleFilterButtonArrow()
+    private func setFilter() {
+        // filterButton
+        filterButton.setTitle("전체", for: .normal)
+        filterButton.setTitleColor(.gray100, for: .normal)
+        filterButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 12, weight: .light)
+        let image = UIImage(systemName: "chevron.up", withConfiguration: imageConfig)
+        filterButton.setImage(image, for: .normal)
+        filterButton.tintColor = .gray100
+        filterButton.semanticContentAttribute = .forceRightToLeft
+        filterButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -10)
+        
+        filterButton.rx.tap
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                self.filterView.isHidden.toggle()
+                self.toggleFilterButtonArrow()
+            }
+            .disposed(by: disposeBag)
+        
+        // filterView
+        //MARK: 사이트별 검색 필터 적용 후에 다시 필터 적용이 안되는 에러
+        filterView.isHidden = true
+        
+        filterView.allButton.rx.tap
+            .subscribe { _ in
+                print("전체 탭")
+                self.hidefilterView()
+                self.input.getMusicalSearch.onNext(self.viewModel.query)
+            }
+            .disposed(by: disposeBag)
+        
+        filterView.interparkButton.rx.tap
+            .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                print("인터파크 탭")
+                self.hidefilterView()
+                self.input.getMusicalSearchWithSite.onNext((.interpark, viewModel.query))
+            }
+            .disposed(by: disposeBag)
+        
+        filterView.melonButton.rx.tap
+            .subscribe { _ in
+                print("멜론 탭")
+                self.hidefilterView()
+                self.input.getMusicalSearchWithSite.onNext((.melon, self.viewModel.query))
+            }
+            .disposed(by: disposeBag)
+        
+        filterView.yes24Button.rx.tap
+            .subscribe { _ in
+                print("예스24 탭")
+                self.hidefilterView()
+                self.input.getMusicalSearchWithSite.onNext((.yes24, self.viewModel.query))
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func hidefilterView() {
+        self.filterView.isHidden = true
+        self.toggleFilterButtonArrow()
     }
     
     private func toggleFilterButtonArrow() {
@@ -193,54 +288,6 @@ class SearchAllResultsView: UIView {
     }
 }
 
-//MARK: - TableView
-
-extension SearchAllResultsView: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tableView {
-        case noticeTableView:
-            return 4
-        case musicalTableView:
-            return 2
-        default:
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        switch tableView {
-        case noticeTableView:
-            let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
-            
-            cell.titleLabel.text = "뮤지컬 <오페라의 유령 유령 유령 유령 유령 유령 유령 유령>"
-            cell.dateLabel.text = "2023.7.12"
-            cell.timeLabel.text = "14:00"
-            cell.alarmSettingButtonAction = {
-                self.delegate?.didTapAlarmSetting(self, indexPath: indexPath)
-            }
-            cell.selectionStyle = .none
-            
-            return cell
-        case musicalTableView:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalTableViewCell.identifier, for: indexPath) as! MusicalTableViewCell
-            
-            cell.musicalImageView.image = UIImage(named: "opera")
-            
-            return cell
-        default:
-            return UITableViewCell()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didTapCell(self)
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
 //MARK: - FilterView
 
 class FilterView: UIView {
@@ -248,29 +295,29 @@ class FilterView: UIView {
     private let allLabel = UILabel()
     private let allSpacer = UIView()
     private let allArrow = UIImageView()
-    private let allButton = UIButton()
+    let allButton = UIButton()
     
     private let interparkLabel = UILabel()
     private let interparkSpacer = UIView()
     private let interparkArrow = UIImageView()
-    private let interparkButton = UIButton()
+    let interparkButton = UIButton()
 
     private let melonLabel = UILabel()
     private let melonSpacer = UIView()
     private let melonArrow = UIImageView()
-    private let melonButton = UIButton()
+    let melonButton = UIButton()
 
     private let yes24Label = UILabel()
     private let yes24Spacer = UIView()
     private let yes24Arrow = UIImageView()
-    private let yes24Button = UIButton()
+    let yes24Button = UIButton()
     
     private lazy var allStackView = UIStackView(arrangedSubviews: [allLabel, allSpacer, allArrow])
     private lazy var interparkStackView = UIStackView(arrangedSubviews: [interparkLabel, interparkSpacer, interparkArrow])
     private lazy var melonStackView = UIStackView(arrangedSubviews: [melonLabel, melonSpacer, melonArrow])
     private lazy var yes24StackView = UIStackView(arrangedSubviews: [yes24Label, yes24Spacer, yes24Arrow])
     
-    var filterAction: (([Platform]) -> Void)?
+    var filterAction: ((Platform?) -> Void)?
     
     let divider = UIView()
     
@@ -390,13 +437,13 @@ class FilterView: UIView {
     
     @objc func FilterTapped(_ sender: UIButton) {
         if sender == allButton {
-            filterAction?(Platform.allCases)
+            filterAction?(nil)
         } else if sender == interparkButton {
-            filterAction?([.interpark])
+            filterAction?(.interpark)
         } else if sender == melonButton {
-            filterAction?([.melon])
+            filterAction?(.melon)
         } else if sender == yes24Button {
-            filterAction?([.yes24])
+            filterAction?(.yes24)
         }
     }
 }

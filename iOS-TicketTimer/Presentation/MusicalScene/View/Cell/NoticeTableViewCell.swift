@@ -7,9 +7,13 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 class NoticeTableViewCell: UITableViewCell {
     static let identifier = "NoticeTableViewCell"
+    
+    let cellData = PublishSubject<MusicalNotice>()
+    private var disposeBag = DisposeBag()
     
     let titleLabel = UILabel()
     let dateLabel = UILabel()
@@ -24,10 +28,23 @@ class NoticeTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUI()
         setAutoLayout()
+        bindData()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    private func bindData() {
+        cellData
+            .bind(onNext: { [weak self] data in
+                guard let self = self else { return }
+                self.titleLabel.text = data.title
+                self.dateLabel.text = data.openDateTime?.toDate()
+                self.timeLabel.text = data.openDateTime?.toTime()
+            })
+            .disposed(by: disposeBag)
+
     }
 
     private func setUI() {
@@ -40,7 +57,11 @@ class NoticeTableViewCell: UITableViewCell {
         alarmSettingButton.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .medium)
         alarmSettingButton.backgroundColor = .mainColor
         alarmSettingButton.layer.cornerRadius = 5
-        alarmSettingButton.addTarget(self, action: #selector(alarmSettingButtonTapped), for: .touchUpInside)
+        alarmSettingButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.alarmSettingButtonAction?()
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setAutoLayout() {
@@ -75,10 +96,6 @@ class NoticeTableViewCell: UITableViewCell {
             make.width.equalTo(83)
             make.height.equalTo(28)
         }
-    }
-    
-    @objc func alarmSettingButtonTapped() {
-        alarmSettingButtonAction?()
     }
 }
 

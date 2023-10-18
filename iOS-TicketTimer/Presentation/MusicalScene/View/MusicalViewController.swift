@@ -13,6 +13,8 @@ class MusicalViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     private let viewModel = MusicalViewModel()
+    private lazy var input = MusicalViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
     
     private lazy var searchInactiveView = SearchInactiveView(viewModel: viewModel)
     private lazy var searchReadyView = SearchReadyView(viewModel: viewModel)
@@ -21,8 +23,9 @@ class MusicalViewController: UIViewController {
     
     private let searchController = UISearchController()
     
-    private var isActiveSearch: Bool {
+    private var isReadySearch: Bool {
         return searchController.isActive
+        && searchController.searchBar.text?.isEmpty == true
     }
 
     override func viewDidLoad() {
@@ -60,22 +63,28 @@ class MusicalViewController: UIViewController {
 
 extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-        if searchController.isActive {
-            removeAllViews()
+        if isReadySearch  {
             updateView(type: .ready)
+        }
+        
+        if searchController.searchBar.text == "" {
+            searchResultView.removeFromSuperview()
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        removeAllViews()
         updateView(type: .result)
 
         guard let query = searchBar.text else { return }
         viewModel.addSearchHistory(query: query)
+        viewModel.query = query
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        removeAllViews()
+        searchInactiveView.removeFromSuperview()
+        searchReadyView.removeFromSuperview()
+        searchResultView.removeFromSuperview()
+        searchAllResultsView.removeFromSuperview()
         updateView(type: .inactive)
     }
     
@@ -83,21 +92,17 @@ extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
         case inactive, ready, result
     }
     
-    private func removeAllViews() {
-        searchInactiveView.removeFromSuperview()
-        searchReadyView.removeFromSuperview()
-        searchResultView.removeFromSuperview()
-        searchAllResultsView.removeFromSuperview()
-    }
-    
     func updateView(type: ViewType) {
         let updatedView: UIView
         switch type {
         case .inactive:
+            searchInactiveView.removeFromSuperview()
             updatedView = searchInactiveView
         case .ready:
+            searchReadyView.removeFromSuperview()
             updatedView = searchReadyView
         case .result:
+            searchResultView.removeFromSuperview()
             updatedView = searchResultView
         }
 
@@ -135,10 +140,11 @@ extension MusicalViewController: SearchResultViewDelegate {
         viewModel.presentAlarmSettingViewController(viewController: self, at: indexPath.row)
     }
     
-    func didTapShowAllResults(resultType: ShowAllResultsType) {
+    func didTapShowAllResults(resultType: SearchType) {
         searchAllResultsView.type = resultType
         searchAllResultsView.resetFilter()
         
+        searchAllResultsView.removeFromSuperview()
         self.view.addSubview(searchAllResultsView)
         searchAllResultsView.snp.makeConstraints { make in
             make.edges.equalTo(self.view.safeAreaLayoutGuide)

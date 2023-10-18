@@ -14,7 +14,7 @@ import RxDataSources
 protocol SearchResultViewDelegate: AnyObject {
     func didTapCell(_ : SearchResultView)
     func didTapAlarmSetting(_ : SearchResultView, indexPath: IndexPath)
-    func didTapShowAllResults(resultType: ShowAllResultsType)
+    func didTapShowAllResults(resultType: SearchType)
 }
 
 class SearchResultView: UIView {
@@ -29,18 +29,16 @@ class SearchResultView: UIView {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
-    private let numberOfNoticeResult = 0
     private let noticeResultLable = UILabel()
     private let noticeResultShowAllButton = ShowAllResultsButton()
     private let noticeTableView = UITableView()
-    private let noticeTableViewRowHeight: CGFloat = 72
-    
-    private let numberOfMusicalResult = 0
+    private var noticeTableViewHeightConstraint: Constraint?
+
     private let musicalResultLable = UILabel()
     private let musicalResultShowAllButton = ShowAllResultsButton()
     private let musicalTableView = UITableView()
-    private let musicalTableViewRowHeight: CGFloat = 200
-    
+    private var musicalTableViewHeightConstraint: Constraint?
+
     private var selectedPlatforms: [Platform] = Platform.allCases
     
     weak var delegate: SearchResultViewDelegate?
@@ -56,6 +54,13 @@ class SearchResultView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        let query = viewModel.query
+        input.getMusicalSearch.onNext(query)
+        input.getNoticSearch.onNext(query)
+    }
+
     private func setUI() {
         self.backgroundColor = .white
         
@@ -64,25 +69,37 @@ class SearchResultView: UIView {
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
         
-        noticeResultLable.text = "검색결과 \(numberOfMusicalResult)건"
+        noticeResultLable.text = "오픈공지 검색결과"
         noticeResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         
-        noticeTableView.delegate = self
-        noticeTableView.dataSource = self
         noticeTableView.register(NoticeTableViewCell.self,
                                   forCellReuseIdentifier: NoticeTableViewCell.identifier)
-        noticeTableView.rowHeight = noticeTableViewRowHeight
+        noticeTableView.rowHeight = 72
         noticeTableView.isScrollEnabled = false
         
-        musicalResultLable.text = "검색결과 \(numberOfMusicalResult)건"
-        musicalResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        let noticeDataSoure = RxTableViewSectionedReloadDataSource<MusicalNoticeSection> {
+            dataSource, tableView, indexPath, item  in
+            let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
+            cell.cellData.onNext(item)
+            cell.alarmSettingButtonAction = {
+                self.delegate?.didTapAlarmSetting(self, indexPath: indexPath)
+            }
+            return cell
+        }
         
-        musicalTableView.delegate = self
-        musicalTableView.dataSource = self
-        musicalTableView.register(MusicalTableViewCell.self,
-                                  forCellReuseIdentifier: MusicalTableViewCell.identifier)
-        musicalTableView.rowHeight = musicalTableViewRowHeight
-        musicalTableView.isScrollEnabled = false
+        output.bindNoticeLimitedSearch
+            .do { [weak self] sections in
+                let newHeight = sections[0].items.count * 72
+                self?.noticeTableViewHeightConstraint?.update(offset: newHeight)
+                self?.noticeResultLable.text = sections[0].items.isEmpty
+                ? "오픈공지 검색결과가 없습니다."
+                : "오픈공지 검색결과"
+                self?.noticeResultShowAllButton.isHidden = sections[0].items.count <= 2
+                ? true
+                : false
+            }
+            .bind(to: noticeTableView.rx.items(dataSource: noticeDataSoure))
+            .disposed(by: disposeBag)
         
         noticeResultShowAllButton.rx.tapGesture()
             .when(.recognized)
@@ -90,6 +107,47 @@ class SearchResultView: UIView {
                 self?.delegate?.didTapShowAllResults(resultType: .notice)
             })
             .disposed(by: disposeBag)
+        
+        musicalResultLable.text = "공연상세 검색결과"
+        musicalResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        
+        musicalTableView.register(MusicalTableViewCell.self,
+                                  forCellReuseIdentifier: MusicalTableViewCell.identifier)
+        musicalTableView.rowHeight = 200
+        musicalTableView.isScrollEnabled = false
+        
+        let musicalDataSource = RxTableViewSectionedReloadDataSource<MusicalsSection> {
+            dataSource, tableView, indexPath, item  in
+            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalTableViewCell.identifier, for: indexPath) as! MusicalTableViewCell
+            cell.cellData.onNext(item)
+            return cell
+        }
+        
+        output.bindMusicalLimitedSearch
+            .do { [weak self] sections in
+                let newHeight = sections[0].items.count * 200
+                self?.musicalTableViewHeightConstraint?.update(offset: newHeight)
+                self?.musicalResultLable.text = sections[0].items.isEmpty
+                ? "공연상세 검색결과가 없습니다."
+                : "공연상세 검색결과"
+                self?.musicalResultShowAllButton.isHidden = sections[0].items.count <= 2
+                ? true
+                : false
+            }
+            .bind(to: musicalTableView.rx.items(dataSource: musicalDataSource))
+            .disposed(by: disposeBag)
+        
+        Observable.zip(
+            musicalTableView.rx.itemSelected,
+            musicalTableView.rx.modelSelected(Musicals.self)
+        )
+        .subscribe(onNext: { [weak self] indexPath, item in
+            guard let self = self else { return }
+            self.viewModel.selectedMusical = item
+            self.delegate?.didTapCell(self)
+            self.musicalTableView.deselectRow(at: indexPath, animated: true)
+        })
+        .disposed(by: disposeBag)
         
         musicalResultShowAllButton.rx.tapGesture()
             .when(.recognized)
@@ -126,7 +184,7 @@ class SearchResultView: UIView {
         noticeTableView.snp.makeConstraints { make in
             make.top.equalTo(noticeResultLable.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(noticeTableViewRowHeight * 2)
+            noticeTableViewHeightConstraint = make.height.equalTo(0).constraint
         }
         
         musicalResultLable.snp.makeConstraints { make in
@@ -143,58 +201,8 @@ class SearchResultView: UIView {
             make.top.equalTo(musicalResultLable.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.equalTo(musicalTableViewRowHeight * 2)
+            musicalTableViewHeightConstraint = make.height.equalTo(0).constraint
         }
-    }
-}
-
-//MARK: - TableView
-
-extension SearchResultView: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch tableView {
-        case noticeTableView:
-            return 4
-        case musicalTableView:
-            return 2
-        default:
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        switch tableView {
-        case noticeTableView:
-            let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
-            
-            cell.titleLabel.text = "뮤지컬 <오페라의 유령 유령 유령 유령 유령 유령 유령 유령>"
-            cell.dateLabel.text = "2023.7.12"
-            cell.timeLabel.text = "14:00"
-            cell.alarmSettingButtonAction = {
-                self.delegate?.didTapAlarmSetting(self, indexPath: indexPath)
-            }
-            
-            return cell
-        case musicalTableView:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MusicalTableViewCell.identifier, for: indexPath) as! MusicalTableViewCell
-            
-            cell.musicalImageView.image = UIImage(named: "opera")
-            
-            return cell
-        default:
-            return UITableViewCell()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView == musicalTableView {
-            delegate?.didTapCell(self)
-        }
-        
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

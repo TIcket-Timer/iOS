@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxGesture
 
 class RecentlyResearchedTableViewCell: UITableViewCell {
     static let identifier = "RecentlyResearchedTableViewCell"
@@ -16,7 +17,7 @@ class RecentlyResearchedTableViewCell: UITableViewCell {
     let cellData = PublishSubject<String>()
     private var disposeBag = DisposeBag()
     
-    let historyButton = UIButton()
+    let historyButton = UILabel()
     let deleteButton = UIButton()
     
     var historyButtonAction: (() -> Void)?
@@ -37,23 +38,26 @@ class RecentlyResearchedTableViewCell: UITableViewCell {
         cellData
             .subscribe { [weak self] item in
                 if item == "검색 내역이 없습니다." {
-                    self?.historyButton.setTitle("검색 내역이 없습니다.", for: .normal)
-                    self?.historyButton.isEnabled = false
+                    self?.historyButton.text = "검색 내역이 없습니다."
+                    self?.historyButton.isUserInteractionEnabled = false
                     self?.deleteButton.isHidden = true
                 } else {
-                    self?.historyButton.setTitle(item, for: .normal)
-                    self?.historyButton.isEnabled = true
+                    self?.historyButton.text = item
+                    self?.historyButton.isUserInteractionEnabled = true
+                    self?.deleteButton.isHidden = false
                 }
             }
             .disposed(by: disposeBag)
     }
 
     private func setUI() {
-        historyButton.setTitleColor(.gray60, for: .normal)
-        historyButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        
-        historyButton.rx.tap
-            .subscribe(onNext: { [weak self] in
+        historyButton.textColor = .gray60
+        historyButton.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        historyButton.isUserInteractionEnabled = true
+                
+        historyButton.rx.tapGesture()
+            .when(.recognized)
+            .subscribe(onNext: { [weak self] _ in
                 self?.historyButtonAction?()
             })
             .disposed(by: disposeBag)
