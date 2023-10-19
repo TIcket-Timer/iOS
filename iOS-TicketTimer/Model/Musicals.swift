@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Musicals: Codable {
+struct Musicals: Codable, Equatable {
 	let createdTime: String?
 	let modifiedDate: String?
 	let id: String?
@@ -22,7 +22,7 @@ struct Musicals: Codable {
 	let actors: [Actor?]
 }
 
-struct Actor: Codable {
+struct Actor: Codable, Equatable {
     let actorId: Int?
     let actorName: String?
     let profileUrl: String?

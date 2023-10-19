@@ -101,4 +101,109 @@ class MusicalService {
         
         return observable
     }
+    
+    //MARK: - 인기 뮤지컬 조회
+    func getPopularMusicals(platform: Platform) -> Observable<Response<[Musicals]>> {
+        let path = "/api/musicals/site/\(platform.site)?page=1&size=10"
+        let url = baseUrl + path
+
+        let header: HTTPHeaders = [
+            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
+        ]
+        
+        return Observable.create { observer -> Disposable in
+            AF.request(url, headers: header)
+                .responseDecodable(of: Response<[Musicals]>.self) { response in
+                    switch response.result {
+                    case .success(let musicals):
+                        //print("[getPopularMusicals 성공 - \(platform.rawValue)]")
+                        observer.onNext(musicals)
+                        observer.onCompleted()
+                    case .failure(let error):
+                        //print("[getPopularMusicals 실패] \(error)")
+                        observer.onError(error)
+                        observer.onCompleted()
+                    }
+                }
+            return Disposables.create()
+        }
+    }
+    
+    //MARK: - 공지 제목으로 검색
+    func searchMusicalNotices(query: String) -> Observable<Response<[MusicalNotice]>> {
+        let path = "/api/musicalNotices/search?q=\(query)&page=1&search=100"
+        let url = baseUrl + path
+
+        let header: HTTPHeaders = [
+            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
+        ]
+        
+        return Observable.create { observer -> Disposable in
+            AF.request(url, headers: header)
+                .responseDecodable(of: Response<[MusicalNotice]>.self) { response in
+                    switch response.result {
+                    case .success(let notices):
+                        //print("[searchMusicalNotices 성공]")
+                        observer.onNext(notices)
+                        observer.onCompleted()
+                    case .failure(let error):
+                        //print("[searchMusicalNotices 실패] \(error)")
+                        observer.onError(error)
+                        observer.onCompleted()
+                    }
+                }
+            return Disposables.create()
+        }
+    }
+    
+    //MARK: - 사이트별 뮤지컬 제목으로 검색
+    func searchMusicalsWithSite(platform: Platform, query: String) -> Observable<Response<[Musicals]>> {
+        let path = "/api/musicals/search?q=\(query)&site=\(platform.siteCapital)&page=1&size=100"
+        let url = baseUrl + path
+
+        let header: HTTPHeaders = [
+            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
+        ]
+        
+        return Observable.create { observer -> Disposable in
+            AF.request(url, headers: header)
+                .responseDecodable(of: Response<[Musicals]>.self) { response in
+                    switch response.result {
+                    case .success(let musicals):
+                        //print("[searchMusicalsWithSite 성공 - \(platform.rawValue)]")
+                        observer.onNext(musicals)
+                        observer.onCompleted()
+                    case .failure(let error):
+                        //print("[searchMusicalsWithSite 실패] \(error)")
+                        observer.onError(error)
+                        observer.onCompleted()
+                    }
+                }
+            return Disposables.create()
+        }
+    }
+    
+    //MARK: - 모든 사이트로 뮤지컬 제목으로 검색
+    func searchMusicalsWithAllSites(query: String) -> Observable<Response<[Musicals]>> {
+        let interpark = searchMusicalsWithSite(platform: .interpark, query: query)
+        let melon = searchMusicalsWithSite(platform: .melon, query: query)
+        let yes24 = searchMusicalsWithSite(platform: .yes24, query: query)
+        return Observable.zip(interpark, melon, yes24)
+            .map { interparkResponse, melonResponse, yes24Response -> Response<[Musicals]> in
+                
+                var allMusicals: [Musicals] = []
+                
+                if let interparkMusicals = interparkResponse.result {
+                    allMusicals.append(contentsOf: interparkMusicals)
+                }
+                if let melonMusicals = melonResponse.result {
+                    allMusicals.append(contentsOf: melonMusicals)
+                }
+                if let yes24Musicals = yes24Response.result {
+                    allMusicals.append(contentsOf: yes24Musicals)
+                }
+                
+                return Response(code: interparkResponse.code, message: interparkResponse.message, result: allMusicals)
+            }
+    }
 }

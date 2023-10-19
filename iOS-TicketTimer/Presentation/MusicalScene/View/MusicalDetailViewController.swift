@@ -6,8 +6,17 @@
 //
 
 import UIKit
+import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
+import SafariServices
 
 class MusicalDetailViewController: UIViewController {
+    
+    private let disposeBag = DisposeBag()
+    
+    private let musical: Musicals
     
     private let bgView = UIImageView()
     
@@ -30,13 +39,20 @@ class MusicalDetailViewController: UIViewController {
     lazy private var stackViewContainer = UIStackView(arrangedSubviews: [venueStackView, durationStackView, reservationScheduleStackView])
     
     private let divider = UIView()
-    
-    private let addAlarmButton = UIButton()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setAutoLayout()
+    }
+    
+    init(musical: Musicals) {
+        self.musical = musical
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setUI() {
@@ -45,20 +61,30 @@ class MusicalDetailViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.topItem?.title = ""
         
-        bgView.image = UIImage(named: "opera")
+        guard let url = musical.posterUrl else { return }
+        bgView.kf.setImage(with: URL(string: url))
         bgView.backgroundColor = UIColor("#040005")
         bgView.contentMode = .scaleAspectFit
         bgView.clipsToBounds = true
         
-        imageView.image = UIImage(named: "opera")
+        imageView.kf.setImage(with: URL(string: url))
         
         viewMusicalDetailButton.setTitle("공연 상세정보 보기", for: .normal)
         viewMusicalDetailButton.setTitleColor(.gray80, for: .normal)
         viewMusicalDetailButton.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .medium)
-        viewMusicalDetailButton.addTarget(self, action: #selector(viewMusicalDetailButtonTapped), for: .touchUpInside)
         viewMusicalDetailButtonBottom.backgroundColor = .gray80
         
-        titleLabel.text = "뮤지컬 <오페라의 유령> - 서울"
+        viewMusicalDetailButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                guard let urlString = self?.musical.siteLink,
+                      let url = URL(string: urlString),
+                      UIApplication.shared.canOpenURL(url)
+                else { return }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            })
+            .disposed(by: disposeBag)
+        
+        titleLabel.text = musical.title
         titleLabel.textColor = .gray100
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         
@@ -66,7 +92,7 @@ class MusicalDetailViewController: UIViewController {
         venueLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         venueLabel.textColor = .gray100
         
-        venueDetail.text = "샤롯데씨어터"
+        venueDetail.text = musical.place
         venueDetail.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         venueDetail.textColor = .gray80
         
@@ -74,7 +100,9 @@ class MusicalDetailViewController: UIViewController {
         durationLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         durationLabel.textColor = .gray100
         
-        durationDetail.text = "2023.07.21 ~ 2023.11.17"
+        guard let startDate = musical.startDate else { return }
+        guard let endDate = musical.endDate else { return }
+        durationDetail.text = "\(startDate) ~ \(endDate)"
         durationDetail.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         durationDetail.textColor = .gray80
         
@@ -82,7 +110,7 @@ class MusicalDetailViewController: UIViewController {
         reservationScheduleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         reservationScheduleLabel.textColor = .gray100
         
-        reservationScheduleDetail.text = "2023.07.12 14:00"
+        reservationScheduleDetail.text = "삭제 예정"
         reservationScheduleDetail.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         reservationScheduleDetail.textColor = .gray80
         
@@ -103,14 +131,10 @@ class MusicalDetailViewController: UIViewController {
         stackViewContainer.alignment = .leading
         
         divider.backgroundColor = .gray20
-        
-        addAlarmButton.setTitle("예매알람 추가하기", for: .normal)
-        addAlarmButton.backgroundColor = .mainColor
-        addAlarmButton.layer.cornerRadius = 10
     }
             
     private func setAutoLayout() {
-        self.view.addSubviews([bgView, imageView, platfomrLabel, viewMusicalDetailButton, titleLabel, stackViewContainer, divider, addAlarmButton])
+        self.view.addSubviews([bgView, imageView, platfomrLabel, viewMusicalDetailButton, titleLabel, stackViewContainer, divider])
         viewMusicalDetailButton.addSubview(viewMusicalDetailButtonBottom)
         
         bgView.snp.makeConstraints { make in
@@ -122,6 +146,8 @@ class MusicalDetailViewController: UIViewController {
         imageView.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(10)
             make.leading.equalToSuperview().offset(24)
+            make.height.equalTo(160)
+            make.width.equalTo(120)
         }
         
         platfomrLabel.snp.makeConstraints { make in
@@ -130,7 +156,7 @@ class MusicalDetailViewController: UIViewController {
         }
         
         viewMusicalDetailButton.snp.makeConstraints { make in
-            make.top.equalTo(bgView.snp.bottom).offset(14)
+            make.top.equalTo(bgView.snp.bottom).offset(16)
             make.trailing.equalToSuperview().offset(-24)
             make.height.equalTo(13)
         }
@@ -155,16 +181,5 @@ class MusicalDetailViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(8)
         }
-        
-        addAlarmButton.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-18)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(56)
-        }
-    }
-    
-    @objc func viewMusicalDetailButtonTapped() {
-        print(#function)
     }
 }

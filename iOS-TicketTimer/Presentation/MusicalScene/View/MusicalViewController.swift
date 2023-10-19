@@ -7,29 +7,39 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 
 class MusicalViewController: UIViewController {
     
+    private let disposeBag = DisposeBag()
+    private let viewModel = MusicalViewModel()
+    private lazy var input = MusicalViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
+    
+    private lazy var searchInactiveView = SearchInactiveView(viewModel: viewModel)
+    private lazy var searchReadyView = SearchReadyView(viewModel: viewModel)
+    private lazy var searchResultView = SearchResultView(viewModel: viewModel)
+    private lazy var searchAllResultsView = SearchAllResultsView(viewModel: viewModel)
+    
     private let searchController = UISearchController()
-
-    private let searchInactiveView = SearchInactiveView()
-    private let searchReadyView = SearchReadyView()
-    private let searchResultView = SearchResultView()
     
-    private var searchQuery = ""
-    
-    private var isActiveSearch: Bool {
+    private var isReadySearch: Bool {
         return searchController.isActive
+        && searchController.searchBar.text?.isEmpty == true
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        setAutoLayout()
+        updateView(type: .inactive)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "검색"
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        searchController.isActive = false
     }
 
     private func setUI() {
@@ -49,91 +59,107 @@ class MusicalViewController: UIViewController {
         searchInactiveView.delegate = self
         searchReadyView.delegate = self
         searchResultView.delegate = self
-    }
-
-    private func setAutoLayout() {
-        self.view.addSubview(searchInactiveView)
-
-        searchInactiveView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
-        }
+        searchAllResultsView.delegate = self
     }
 }
 
 // MARK: - SearchController
 
-extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate {
+extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate, UISearchControllerDelegate {
     func updateSearchResults(for searchController: UISearchController) {
-        
-        guard let text = searchController.searchBar.text else { return }
-        self.searchQuery = text
-
-        if isActiveSearch {
-            updateSearchReadyView()
+        if isReadySearch {
+            if searchReadyView.superview == nil {
+                updateView(type: .ready)
+            }
         }
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        updateSearchResultView()
+        updateView(type: .result)
+
+        guard let query = searchBar.text else { return }
+        viewModel.addSearchHistory(query: query)
+        viewModel.query = query
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        deleteSearchView()
-    }
-    
-    func updateSearchReadyView() {
-        self.view.addSubview(searchReadyView)
-        
-        searchReadyView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
-        }
-    }
-    
-    func updateSearchResultView() {
-        self.view.addSubview(searchResultView)
-        
-        searchResultView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
-        }
-    }
-    
-    func deleteSearchView() {
+        searchInactiveView.removeFromSuperview()
         searchReadyView.removeFromSuperview()
         searchResultView.removeFromSuperview()
+        searchAllResultsView.removeFromSuperview()
+        updateView(type: .inactive)
+    }
+    
+    enum ViewType {
+        case inactive, ready, result
+    }
+    
+    func updateView(type: ViewType) {
+        let updatedView: UIView
+        switch type {
+        case .inactive:
+            searchInactiveView.removeFromSuperview()
+            updatedView = searchInactiveView
+        case .ready:
+            searchReadyView.removeFromSuperview()
+            updatedView = searchReadyView
+        case .result:
+            searchResultView.removeFromSuperview()
+            updatedView = searchResultView
+        }
+
+        self.view.addSubview(updatedView)
+        updatedView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
     }
 }
 
 extension MusicalViewController: SearchInactiveViewDelegate {
-    func didTapCell(_: SearchInactiveView, indexPath: IndexPath) {
-        let vc = MusicalDetailViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    func didTapCell(_: SearchInactiveView) {
+        viewModel.showMusicalDetailViewController(viewController: self)
     }
 }
 
 extension MusicalViewController: SearchReadyViewDelegate {
-    func didTapCell(_: SearchReadyView, indexPath: IndexPath) {
-        let vc = MusicalDetailViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    func didTapHistoryButton(_: SearchReadyView, history: String) {
+        searchController.searchBar.text = history
+        searchBarSearchButtonClicked(searchController.searchBar)
+    }
+    
+    func didTapCell(_: SearchReadyView) {
+        viewModel.showMusicalDetailViewController(viewController: self)
     }
 }
 
 extension MusicalViewController: SearchResultViewDelegate {
-    func didTapCell(_: SearchResultView, indexPath: IndexPath) {
-        let vc = MusicalDetailViewController()
-        navigationController?.pushViewController(vc, animated: true)
+    func didTapCell(_ : SearchResultView) {
+        viewModel.showMusicalDetailViewController(viewController: self)
+
     }
     
-    func didTapAlarmSetting() {
-        let vc = AlarmSettingViewController(platform: .interpark)
-        vc.navigationItem.title = "알람 설정"
+    func didTapAlarmSetting(_: SearchResultView, indexPath: IndexPath) {
+        viewModel.presentAlarmSettingViewController(viewController: self, at: indexPath.row)
+    }
+    
+    func didTapShowAllResults(resultType: SearchType) {
+        searchAllResultsView.type = resultType
+        searchAllResultsView.resetFilter()
         
-        let navigationController = UINavigationController(rootViewController: vc)
-        navigationController.modalPresentationStyle = .automatic
-        
-        if let sheet = navigationController.sheetPresentationController {
-            sheet.prefersGrabberVisible = true
+        searchAllResultsView.removeFromSuperview()
+        self.view.addSubview(searchAllResultsView)
+        searchAllResultsView.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
         }
-        
-        self.present(navigationController, animated: true, completion: nil)
+    }
+}
+
+extension MusicalViewController: SearchAllResultsViewDelegate {
+    func didTapCell(_ : SearchAllResultsView) {
+        viewModel.showMusicalDetailViewController(viewController: self)
+    }
+    
+    func didTapAlarmSetting(_ : SearchAllResultsView, indexPath: IndexPath) {
+        viewModel.presentAlarmSettingViewController(viewController: self, at: indexPath.row)
     }
 }
