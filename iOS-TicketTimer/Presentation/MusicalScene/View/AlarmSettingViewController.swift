@@ -7,10 +7,15 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class AlarmSettingViewController: UIViewController {
     
-    var platform: Platform
+    private let notice: MusicalNotice
+    private let viewModel: AlarmViewModel
+    
+    var platform: Platform = .interpark
     private let platformLabel = PlatformLabel(platform: .interpark)
     private let titleLabel = UILabel()
     private let titleSpacer = UIView()
@@ -50,20 +55,21 @@ class AlarmSettingViewController: UIViewController {
     private let buttonContainer = UIView()
     
     private var isActiveAutoAddNextSchedule = false
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setAutoLayout()
     }
+    
+    init(notice: MusicalNotice) {
+        self.notice = notice
+        self.viewModel = AlarmViewModel(notice: notice)
+        super.init(nibName: nil, bundle: nil)
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    init(platform: Platform) {
-        self.platform = platform
-        super.init(nibName: nil, bundle: nil)
     }
     
     private func setUI() {
@@ -90,6 +96,10 @@ class AlarmSettingViewController: UIViewController {
         tenMinuteSwitch.tag = 2
         twentyMinuteSwitch.tag = 3
         thirtyMinuteSwitch.tag = 4
+        fiveMinuteSwitch.isOn = viewModel.fiveMinSwitchIsOn
+        tenMinuteSwitch.isOn = viewModel.tenMinSwitchIsOn
+        twentyMinuteSwitch.isOn = viewModel.twentyMinSwitchIsOn
+        thirtyMinuteSwitch.isOn = viewModel.thirtyMinSwitchIsOn
         fiveMinuteSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
         tenMinuteSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
         twentyMinuteSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
@@ -209,8 +219,29 @@ class AlarmSettingViewController: UIViewController {
             make.height.equalTo(48)
         }
         addAlarmLabel.snp.makeConstraints { make in
+            make.top.equalTo(buttonContainer.snp.top).offset(10)
             make.bottom.equalTo(ButtonStackView.snp.top).offset(-19)
             make.centerX.equalToSuperview()
+        }
+    }
+    
+    func sendNotification(date: Date, title: String, body: String) {
+        let center = UNUserNotificationCenter.current()
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = UNNotificationSound.default
+        
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        let identifier = UUID().uuidString
+        
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        center.add(request) { (error) in
+            if let error = error {
+                print(error)
+            }
         }
     }
     
@@ -218,27 +249,27 @@ class AlarmSettingViewController: UIViewController {
         switch sender.tag {
         case 1:
             if sender.isOn {
-                
+                viewModel.fiveMinSwitchIsOn = true
             } else {
-                
+                viewModel.fiveMinSwitchIsOn = false
             }
         case 2:
             if sender.isOn {
-                
+                viewModel.tenMinSwitchIsOn = true
             } else {
-                
+                viewModel.tenMinSwitchIsOn = false
             }
         case 3:
             if sender.isOn {
-                
+                viewModel.twentyMinSwitchIsOn = true
             } else {
-                
+                viewModel.twentyMinSwitchIsOn = false
             }
         case 4:
             if sender.isOn {
-                
+                viewModel.thirtyMinSwitchIsOn = true
             } else {
-                
+                viewModel.thirtyMinSwitchIsOn = false
             }
         default:
             break
@@ -261,11 +292,12 @@ class AlarmSettingViewController: UIViewController {
     }
     
     @objc func cancleButtonTapped() {
-        print(#function)
+        dismiss(animated: true)
     }
     
     @objc func completeButtonTapped() {
-        print(#function)
+        dismiss(animated: true)
+        viewModel.completeButtonAction()
     }
 }
 

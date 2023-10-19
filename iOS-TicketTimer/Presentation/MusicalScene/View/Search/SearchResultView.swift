@@ -13,7 +13,7 @@ import RxDataSources
 
 protocol SearchResultViewDelegate: AnyObject {
     func didTapCell(_ : SearchResultView)
-    func didTapAlarmSetting(_ : SearchResultView, indexPath: IndexPath)
+    func didTapAlarmSetting(_ : SearchResultView)
     func didTapShowAllResults(resultType: SearchType)
 }
 
@@ -82,7 +82,7 @@ class SearchResultView: UIView {
             let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
             cell.cellData.onNext(item)
             cell.alarmSettingButtonAction = {
-                self.delegate?.didTapAlarmSetting(self, indexPath: indexPath)
+                self.delegate?.didTapAlarmSetting(self)
             }
             return cell
         }
