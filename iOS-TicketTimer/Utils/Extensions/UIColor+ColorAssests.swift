@@ -26,4 +26,7 @@ extension UIColor {
     class var gray20: UIColor {
         return UIColor(named: "gray20")!
     }
+    class var gray10: UIColor {
+        return UIColor(named: "gray10")!
+    }
 }

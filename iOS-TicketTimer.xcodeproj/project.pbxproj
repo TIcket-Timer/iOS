@@ -40,6 +40,10 @@
 		8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38792AE0CABA00F26558 /* AlarmViewModel.swift */; };
 		8FAC387E2AE0DBDA00F26558 /* String+toDateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC387D2AE0DBDA00F26558 /* String+toDateType.swift */; };
 		8FAC38802AE10BC200F26558 /* String+toDateAndTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC387F2AE10BC200F26558 /* String+toDateAndTime.swift */; };
+		8FAC38852AE2162300F26558 /* MypageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38842AE2162300F26558 /* MypageViewController.swift */; };
+		8FAC38872AE217FB00F26558 /* AlarmConfigureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38862AE217FB00F26558 /* AlarmConfigureViewController.swift */; };
+		8FAC38892AE218BD00F26558 /* UseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38882AE218BD00F26558 /* UseInfoViewController.swift */; };
+		8FAC388B2AE2294900F26558 /* ChangeUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC388A2AE2294900F26558 /* ChangeUsernameViewController.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
 		9A00CD952AD12FC300E9813F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD942AD12FC300E9813F /* Response.swift */; };
 		9A00CD972AD1314400E9813F /* Musicals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD962AD1314400E9813F /* Musicals.swift */; };
@@ -124,6 +128,10 @@
 		8FAC38792AE0CABA00F26558 /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
 		8FAC387D2AE0DBDA00F26558 /* String+toDateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDateType.swift"; sourceTree = "<group>"; };
 		8FAC387F2AE10BC200F26558 /* String+toDateAndTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDateAndTime.swift"; sourceTree = "<group>"; };
+		8FAC38842AE2162300F26558 /* MypageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewController.swift; sourceTree = "<group>"; };
+		8FAC38862AE217FB00F26558 /* AlarmConfigureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmConfigureViewController.swift; sourceTree = "<group>"; };
+		8FAC38882AE218BD00F26558 /* UseInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseInfoViewController.swift; sourceTree = "<group>"; };
+		8FAC388A2AE2294900F26558 /* ChangeUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUsernameViewController.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A00CD922AD12BDA00E9813F /* MusicalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalService.swift; sourceTree = "<group>"; };
 		9A00CD942AD12FC300E9813F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -469,6 +477,10 @@
 			isa = PBXGroup;
 			children = (
 				9AB92BE42ACC4A10002C4B0A /* SettingsViewController.swift */,
+				8FAC38842AE2162300F26558 /* MypageViewController.swift */,
+				8FAC38862AE217FB00F26558 /* AlarmConfigureViewController.swift */,
+				8FAC38882AE218BD00F26558 /* UseInfoViewController.swift */,
+				8FAC388A2AE2294900F26558 /* ChangeUsernameViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -786,6 +798,7 @@
 				9AB92BDC2ACC4921002C4B0A /* HomeViewModel.swift in Sources */,
 				9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */,
 				9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */,
+				8FAC38872AE217FB00F26558 /* AlarmConfigureViewController.swift in Sources */,
 				9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */,
 				8F33E92B2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift in Sources */,
 				8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */,
@@ -799,13 +812,16 @@
 				8F1AFF0A2ADE16D200972CFC /* UserDefaultService.swift in Sources */,
 				9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */,
 				8F33E9312AD4EAC200B7AD21 /* NoticeTableViewCell.swift in Sources */,
+				8FAC38852AE2162300F26558 /* MypageViewController.swift in Sources */,
 				658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */,
 				8F33E92D2AD4D81000B7AD21 /* UIColor+HexColor.swift in Sources */,
 				8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */,
 				8FA034952AD3E258001FEC71 /* SearchReadyView.swift in Sources */,
 				9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */,
+				8FAC38892AE218BD00F26558 /* UseInfoViewController.swift in Sources */,
 				8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */,
 				8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */,
+				8FAC388B2AE2294900F26558 /* ChangeUsernameViewController.swift in Sources */,
 				8FAC38782AE0CA5800F26558 /* LocalAlarm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

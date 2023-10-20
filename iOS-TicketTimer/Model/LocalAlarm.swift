@@ -32,6 +32,19 @@ enum LocalAlarmType: Codable {
     case twenty
     case thirty
     
+    var before: String {
+        switch self {
+        case .five:
+            return "5분 전"
+        case .ten:
+            return "10분 전"
+        case .twenty:
+            return "20분 전"
+        case .thirty:
+            return "30분 전"
+        }
+    }
+    
     var title: String {
         switch self {
         case .five:
