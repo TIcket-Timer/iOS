@@ -19,6 +19,8 @@ class UserDefaultService {
                 } else {
                     observer.onNext(["검색 내역이 없습니다."])
                 }
+            } else {
+                observer.onNext(["검색 내역이 없습니다."])
             }
             observer.onCompleted()
             return Disposables.create()

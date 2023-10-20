@@ -177,22 +177,22 @@ class MusicalViewModel: ViewModelType {
     }
     
     func showMusicalDetailViewController(viewController: UIViewController) {
-//        viewController.navigationItem.searchController?.isActive = false
-//
-//        guard let musical = self.selectedMusical else { return }
-//        self.updateViewdMusicalHistory(musical: musical)
-//        let vc = MusicalDetailViewController(musical: musical)
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//            viewController.navigationController?.pushViewController(vc, animated: true)
-//        }
-        presentAlarmSettingViewController(viewController: viewController)
+        viewController.navigationItem.searchController?.isActive = false
+
+        guard let musical = self.selectedMusical else { return }
+        self.addViewdMusicalHistory(musical: musical)
+        let vc = MusicalDetailViewController(musical: musical)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            viewController.navigationController?.pushViewController(vc, animated: true)
+        }
+        //presentAlarmSettingViewController(viewController: viewController)
     }
     
     func presentAlarmSettingViewController(viewController: UIViewController) {
-//        guard let notice = self.selectedNotice else { return }
-//        let vc = AlarmSettingViewController(notice: notice)
-        let vc = AlarmSettingViewController(notice: MusicalNotice(id: "1", siteCategory: "인터파크", openDateTime: "1", title: "타이틀", url: "url"))
+        guard let notice = self.selectedNotice else { return }
+        let vc = AlarmSettingViewController(notice: notice)
+//        let vc = AlarmSettingViewController(notice: MusicalNotice(id: "1", siteCategory: "MELON", openDateTime: "202310202000", title: "타이틀", url: ""))
         vc.navigationItem.title = "알람 설정"
         
         let navigationController = UINavigationController(rootViewController: vc)

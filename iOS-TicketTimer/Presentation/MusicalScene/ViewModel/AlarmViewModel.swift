@@ -5,7 +5,7 @@
 //  Created by 심현석 on 2023/10/19.
 //
 
-import Foundation
+import RxRelay
 import UserNotifications
 
 class AlarmViewModel {
@@ -14,40 +14,28 @@ class AlarmViewModel {
     private var savedLocalAlarms = [LocalAlarm]()
     private let userDefaultService = UserDefaultService.shared
 
-    var fiveMinSwitchIsOn: Bool = false
-    var tenMinSwitchIsOn: Bool = false
-    var twentyMinSwitchIsOn: Bool = false
-    var thirtyMinSwitchIsOn: Bool = false
+    var fiveMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
+    var tenMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
+    var twentyMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
+    var thirtyMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
     
     init(notice: MusicalNotice) {
         self.notice = notice
         self.savedLocalAlarms = userDefaultService.getLocalAlarmData(notice: notice)
-        bindSwitch()
+        bindSwitches()
     }
     
-    func bindSwitch() {
-        if savedLocalAlarms.contains(where: { $0.type == .five }) {
-            fiveMinSwitchIsOn = true
-        }
-        
-        if savedLocalAlarms.contains(where: { $0.type == .ten }) {
-            tenMinSwitchIsOn = true
-        }
-        
-        if savedLocalAlarms.contains(where: { $0.type == .twenty }) {
-            twentyMinSwitchIsOn = true
-        }
-        
-        if savedLocalAlarms.contains(where: { $0.type == .thirty }) {
-            thirtyMinSwitchIsOn = true
-        }
+    func bindSwitches() {
+        fiveMinSwitchIsOn.accept(savedLocalAlarms.contains { $0.type == .five })
+        tenMinSwitchIsOn.accept(savedLocalAlarms.contains { $0.type == .ten })
+        twentyMinSwitchIsOn.accept(savedLocalAlarms.contains { $0.type == .twenty })
+        thirtyMinSwitchIsOn.accept(savedLocalAlarms.contains { $0.type == .thirty })
     }
     
     func completeButtonAction() {
         // 기존 알림 삭제
-        cancelNotification(alarmData: savedLocalAlarms)
+        cancelNotification(alarms: savedLocalAlarms)
         userDefaultService.deleteLocalAlarmData(alarms: savedLocalAlarms)
-        
         
         // 새로운 알림으로 업데이트
         guard
@@ -57,38 +45,25 @@ class AlarmViewModel {
         else { return }
         let date = Date()
         
-        if fiveMinSwitchIsOn {
-            let alarm = LocalAlarm(noticeId: id, noticeTitle: title, noticeOpenDate: date, type: .five)
-            sendNotification(alarmData: alarm)
-            userDefaultService.saveLocalAlarmData(alarms: alarm)
-        }
-        
-        if tenMinSwitchIsOn {
-            let alarm = LocalAlarm(noticeId: id, noticeTitle: title, noticeOpenDate: date, type: .ten)
-            sendNotification(alarmData: alarm)
-            userDefaultService.saveLocalAlarmData(alarms: alarm)
-        }
-        
-        if twentyMinSwitchIsOn {
-            let alarm = LocalAlarm(noticeId: id, noticeTitle: title, noticeOpenDate: date, type: .twenty)
-            sendNotification(alarmData: alarm)
-            userDefaultService.saveLocalAlarmData(alarms: alarm)
-        }
-        
-        if thirtyMinSwitchIsOn {
-            let alarm = LocalAlarm(noticeId: id, noticeTitle: title, noticeOpenDate: date, type: .thirty)
-            sendNotification(alarmData: alarm)
-            userDefaultService.saveLocalAlarmData(alarms: alarm)
-        }
+        if fiveMinSwitchIsOn.value { updateLocalAlarm(type: .five, id: id, title: title, date: date) }
+        if tenMinSwitchIsOn.value { updateLocalAlarm(type: .ten, id: id, title: title, date: date) }
+        if twentyMinSwitchIsOn.value { updateLocalAlarm(type: .twenty, id: id, title: title, date: date) }
+        if thirtyMinSwitchIsOn.value { updateLocalAlarm(type: .thirty, id: id, title: title, date: date) }
+    }
+
+    func updateLocalAlarm(type: LocalAlarmType, id: String, title: String, date: Date) {
+        let alarm = LocalAlarm(noticeId: id, noticeTitle: title, noticeOpenDate: date, type: type)
+        sendNotification(alarm: alarm)
+        userDefaultService.saveLocalAlarmData(alarms: alarm)
     }
     
-    func sendNotification(alarmData: LocalAlarm) {
+    func sendNotification(alarm: LocalAlarm) {
         let content = UNMutableNotificationContent()
-        content.title = alarmData.title
-        content.body = alarmData.body
+        content.title = alarm.title
+        content.body = alarm.body
         content.sound = UNNotificationSound.default
         
-        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: alarmData.date)
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: alarm.date)
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         let identifier = UUID().uuidString
         
@@ -102,8 +77,8 @@ class AlarmViewModel {
         }
     }
     
-    func cancelNotification(alarmData: [LocalAlarm]) {
-        let identifiers = alarmData.map { $0.id }
+    func cancelNotification(alarms: [LocalAlarm]) {
+        let identifiers = alarms.map { $0.id }
         
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: identifiers)
