@@ -7,11 +7,19 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class AlarmSettingViewController: UIViewController {
     
-    var platform: Platform
-    private let platformLabel = PlatformLabel(platform: .interpark)
+    private let notice: MusicalNotice
+    private let viewModel: AlarmViewModel
+    private let disposeBag = DisposeBag()
+    
+    private lazy var platformLabel: PlatformLabel = {
+        let lb = PlatformLabel(platform: stringToPlatformType(string: notice.siteCategory ?? ""))
+        return lb
+    }()
     private let titleLabel = UILabel()
     private let titleSpacer = UIView()
     private let reservationLabel = UILabel()
@@ -23,19 +31,19 @@ class AlarmSettingViewController: UIViewController {
     
     private let divider = UIView()
     
-    private let fiveMinuteLabel = UILabel()
-    private let tenMinuteLabel = UILabel()
-    private let twentyMinuteLabel = UILabel()
-    private let thirtyMinuteLabel = UILabel()
-    private let fiveMinuteSwitch = UISwitch()
-    private let tenMinuteSwitch = UISwitch()
-    private let twentyMinuteSwitch = UISwitch()
-    private let thirtyMinuteSwitch = UISwitch()
-    private let fiveMinuteStackView = UIStackView()
-    private let tenMinuteStackView = UIStackView()
-    private let twentyMinuteStackView = UIStackView()
-    private let thirtyMinuteStackView = UIStackView()
-    private lazy var minuteStackView = UIStackView(arrangedSubviews: [fiveMinuteStackView, tenMinuteStackView, twentyMinuteStackView, thirtyMinuteStackView])
+    private let fiveMinLabel = UILabel()
+    private let tenMinLabel = UILabel()
+    private let twentyMinLabel = UILabel()
+    private let thirtyMinLabel = UILabel()
+    private let fiveMinSwitch = UISwitch()
+    private let tenMinSwitch = UISwitch()
+    private let twentyMinSwitch = UISwitch()
+    private let thirtyMinSwitch = UISwitch()
+    private let fiveMinStackView = UIStackView()
+    private let tenMinStackView = UIStackView()
+    private let twentyMinStackView = UIStackView()
+    private let thirtyMinStackView = UIStackView()
+    private lazy var MinStackView = UIStackView(arrangedSubviews: [fiveMinStackView, tenMinStackView, twentyMinStackView, thirtyMinStackView])
     private let customTimeLabel = UILabel()
     private let autoAddNextScheduleButtonImage = UIImageView()
     private let autoAddNextScheduleButtonTitle = UILabel()
@@ -50,29 +58,69 @@ class AlarmSettingViewController: UIViewController {
     private let buttonContainer = UIView()
     
     private var isActiveAutoAddNextSchedule = false
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setAutoLayout()
+        setAction()
+    }
+    
+    init(notice: MusicalNotice) {
+        self.notice = notice
+        self.viewModel = AlarmViewModel(notice: notice)
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(platform: Platform) {
-        self.platform = platform
-        super.init(nibName: nil, bundle: nil)
+    private func setAction() {
+        bindSwitch(fiveMinSwitch, to: viewModel.fiveMinSwitchIsOn)
+        bindSwitch(tenMinSwitch, to: viewModel.tenMinSwitchIsOn)
+        bindSwitch(twentyMinSwitch, to: viewModel.twentyMinSwitchIsOn)
+        bindSwitch(thirtyMinSwitch, to: viewModel.thirtyMinSwitchIsOn)
+        
+        autoAddNextScheduleButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.isActiveAutoAddNextSchedule.toggle()
+                self?.toggleButtonImage()
+            }
+            .disposed(by: disposeBag)
+
+        cancelButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .disposed(by: disposeBag)
+
+        completeButton.rx.tap
+            .subscribe { [weak self] _ in
+                self?.dismiss(animated: true)
+                self?.viewModel.completeButtonAction()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindSwitch(_ minSwitch: UISwitch, to relay: BehaviorRelay<Bool>) {
+        relay
+            .bind(to: minSwitch.rx.isOn)
+            .disposed(by: disposeBag)
+        
+        minSwitch.rx.controlEvent(.valueChanged)
+            .withLatestFrom(minSwitch.rx.isOn)
+            .bind(to: relay)
+            .disposed(by: disposeBag)
     }
     
     private func setUI() {
         self.view.backgroundColor = .white
 
-        platformLabel.platform = self.platform
-        titleLabel.setup(text: "뮤지컬 <오페라의 유령>", color: .gray100, size: 17, weight: .medium)
+        platformLabel.platform = stringToPlatformType(string: notice.siteCategory ?? "")
+        titleLabel.setup(text: notice.title ?? "", color: .gray100, size: 17, weight: .medium)
         reservationLabel.setup(text: "예매 일정", color: .gray100, size: 15, weight: .medium)
-        reservationDetail.setup(text: "2023.07.12 14:00", color: .mainColor, size: 15, weight: .medium)
+        reservationDetail.setup(text: notice.openDateTime?.toDateAndTime() ?? "", color: .mainColor, size: 15, weight: .medium)
         
         titleStackView.axis = .horizontal
         titleStackView.spacing = 8
@@ -81,27 +129,18 @@ class AlarmSettingViewController: UIViewController {
         
         divider.backgroundColor = .gray20
  
-        fiveMinuteLabel.setup(text: "5분 전", color: .gray100, size: 15, weight: .regular)
-        tenMinuteLabel.setup(text: "10분 전", color: .gray100, size: 15, weight: .regular)
-        twentyMinuteLabel.setup(text: "20분 전", color: .gray100, size: 15, weight: .regular)
-        thirtyMinuteLabel.setup(text: "30분 전", color: .gray100, size: 15, weight: .regular)
+        fiveMinLabel.setup(text: "5분 전", color: .gray100, size: 15, weight: .regular)
+        tenMinLabel.setup(text: "10분 전", color: .gray100, size: 15, weight: .regular)
+        twentyMinLabel.setup(text: "20분 전", color: .gray100, size: 15, weight: .regular)
+        thirtyMinLabel.setup(text: "30분 전", color: .gray100, size: 15, weight: .regular)
         
-        fiveMinuteSwitch.tag = 1
-        tenMinuteSwitch.tag = 2
-        twentyMinuteSwitch.tag = 3
-        thirtyMinuteSwitch.tag = 4
-        fiveMinuteSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
-        tenMinuteSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
-        twentyMinuteSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
-        thirtyMinuteSwitch.addTarget(self, action: #selector(switchTapped), for: .valueChanged)
+        configureStackView(fiveMinStackView, label: fiveMinLabel, Switch: fiveMinSwitch)
+        configureStackView(tenMinStackView, label: tenMinLabel, Switch: tenMinSwitch)
+        configureStackView(twentyMinStackView, label: twentyMinLabel, Switch: twentyMinSwitch)
+        configureStackView(thirtyMinStackView, label: thirtyMinLabel, Switch: thirtyMinSwitch)
         
-        configureStackView(fiveMinuteStackView, label: fiveMinuteLabel, Switch: fiveMinuteSwitch)
-        configureStackView(tenMinuteStackView, label: tenMinuteLabel, Switch: tenMinuteSwitch)
-        configureStackView(twentyMinuteStackView, label: twentyMinuteLabel, Switch: twentyMinuteSwitch)
-        configureStackView(thirtyMinuteStackView, label: thirtyMinuteLabel, Switch: thirtyMinuteSwitch)
-        
-        minuteStackView.axis = .vertical
-        minuteStackView.spacing = 24
+        MinStackView.axis = .vertical
+        MinStackView.spacing = 24
         
         customTimeLabel.setup(text: "사용자 설정", color: .gray100, size: 15, weight: .regular)
         
@@ -113,7 +152,6 @@ class AlarmSettingViewController: UIViewController {
         autoAddNextScheduleButtonStackView.axis = .horizontal
         autoAddNextScheduleButtonStackView.spacing = 8
         autoAddNextScheduleButton.backgroundColor = .clear
-        autoAddNextScheduleButton.addTarget(self, action: #selector(autoAddNextScheduleButtonTapped), for: .touchUpInside)
 
         addAlarmLabel.setup(text: "알람을 추가하시겠습니까?", color: .gray100, size: 13, weight: .regular)
         
@@ -121,13 +159,11 @@ class AlarmSettingViewController: UIViewController {
         cancelButton.setTitleColor(.gray80, for: .normal)
         cancelButton.backgroundColor = .gray20
         cancelButton.layer.cornerRadius = 10
-        cancelButton.addTarget(self, action: #selector(cancleButtonTapped), for: .touchUpInside)
         
         completeButton.setTitle("완료", for: .normal)
         completeButton.setTitleColor(.white, for: .normal)
         completeButton.backgroundColor = .mainColor
         completeButton.layer.cornerRadius = 10
-        completeButton.addTarget(self, action: #selector(completeButtonTapped), for: .touchUpInside)
         
         ButtonStackView.axis = .horizontal
         ButtonStackView.distribution = .fillEqually
@@ -146,7 +182,7 @@ class AlarmSettingViewController: UIViewController {
     private func setAutoLayout() {
         self.view.addSubviews([infoContainer, divider, alarmContainer, buttonContainer])
         infoContainer.addSubviews([titleStackView, reservationStackView])
-        alarmContainer.addSubviews([minuteStackView, customTimeLabel, autoAddNextScheduleButtonStackView])
+        alarmContainer.addSubviews([MinStackView, customTimeLabel, autoAddNextScheduleButtonStackView])
         autoAddNextScheduleButtonStackView.addSubview(autoAddNextScheduleButton)
         buttonContainer.addSubviews([addAlarmLabel, ButtonStackView])
         
@@ -179,13 +215,13 @@ class AlarmSettingViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
-        minuteStackView.snp.makeConstraints { make in
+        MinStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(24)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(200)
         }
         customTimeLabel.snp.makeConstraints { make in
-            make.top.equalTo(minuteStackView.snp.bottom).offset(30)
+            make.top.equalTo(MinStackView.snp.bottom).offset(30)
             make.leading.trailing.equalToSuperview()
         }
         autoAddNextScheduleButtonStackView.snp.makeConstraints { make in
@@ -209,45 +245,20 @@ class AlarmSettingViewController: UIViewController {
             make.height.equalTo(48)
         }
         addAlarmLabel.snp.makeConstraints { make in
+            make.top.equalTo(buttonContainer.snp.top).offset(10)
             make.bottom.equalTo(ButtonStackView.snp.top).offset(-19)
             make.centerX.equalToSuperview()
         }
     }
     
-    @objc func switchTapped(_ sender: UISwitch) {
-        switch sender.tag {
-        case 1:
-            if sender.isOn {
-                
-            } else {
-                
-            }
-        case 2:
-            if sender.isOn {
-                
-            } else {
-                
-            }
-        case 3:
-            if sender.isOn {
-                
-            } else {
-                
-            }
-        case 4:
-            if sender.isOn {
-                
-            } else {
-                
-            }
-        default:
-            break
+    private func stringToPlatformType(string: String) -> Platform {
+        if string == "INTERPARK" {
+            return .interpark
+        } else if string == "MELON" {
+            return .melon
+        } else {
+            return .yes24
         }
-    }
-    
-    @objc func autoAddNextScheduleButtonTapped() {
-        isActiveAutoAddNextSchedule.toggle()
-        toggleButtonImage()
     }
     
     private func toggleButtonImage() {
@@ -258,14 +269,6 @@ class AlarmSettingViewController: UIViewController {
                 self.autoAddNextScheduleButtonImage.tintColor = .gray40
             }
         }
-    }
-    
-    @objc func cancleButtonTapped() {
-        print(#function)
-    }
-    
-    @objc func completeButtonTapped() {
-        print(#function)
     }
 }
 

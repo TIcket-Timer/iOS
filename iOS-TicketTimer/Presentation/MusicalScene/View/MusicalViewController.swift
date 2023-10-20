@@ -78,7 +78,6 @@ extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate, U
         updateView(type: .result)
 
         guard let query = searchBar.text else { return }
-        viewModel.addSearchHistory(query: query)
         viewModel.query = query
     }
     
@@ -138,8 +137,8 @@ extension MusicalViewController: SearchResultViewDelegate {
 
     }
     
-    func didTapAlarmSetting(_: SearchResultView, indexPath: IndexPath) {
-        viewModel.presentAlarmSettingViewController(viewController: self, at: indexPath.row)
+    func didTapAlarmSetting(_: SearchResultView) {
+        viewModel.presentAlarmSettingViewController(viewController: self)
     }
     
     func didTapShowAllResults(resultType: SearchType) {
@@ -159,7 +158,7 @@ extension MusicalViewController: SearchAllResultsViewDelegate {
         viewModel.showMusicalDetailViewController(viewController: self)
     }
     
-    func didTapAlarmSetting(_ : SearchAllResultsView, indexPath: IndexPath) {
-        viewModel.presentAlarmSettingViewController(viewController: self, at: indexPath.row)
+    func didTapAlarmSetting(_ : SearchAllResultsView) {
+        viewModel.presentAlarmSettingViewController(viewController: self)
     }
 }

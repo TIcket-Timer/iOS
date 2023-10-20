@@ -36,6 +36,10 @@
 		8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034942AD3E258001FEC71 /* SearchResultView.swift */; };
 		8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */; };
 		8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */; };
+		8FAC38782AE0CA5800F26558 /* LocalAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38772AE0CA5800F26558 /* LocalAlarm.swift */; };
+		8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38792AE0CABA00F26558 /* AlarmViewModel.swift */; };
+		8FAC387E2AE0DBDA00F26558 /* String+toDateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC387D2AE0DBDA00F26558 /* String+toDateType.swift */; };
+		8FAC38802AE10BC200F26558 /* String+toDateAndTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC387F2AE10BC200F26558 /* String+toDateAndTime.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
 		9A00CD952AD12FC300E9813F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD942AD12FC300E9813F /* Response.swift */; };
 		9A00CD972AD1314400E9813F /* Musicals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD962AD1314400E9813F /* Musicals.swift */; };
@@ -116,6 +120,10 @@
 		8FA034942AD3E258001FEC71 /* SearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyResearchedTableViewCell.swift; sourceTree = "<group>"; };
 		8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalDetailViewController.swift; sourceTree = "<group>"; };
+		8FAC38772AE0CA5800F26558 /* LocalAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAlarm.swift; sourceTree = "<group>"; };
+		8FAC38792AE0CABA00F26558 /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
+		8FAC387D2AE0DBDA00F26558 /* String+toDateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDateType.swift"; sourceTree = "<group>"; };
+		8FAC387F2AE10BC200F26558 /* String+toDateAndTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDateAndTime.swift"; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A00CD922AD12BDA00E9813F /* MusicalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalService.swift; sourceTree = "<group>"; };
 		9A00CD942AD12FC300E9813F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -262,11 +270,10 @@
 		8F33E9292AD4D73100B7AD21 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				8FAC38812AE113A800F26558 /* String */,
 				8F33E92A2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift */,
 				8F33E92C2AD4D81000B7AD21 /* UIColor+HexColor.swift */,
 				8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */,
-				8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */,
-				8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,6 +287,17 @@
 				8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		8FAC38812AE113A800F26558 /* String */ = {
+			isa = PBXGroup;
+			children = (
+				8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */,
+				8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */,
+				8FAC387F2AE10BC200F26558 /* String+toDateAndTime.swift */,
+				8FAC387D2AE0DBDA00F26558 /* String+toDateType.swift */,
+			);
+			path = String;
 			sourceTree = "<group>";
 		};
 		9A16AC022ACD99A1007C5570 /* Cell */ = {
@@ -339,6 +357,7 @@
 				9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */,
 				9A00CD962AD1314400E9813F /* Musicals.swift */,
 				9A00CD942AD12FC300E9813F /* Response.swift */,
+				8FAC38772AE0CA5800F26558 /* LocalAlarm.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -494,6 +513,7 @@
 			isa = PBXGroup;
 			children = (
 				9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */,
+				8FAC38792AE0CABA00F26558 /* AlarmViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -744,6 +764,8 @@
 				9AB92BF32ACC4A69002C4B0A /* MusicalViewModel.swift in Sources */,
 				9AB92BEB2ACC4A37002C4B0A /* CalendarViewModel.swift in Sources */,
 				9AB92BF12ACC4A5D002C4B0A /* MusicalViewController.swift in Sources */,
+				8FAC38802AE10BC200F26558 /* String+toDateAndTime.swift in Sources */,
+				8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */,
 				8F33E9282AD4D55500B7AD21 /* PlatformLabel.swift in Sources */,
 				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
@@ -752,6 +774,7 @@
 				9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */,
 				9A00CD972AD1314400E9813F /* Musicals.swift in Sources */,
 				9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */,
+				8FAC387E2AE0DBDA00F26558 /* String+toDateType.swift in Sources */,
 				65709A112A91D2E200A9DF7A /* KakaoLogin.swift in Sources */,
 				9A16AC042ACD99C0007C5570 /* HomeTableViewCell.swift in Sources */,
 				8F1AFF072ADCD6E700972CFC /* SearchAllResultsView.swift in Sources */,
@@ -783,6 +806,7 @@
 				9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */,
 				8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */,
 				8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */,
+				8FAC38782AE0CA5800F26558 /* LocalAlarm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

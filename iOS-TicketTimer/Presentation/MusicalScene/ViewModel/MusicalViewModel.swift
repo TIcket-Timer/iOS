@@ -14,14 +14,19 @@ class MusicalViewModel: ViewModelType {
     private let musicalService = MusicalService.shared
     private let userDefaultService = UserDefaultService.shared
     
+    var selectedNotice: MusicalNotice? = nil
     var selectedMusical: Musicals? = nil {
         didSet {
             guard let musical = selectedMusical else { return }
-            updateViewdMusicalHistory(musical: musical)
+            addViewdMusicalHistory(musical: musical)
         }
     }
     
-    var query = ""
+    var query = "" {
+        didSet {
+            addSearchHistory(query: query)
+        }
+    }
     
     struct Input {
         var getPopularMusicals = PublishSubject<Platform>()
@@ -167,24 +172,27 @@ class MusicalViewModel: ViewModelType {
         userDefaultService.deleteSearchHistory(query: query)
     }
     
-    func updateViewdMusicalHistory(musical: Musicals) {
+    func addViewdMusicalHistory(musical: Musicals) {
         userDefaultService.updateMusicalHistory(musical: musical)
     }
     
     func showMusicalDetailViewController(viewController: UIViewController) {
         viewController.navigationItem.searchController?.isActive = false
-        
+
         guard let musical = self.selectedMusical else { return }
-        self.updateViewdMusicalHistory(musical: musical)
+        self.addViewdMusicalHistory(musical: musical)
         let vc = MusicalDetailViewController(musical: musical)
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             viewController.navigationController?.pushViewController(vc, animated: true)
         }
+        //presentAlarmSettingViewController(viewController: viewController)
     }
     
-    func presentAlarmSettingViewController(viewController: UIViewController, at: Int) {
-        let vc = AlarmSettingViewController(platform: .interpark)
+    func presentAlarmSettingViewController(viewController: UIViewController) {
+        guard let notice = self.selectedNotice else { return }
+        let vc = AlarmSettingViewController(notice: notice)
+//        let vc = AlarmSettingViewController(notice: MusicalNotice(id: "1", siteCategory: "MELON", openDateTime: "202310202000", title: "타이틀", url: ""))
         vc.navigationItem.title = "알람 설정"
         
         let navigationController = UINavigationController(rootViewController: vc)

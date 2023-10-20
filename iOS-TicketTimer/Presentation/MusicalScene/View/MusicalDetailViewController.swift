@@ -39,6 +39,11 @@ class MusicalDetailViewController: UIViewController {
     lazy private var stackViewContainer = UIStackView(arrangedSubviews: [venueStackView, durationStackView, reservationScheduleStackView])
     
     private let divider = UIView()
+    
+    init(musical: Musicals) {
+        self.musical = musical
+        super.init(nibName: nil, bundle: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,11 +51,7 @@ class MusicalDetailViewController: UIViewController {
         setAutoLayout()
     }
     
-    init(musical: Musicals) {
-        self.musical = musical
-        super.init(nibName: nil, bundle: nil)
-    }
-    
+        
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
