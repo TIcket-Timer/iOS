@@ -16,7 +16,8 @@ class HomeViewController: UIViewController {
     private var viewModel = HomeViewModel()
     private lazy var input = HomeViewModel.Input(getDeadlineMusicalNotices: .create(bufferSize: 1),
                                                  getLatestMusicals: .create(bufferSize: 1),
-                                                 loadMoreMusicals: .create(bufferSize: 1))
+												 loadMoreMusicals: .create(bufferSize: 1),
+												 loadMoreMusicalNotices: .create(bufferSize: 1))
     private lazy var output = viewModel.transform(input: input)
 	
 	// 상단 노치 값 구하기
@@ -40,7 +41,13 @@ class HomeViewController: UIViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
 	
 	// datasource
-	private let tableViewData: [String] = ["뮤지컬1", "뮤지컬2", "뮤지컬3", "뮤지컬4"]
+	private let deadlineMusicalNoticesDataSource = RxTableViewSectionedReloadDataSource<MusicalNoticeSection>(configureCell: { dataSource, tableView, indexPath, item in
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier,
+															for: indexPath) as? HomeTableViewCell else { fatalError("unable to dequeue cell") }
+		cell.cellData.onNext(item)
+		return cell
+	})
+	
     private let latestMusicalsDataSource = RxCollectionViewSectionedReloadDataSource<MusicalsSection>(configureCell: { dataSource, collectionView, indexPath, item in
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
                                                             for: indexPath) as? HomeCollectionViewCell else { fatalError("unable to dequeue cell") }
@@ -51,6 +58,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+		input.getDeadlineMusicalNotices.onNext(.trigger)
         input.getLatestMusicals.onNext(.trigger)
         
         setUI()
@@ -106,10 +114,10 @@ class HomeViewController: UIViewController {
 		ticketLabel.font = .systemFont(ofSize: 17, weight: .bold)
 		ticketLabel.textColor = .mainColor
 		
-		tableView.delegate = self
-		tableView.dataSource = self
 		tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
+		tableView.rx.setDelegate(self).disposed(by: bag)
 		tableView.rowHeight = 42
+		tableView.showsVerticalScrollIndicator = false
 		
 		showOpenLabel.text = "공연 오픈 소식"
         showOpenLabel.font = .systemFont(ofSize: 17, weight: .bold)
@@ -173,7 +181,7 @@ class HomeViewController: UIViewController {
 			$0.top.equalTo(ticketLabel.snp.bottom)
 			$0.leading.equalToSuperview().offset(24)
 			$0.trailing.equalToSuperview().offset(-24)
-			$0.height.equalTo(42 * tableViewData.count)
+			$0.height.equalTo(42 * 2)
 		}
 		
 		showOpenLabel.snp.makeConstraints {
@@ -191,10 +199,31 @@ class HomeViewController: UIViewController {
     }
     
     private func bindRx() {
+		output.bindDeadlineMusicalNotices
+			.observe(on: MainScheduler.asyncInstance)
+			.bind(to: tableView.rx.items(dataSource: self.deadlineMusicalNoticesDataSource))
+			.disposed(by: bag)
+		
         output.bindLatestMusicals
             .observe(on: MainScheduler.asyncInstance)
             .bind(to: collectionView.rx.items(dataSource: self.latestMusicalsDataSource))
             .disposed(by: bag)
+		
+		tableView.rx.modelSelected(MusicalNotice.self)
+			.subscribe(onNext: { data in
+				guard let urlString = data.url,
+					  let url = URL(string: urlString),
+					  UIApplication.shared.canOpenURL(url)
+				else { return }
+				UIApplication.shared.open(url, options: [:], completionHandler: nil)
+			})
+			.disposed(by: bag)
+		
+		collectionView.rx.modelSelected(Musicals.self)
+			.subscribe(onNext: { data in
+				MusicalViewModel().showMusicalDetailViewController(viewController: self)
+			})
+			.disposed(by: bag)
     }
 }
 
@@ -211,24 +240,6 @@ extension HomeViewController: FSCalendarDelegate, FSCalendarDataSource {
     }
 }
 
-// MARK: - 테이블뷰
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		
-		return tableViewData.count
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as? HomeTableViewCell else { return UITableViewCell() }
-		
-		cell.label.text = tableViewData[indexPath.row]
-		
-		return cell
-	}
-}
-
 // MARK: - 스크롤 이벤트 (페이징 처리)
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -236,5 +247,10 @@ extension HomeViewController: UIScrollViewDelegate {
             (collectionView.contentOffset.x + 350) > collectionView.contentSize.width {
             input.loadMoreMusicals.onNext(.trigger)
         }
+		
+		if tableView.contentOffset.y != tableView.contentSize.height &&
+			(tableView.contentOffset.y + 130) > tableView.contentSize.height {
+			input.loadMoreMusicalNotices.onNext(.trigger)
+		}
     }
 }

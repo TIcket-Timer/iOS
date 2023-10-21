@@ -14,9 +14,10 @@ class HomeViewModel: ViewModelType {
 	private let musicalService = MusicalService.shared
 	
     struct Input {
-		var getDeadlineMusicalNotices	    : ReplaySubject<(page: Int, size: Int)>
+		var getDeadlineMusicalNotices	    : ReplaySubject<Execution<Any>>
 		var getLatestMusicals				: ReplaySubject<Execution<Any>>
         var loadMoreMusicals                : ReplaySubject<Execution<Any>>
+        var loadMoreMusicalNotices          : ReplaySubject<Execution<Any>>
     }
     
     struct Output {
@@ -29,24 +30,47 @@ class HomeViewModel: ViewModelType {
             bindDeadlineMusicalNotices: .create(bufferSize: 1),
             bindLatestMusicals: .create(bufferSize: 1)
         )
-        
-        var page: Int = 0
-        let size: Int = 5
-        var hasMoreData: Bool = false
-        var isLoading: Bool = false
-        var section = MusicalsSection(items: [])
+	
+		var musicalPage: Int = 0
+		let musicalSize: Int = 5
+        var musicalSection = MusicalsSection(items: [])
+		var musicalHasMoreData: Bool = false
+		var musicalIsLoading: Bool = false
+		
+		var musicalNoticePage: Int = 0
+//		let musicalNoticeSize: Int = 3
+		let musicalNoticeSize: Int = 0
+        var musicalNoticeSection = MusicalNoticeSection(items: [])
+		var musicalNoticeHasMoreData: Bool = false
+		var musicalNoticeIsLoading: Bool = false
     
         // MARK: - [예매 임박]
 		input.getDeadlineMusicalNotices
             .observe(on: backgroundScheduler)
-			.map { params in
-				let (page, size) = params
-				return self.musicalService.getDeadlineMusicalNotices(page: page, size: size)
+			.flatMap { _ in
+				musicalNoticeIsLoading = true
+				
+				return self.musicalService.getDeadlineMusicalNotices(page: musicalNoticePage, size: musicalNoticeSize)
 			}
-			.subscribe(onNext: { _ in
+			.subscribe(onNext: { response in
+				print("[\(response.code)] \(response.message)")
 				
+				if response.code == 200 {
+					if let result = response.result {
+						musicalNoticeSection.items.append(contentsOf: result.map { $0 })
+						
+						if result.count == musicalNoticeSize {
+							musicalNoticeHasMoreData = true
+							musicalNoticePage += 1
+						}
+					}
+					
+					output.bindDeadlineMusicalNotices.onNext([musicalNoticeSection])
+				} else {
+					
+				}
 			}, onError: { error in
-				
+				print("\(error)")
 			})
 			.disposed(by: bag)
 		
@@ -54,40 +78,47 @@ class HomeViewModel: ViewModelType {
 		input.getLatestMusicals
             .observe(on: backgroundScheduler)
 			.flatMap { _ -> Observable<Response<[Musicals]>> in
-                print("[공연 오픈 소식] page: \(page), size: \(size), hasMoreData: \(hasMoreData)")
-                isLoading = true
+				musicalIsLoading = true
                 
-				return self.musicalService.getLatestMusicals(page: page, size: size)
+				return self.musicalService.getLatestMusicals(page: musicalPage, size: musicalSize)
 			}
 			.subscribe(onNext: { response in
                 print("[\(response.code)] \(response.message)")
                 
                 if response.code == 200 {
                     if let result = response.result {
-                        section.items.append(contentsOf: result.map { $0 })
+						musicalSection.items.append(contentsOf: result.map { $0 })
                         
-                        if result.count == size {
-                            hasMoreData = true
-                            page += 1
+                        if result.count == musicalSize {
+							musicalHasMoreData = true
+							musicalPage += 1
                         }
                     }
                     
-                    output.bindLatestMusicals.onNext([section])
+                    output.bindLatestMusicals.onNext([musicalSection])
                 } else {
                     
                 }
                 
-                isLoading = false
+				musicalIsLoading = false
             }, onError: { error in
                 print("\(error)")
-                isLoading = false
+				musicalIsLoading = false
             })
+			.disposed(by: bag)
+		
+		// MARK: - [예매 임박] 페이징 처리 
+		input.loadMoreMusicalNotices
+			.throttle(.seconds(1), scheduler: MainScheduler.instance)
+			.filter { _ in musicalNoticeHasMoreData && !musicalNoticeIsLoading }
+			.observe(on: backgroundScheduler)
+			.bind(to: input.getDeadlineMusicalNotices)
 			.disposed(by: bag)
         
         // MARK: - [공연 오픈 소식] 페이징 처리
         input.loadMoreMusicals
             .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .filter { _ in hasMoreData && !isLoading }
+            .filter { _ in musicalHasMoreData && !musicalIsLoading }
             .observe(on: backgroundScheduler)
             .bind(to: input.getLatestMusicals)
             .disposed(by: bag)
