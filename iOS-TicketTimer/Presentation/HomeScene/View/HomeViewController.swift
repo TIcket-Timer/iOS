@@ -13,12 +13,13 @@ import FSCalendar
 class HomeViewController: UIViewController {
     
     private let bag = DisposeBag()
-    private var viewModel = HomeViewModel()
+    private var homeViewModel = HomeViewModel()
     private lazy var input = HomeViewModel.Input(getDeadlineMusicalNotices: .create(bufferSize: 1),
                                                  getLatestMusicals: .create(bufferSize: 1),
 												 loadMoreMusicals: .create(bufferSize: 1),
 												 loadMoreMusicalNotices: .create(bufferSize: 1))
-    private lazy var output = viewModel.transform(input: input)
+    private lazy var output = homeViewModel.transform(input: input)
+	private var musicalViewModel = MusicalViewModel()
 	
 	// 상단 노치 값 구하기
 	let scenes = UIApplication.shared.connectedScenes
@@ -71,6 +72,11 @@ class HomeViewController: UIViewController {
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 	}
     
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.navigationController?.setNavigationBarHidden(false, animated: false)
+	}
+	
     private func setUI() {
         self.view.backgroundColor = .white
 		
@@ -209,19 +215,11 @@ class HomeViewController: UIViewController {
             .bind(to: collectionView.rx.items(dataSource: self.latestMusicalsDataSource))
             .disposed(by: bag)
 		
-		tableView.rx.modelSelected(MusicalNotice.self)
-			.subscribe(onNext: { data in
-				guard let urlString = data.url,
-					  let url = URL(string: urlString),
-					  UIApplication.shared.canOpenURL(url)
-				else { return }
-				UIApplication.shared.open(url, options: [:], completionHandler: nil)
-			})
-			.disposed(by: bag)
-		
 		collectionView.rx.modelSelected(Musicals.self)
-			.subscribe(onNext: { data in
-				MusicalViewModel().showMusicalDetailViewController(viewController: self)
+			.withUnretained(self)
+			.subscribe(onNext: { (self, data) in
+				self.musicalViewModel.selectedMusical = data
+				self.musicalViewModel.showMusicalDetailViewController(viewController: self)
 			})
 			.disposed(by: bag)
     }
