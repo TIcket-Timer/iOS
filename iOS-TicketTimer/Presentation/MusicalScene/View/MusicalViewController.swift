@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import RxSwift
+import RxSwift
 
 class MusicalViewController: UIViewController {
     

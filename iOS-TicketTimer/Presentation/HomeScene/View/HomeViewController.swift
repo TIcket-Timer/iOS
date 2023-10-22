@@ -13,16 +13,21 @@ import FSCalendar
 class HomeViewController: UIViewController {
     
     private let bag = DisposeBag()
-    private var viewModel = HomeViewModel()
+    private var homeViewModel = HomeViewModel()
     private lazy var input = HomeViewModel.Input(getDeadlineMusicalNotices: .create(bufferSize: 1),
                                                  getLatestMusicals: .create(bufferSize: 1),
-                                                 loadMoreMusicals: .create(bufferSize: 1))
-    private lazy var output = viewModel.transform(input: input)
+												 loadMoreMusicals: .create(bufferSize: 1),
+												 loadMoreMusicalNotices: .create(bufferSize: 1))
+    private lazy var output = homeViewModel.transform(input: input)
+	private var musicalViewModel = MusicalViewModel()
+	
+	private var dateComponents = DateComponents()
+	private lazy var currentPage: Date = self.calendar.currentPage
 	
 	// 상단 노치 값 구하기
-	let scenes = UIApplication.shared.connectedScenes
-	lazy var windowScene = self.scenes.first as? UIWindowScene
-	lazy var topSafeAreaInsets: CGFloat = self.windowScene?.windows.first?.safeAreaInsets.top ?? 0.0
+	private let scenes = UIApplication.shared.connectedScenes
+	private lazy var windowScene = self.scenes.first as? UIWindowScene
+	private lazy var topSafeAreaInsets: CGFloat = self.windowScene?.windows.first?.safeAreaInsets.top ?? 0.0
     
 	// UI
 	private let scrollView = UIScrollView()
@@ -31,6 +36,8 @@ class HomeViewController: UIViewController {
     private let logoImageView = UIImageView()
     private let calendarView = UIView()
     private lazy var calendar = FSCalendar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 48, height: self.view.frame.width - 46))
+	private let prevButton = UIButton()
+	private let nextButton = UIButton()
 	private let markIconImageView = UIImageView()
 	private let ticketLabel = UILabel()
 	private let tableView = UITableView()
@@ -40,7 +47,13 @@ class HomeViewController: UIViewController {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
 	
 	// datasource
-	private let tableViewData: [String] = ["뮤지컬1", "뮤지컬2", "뮤지컬3", "뮤지컬4"]
+	private let deadlineMusicalNoticesDataSource = RxTableViewSectionedReloadDataSource<MusicalNoticeSection>(configureCell: { dataSource, tableView, indexPath, item in
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier,
+															for: indexPath) as? HomeTableViewCell else { fatalError("unable to dequeue cell") }
+		cell.cellData.onNext(item)
+		return cell
+	})
+	
     private let latestMusicalsDataSource = RxCollectionViewSectionedReloadDataSource<MusicalsSection>(configureCell: { dataSource, collectionView, indexPath, item in
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier,
                                                             for: indexPath) as? HomeCollectionViewCell else { fatalError("unable to dequeue cell") }
@@ -51,6 +64,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+		input.getDeadlineMusicalNotices.onNext(.trigger)
         input.getLatestMusicals.onNext(.trigger)
         
         setUI()
@@ -63,6 +77,11 @@ class HomeViewController: UIViewController {
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 	}
     
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		self.navigationController?.setNavigationBarHidden(false, animated: false)
+	}
+	
     private func setUI() {
         self.view.backgroundColor = .white
 		
@@ -71,7 +90,7 @@ class HomeViewController: UIViewController {
 		contentView.addSubviews([shadowView, showOpenLabel, collectionView])
 		shadowView.addSubviews([topBgView, calendarView, markIconImageView, ticketLabel, tableView])
         topBgView.addSubview(logoImageView)
-        calendarView.addSubview(calendar)
+        calendarView.addSubviews([calendar, prevButton, nextButton])
 		
 		shadowView.backgroundColor = .white
 		shadowView.layer.cornerRadius = 16
@@ -99,6 +118,24 @@ class HomeViewController: UIViewController {
         
         calendar.dataSource = self
         calendar.delegate = self
+		calendar.locale = Locale(identifier: "ko_KR")
+		calendar.appearance.caseOptions = .weekdayUsesSingleUpperCase
+		calendar.appearance.headerDateFormat = "YYYY년 MM월"
+		calendar.appearance.headerTitleAlignment = .center
+		calendar.appearance.headerTitleFont = .systemFont(ofSize: 17, weight: .bold)
+		calendar.appearance.headerTitleColor = .gray100
+		calendar.appearance.weekdayFont = .systemFont(ofSize: 15, weight: .medium)
+		calendar.appearance.weekdayTextColor = .gray60
+		calendar.appearance.headerMinimumDissolvedAlpha = 0.0 // 헤더 양 옆(전달 & 다음 달) 글씨 투명도
+		calendar.appearance.eventDefaultColor = .subGreenColor
+		calendar.appearance.eventSelectionColor = .none
+		calendar.appearance.selectionColor = .none
+		calendar.appearance.titleTodayColor = .white
+		calendar.appearance.todayColor = .mainColor
+		calendar.appearance.todaySelectionColor = .none
+		
+		prevButton.setImage(UIImage(named: "prev"), for: .normal)
+		nextButton.setImage(UIImage(named: "next"), for: .normal)
 		
 		markIconImageView.image = UIImage(named: "markIcon")
         
@@ -106,10 +143,10 @@ class HomeViewController: UIViewController {
 		ticketLabel.font = .systemFont(ofSize: 17, weight: .bold)
 		ticketLabel.textColor = .mainColor
 		
-		tableView.delegate = self
-		tableView.dataSource = self
 		tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.identifier)
+		tableView.rx.setDelegate(self).disposed(by: bag)
 		tableView.rowHeight = 42
+		tableView.showsVerticalScrollIndicator = false
 		
 		showOpenLabel.text = "공연 오픈 소식"
         showOpenLabel.font = .systemFont(ofSize: 17, weight: .bold)
@@ -158,6 +195,22 @@ class HomeViewController: UIViewController {
             $0.width.height.equalTo(self.view.frame.width - 48)
         }
 		
+		calendar.snp.makeConstraints {
+			$0.edges.equalToSuperview()
+		}
+		
+		prevButton.snp.makeConstraints {
+			$0.top.equalToSuperview()
+			$0.leading.equalToSuperview()
+			$0.width.height.equalTo(45)
+		}
+		
+		nextButton.snp.makeConstraints {
+			$0.top.equalToSuperview()
+			$0.trailing.equalToSuperview()
+			$0.width.height.equalTo(45)
+		}
+		
 		markIconImageView.snp.makeConstraints {
 			$0.leading.equalToSuperview().offset(24)
 			$0.top.equalTo(calendarView.snp.bottom).offset(24)
@@ -173,7 +226,7 @@ class HomeViewController: UIViewController {
 			$0.top.equalTo(ticketLabel.snp.bottom)
 			$0.leading.equalToSuperview().offset(24)
 			$0.trailing.equalToSuperview().offset(-24)
-			$0.height.equalTo(42 * tableViewData.count)
+			$0.height.equalTo(42 * 2)
 		}
 		
 		showOpenLabel.snp.makeConstraints {
@@ -191,41 +244,61 @@ class HomeViewController: UIViewController {
     }
     
     private func bindRx() {
+		output.bindDeadlineMusicalNotices
+			.observe(on: MainScheduler.asyncInstance)
+			.bind(to: tableView.rx.items(dataSource: self.deadlineMusicalNoticesDataSource))
+			.disposed(by: bag)
+		
         output.bindLatestMusicals
             .observe(on: MainScheduler.asyncInstance)
             .bind(to: collectionView.rx.items(dataSource: self.latestMusicalsDataSource))
             .disposed(by: bag)
+		
+		collectionView.rx.modelSelected(Musicals.self)
+			.withUnretained(self)
+			.subscribe(onNext: { (self, data) in
+				self.musicalViewModel.selectedMusical = data
+				self.musicalViewModel.showMusicalDetailViewController(viewController: self)
+			})
+			.disposed(by: bag)
+
+		prevButton.rx.tap
+			.withUnretained(self)
+			.subscribe(onNext: { (self, _) in
+				self.moveCurrentPage(moveUp: false)
+			})
+			.disposed(by: bag)
+		
+		nextButton.rx.tap
+			.withUnretained(self)
+			.subscribe(onNext: { (self, _) in
+				self.moveCurrentPage(moveUp: true)
+			})
+			.disposed(by: bag)
     }
+	
+	//MARK: - 달력 페이지 넘기기
+	private func moveCurrentPage(moveUp: Bool) {
+		self.dateComponents.month = moveUp ? 1 : -1
+		guard let today = calendar.today else { return }
+		self.currentPage = Calendar(identifier: .gregorian).date(byAdding: dateComponents, to: self.currentPage) ?? today
+		self.calendar.setCurrentPage(self.currentPage, animated: true)
+	}
 }
 
 // MARK: - 캘린더
 extension HomeViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        
         calendar.snp.updateConstraints {
             $0.height.equalTo(bounds.height)
         }
-        
         self.view.layoutIfNeeded()
     }
-}
-
-// MARK: - 테이블뷰
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 	
-	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		
-		return tableViewData.count
-	}
-	
-	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.identifier, for: indexPath) as? HomeTableViewCell else { return UITableViewCell() }
-		
-		cell.label.text = tableViewData[indexPath.row]
-		
-		return cell
+	// 날짜 선택 시 콜백 메소드
+	func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+		print("\(date) 날짜가 선택되었습니다.")
 	}
 }
 
@@ -236,5 +309,10 @@ extension HomeViewController: UIScrollViewDelegate {
             (collectionView.contentOffset.x + 350) > collectionView.contentSize.width {
             input.loadMoreMusicals.onNext(.trigger)
         }
+		
+		if tableView.contentOffset.y != tableView.contentSize.height &&
+			(tableView.contentOffset.y + 130) > tableView.contentSize.height {
+			input.loadMoreMusicalNotices.onNext(.trigger)
+		}
     }
 }
