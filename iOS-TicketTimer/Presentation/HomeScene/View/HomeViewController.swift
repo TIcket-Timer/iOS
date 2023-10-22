@@ -21,10 +21,13 @@ class HomeViewController: UIViewController {
     private lazy var output = homeViewModel.transform(input: input)
 	private var musicalViewModel = MusicalViewModel()
 	
+	private var dateComponents = DateComponents()
+	private lazy var currentPage: Date = self.calendar.currentPage
+	
 	// 상단 노치 값 구하기
-	let scenes = UIApplication.shared.connectedScenes
-	lazy var windowScene = self.scenes.first as? UIWindowScene
-	lazy var topSafeAreaInsets: CGFloat = self.windowScene?.windows.first?.safeAreaInsets.top ?? 0.0
+	private let scenes = UIApplication.shared.connectedScenes
+	private lazy var windowScene = self.scenes.first as? UIWindowScene
+	private lazy var topSafeAreaInsets: CGFloat = self.windowScene?.windows.first?.safeAreaInsets.top ?? 0.0
     
 	// UI
 	private let scrollView = UIScrollView()
@@ -33,6 +36,8 @@ class HomeViewController: UIViewController {
     private let logoImageView = UIImageView()
     private let calendarView = UIView()
     private lazy var calendar = FSCalendar(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 48, height: self.view.frame.width - 46))
+	private let prevButton = UIButton()
+	private let nextButton = UIButton()
 	private let markIconImageView = UIImageView()
 	private let ticketLabel = UILabel()
 	private let tableView = UITableView()
@@ -85,7 +90,7 @@ class HomeViewController: UIViewController {
 		contentView.addSubviews([shadowView, showOpenLabel, collectionView])
 		shadowView.addSubviews([topBgView, calendarView, markIconImageView, ticketLabel, tableView])
         topBgView.addSubview(logoImageView)
-        calendarView.addSubview(calendar)
+        calendarView.addSubviews([calendar, prevButton, nextButton])
 		
 		shadowView.backgroundColor = .white
 		shadowView.layer.cornerRadius = 16
@@ -113,6 +118,24 @@ class HomeViewController: UIViewController {
         
         calendar.dataSource = self
         calendar.delegate = self
+		calendar.locale = Locale(identifier: "ko_KR")
+		calendar.appearance.caseOptions = .weekdayUsesSingleUpperCase
+		calendar.appearance.headerDateFormat = "YYYY년 MM월"
+		calendar.appearance.headerTitleAlignment = .center
+		calendar.appearance.headerTitleFont = .systemFont(ofSize: 17, weight: .bold)
+		calendar.appearance.headerTitleColor = .gray100
+		calendar.appearance.weekdayFont = .systemFont(ofSize: 15, weight: .medium)
+		calendar.appearance.weekdayTextColor = .gray60
+		calendar.appearance.headerMinimumDissolvedAlpha = 0.0 // 헤더 양 옆(전달 & 다음 달) 글씨 투명도
+		calendar.appearance.eventDefaultColor = .subGreenColor
+		calendar.appearance.eventSelectionColor = .none
+		calendar.appearance.selectionColor = .none
+		calendar.appearance.titleTodayColor = .white
+		calendar.appearance.todayColor = .mainColor
+		calendar.appearance.todaySelectionColor = .none
+		
+		prevButton.setImage(UIImage(named: "prev"), for: .normal)
+		nextButton.setImage(UIImage(named: "next"), for: .normal)
 		
 		markIconImageView.image = UIImage(named: "markIcon")
         
@@ -172,6 +195,22 @@ class HomeViewController: UIViewController {
             $0.width.height.equalTo(self.view.frame.width - 48)
         }
 		
+		calendar.snp.makeConstraints {
+			$0.edges.equalToSuperview()
+		}
+		
+		prevButton.snp.makeConstraints {
+			$0.top.equalToSuperview()
+			$0.leading.equalToSuperview()
+			$0.width.height.equalTo(45)
+		}
+		
+		nextButton.snp.makeConstraints {
+			$0.top.equalToSuperview()
+			$0.trailing.equalToSuperview()
+			$0.width.height.equalTo(45)
+		}
+		
 		markIconImageView.snp.makeConstraints {
 			$0.leading.equalToSuperview().offset(24)
 			$0.top.equalTo(calendarView.snp.bottom).offset(24)
@@ -222,20 +261,45 @@ class HomeViewController: UIViewController {
 				self.musicalViewModel.showMusicalDetailViewController(viewController: self)
 			})
 			.disposed(by: bag)
+
+		prevButton.rx.tap
+			.withUnretained(self)
+			.subscribe(onNext: { (self, _) in
+				self.moveCurrentPage(moveUp: false)
+			})
+			.disposed(by: bag)
+		
+		nextButton.rx.tap
+			.withUnretained(self)
+			.subscribe(onNext: { (self, _) in
+				self.moveCurrentPage(moveUp: true)
+			})
+			.disposed(by: bag)
     }
+	
+	//MARK: - 달력 페이지 넘기기
+	private func moveCurrentPage(moveUp: Bool) {
+		self.dateComponents.month = moveUp ? 1 : -1
+		guard let today = calendar.today else { return }
+		self.currentPage = Calendar(identifier: .gregorian).date(byAdding: dateComponents, to: self.currentPage) ?? today
+		self.calendar.setCurrentPage(self.currentPage, animated: true)
+	}
 }
 
 // MARK: - 캘린더
 extension HomeViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
-        
         calendar.snp.updateConstraints {
             $0.height.equalTo(bounds.height)
         }
-        
         self.view.layoutIfNeeded()
     }
+	
+	// 날짜 선택 시 콜백 메소드
+	func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
+		print("\(date) 날짜가 선택되었습니다.")
+	}
 }
 
 // MARK: - 스크롤 이벤트 (페이징 처리)

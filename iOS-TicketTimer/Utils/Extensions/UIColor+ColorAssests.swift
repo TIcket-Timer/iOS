@@ -11,6 +11,9 @@ extension UIColor {
     class var mainColor: UIColor {
         return UIColor(named: "mainColor")!
     }
+	class var subGreenColor: UIColor {
+		return UIColor(named: "subGreenColor")!
+	}
     class var gray100: UIColor {
         return UIColor(named: "gray100")!
     }

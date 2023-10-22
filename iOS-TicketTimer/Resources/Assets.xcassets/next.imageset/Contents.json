@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "farinelli.png",
+      "filename" : "Next.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "farinelli 1.png",
+      "filename" : "Next@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "farinelli 2.png",
+      "filename" : "Next@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
