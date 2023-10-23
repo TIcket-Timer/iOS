@@ -17,8 +17,7 @@ class MusicalTableViewCell: UITableViewCell {
     private var disposeBag = DisposeBag()
 
     let musicalImageView = UIImageView()
-    let platform: Platform = .interpark
-    let platformLabel = PaddingLabel()
+    let platformLabel = PlatformLabel(platform: .yes24)
     let titleLabel = UILabel()
     let placeLabel = UILabel()
     let dateLabel = UILabel()
@@ -39,6 +38,7 @@ class MusicalTableViewCell: UITableViewCell {
         cellData
             .withUnretained(self)
             .bind(onNext: { (self, data) in
+                self.platformLabel.platform = self.stringToPlatformType(string: data.siteCategory ?? "")
                 self.titleLabel.text = data.title
                 self.placeLabel.text = data.place
                 self.dateLabel.text = data.startDate
@@ -53,15 +53,6 @@ class MusicalTableViewCell: UITableViewCell {
         musicalImageView.layer.shadowColor = UIColor.black.cgColor
         musicalImageView.layer.shadowOffset = CGSize(width: 0, height: 4)
         musicalImageView.layer.shadowOpacity = 0.2
-
-        platformLabel.text = platform.ticket
-        platformLabel.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-        platformLabel.textColor = platform.color
-        platformLabel.padding = UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
-        platformLabel.layer.borderWidth = 1.0
-        platformLabel.layer.cornerRadius = 9
-        platformLabel.layer.borderColor = platform.color.cgColor
-        platformLabel.clipsToBounds = true
 
         titleLabel.text = "뮤지컬 <오페라의 유령>"
         titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
@@ -111,6 +102,16 @@ class MusicalTableViewCell: UITableViewCell {
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(placeLabel.snp.bottom).offset(4)
             make.leading.equalTo(musicalImageView.snp.trailing).offset(12)
+        }
+    }
+    
+    private func stringToPlatformType(string: String) -> Platform {
+        if string == "INTERPARK" {
+            return .interpark
+        } else if string == "MELON" {
+            return .melon
+        } else {
+            return .yes24
         }
     }
 }

@@ -60,10 +60,13 @@ class SearchAllResultsView: UIView {
     
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
+        print("진입")
         let query = viewModel.query
         if type == .notice {
+            print("notice")
             input.getNoticSearch.onNext(query)
         } else if type == .musical {
+            print("musical")
             input.getMusicalSearch.onNext(query)
         }
     }
@@ -86,15 +89,19 @@ class SearchAllResultsView: UIView {
             dataSource, tableView, indexPath, item  in
             let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
             cell.cellData.onNext(item)
-            cell.alarmSettingButtonAction = {
+            cell.alarmSettingButtonAction = { [weak self] in
+                guard let self = self else { return }
+                self.viewModel.selectedNotice = item
                 self.delegate?.didTapAlarmSetting(self)
             }
+            cell.selectionStyle = .none
             return cell
         }
         
-        output.bindNoticeAllSearch
+        output.bindNoticeSearch
             .do { [weak self] sections in
                 let newHeight = sections[0].items.count * 72
+                print("[newHeight: \(newHeight)]")
                 self?.noticeTableViewHeightConstraint?.update(offset: newHeight)
                 self?.noticeResultLable.text = "오픈공지 검색결과 \(sections[0].items.count)건"
             }
@@ -116,10 +123,11 @@ class SearchAllResultsView: UIView {
             return cell
         }
         
-        output.bindMusicalAllSearch
+        output.bindMusicalSearch
             .observe(on: MainScheduler.instance)
             .do { [weak self] sections in
                 let newHeight = sections[0].items.count * 200
+                print("[newHeight: \(newHeight)]")
                 self?.musicalTableViewHeightConstraint?.update(offset: newHeight)
                 self?.musicalResultLable.text = "공연상세 검색결과 \(sections[0].items.count)건"
             }

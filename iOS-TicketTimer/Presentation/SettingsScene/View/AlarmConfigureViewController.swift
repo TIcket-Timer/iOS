@@ -135,39 +135,3 @@ class AlarmConfigureViewController: UIViewController {
         }
     }
 }
-
-class AlarmSwitch: UIView {
-    
-    let type: LocalAlarmType
-    
-    private let minLabel = UILabel()
-    private let spacer = UIView()
-    let minSwitch = UISwitch()
-    private lazy var stackView = UIStackView(arrangedSubviews: [minLabel, spacer, minSwitch])
-    
-    init(min: LocalAlarmType) {
-        self.type = min
-        super.init(frame: .zero)
-        configure()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configure() {
-        minLabel.setup(text: type.before, color: .black, size: 17, weight: .regular)
-//        minSwitch.snp.makeConstraints { make in
-//            make.width.equalTo(51)
-//            make.height.equalTo(31)
-//        }
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fill
-        
-        self.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-}

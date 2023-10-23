@@ -9,7 +9,11 @@ import UIKit
 
 class PlatformLabel: PaddingLabel {
     
-    var platform: Platform
+    var platform: Platform {
+        didSet {
+            setup()
+        }
+    }
     
     init(platform: Platform) {
         self.platform = platform

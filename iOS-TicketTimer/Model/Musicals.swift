@@ -29,7 +29,7 @@ struct Actor: Codable, Equatable {
     let siteCategory: String?
 }
 
-struct MusicalNotice: Codable {
+struct MusicalNotice: Codable, Equatable {
     let id: String?
     let siteCategory: String?
     let openDateTime: String?

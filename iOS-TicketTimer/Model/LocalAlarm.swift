@@ -19,7 +19,7 @@ struct LocalAlarm: Codable {
         self.noticeId = noticeId
         self.title = type.title
         self.body = body
-        //let newDate = Calendar.current.date(byAdding: .minute, value: type.value, to: date)!
+        //let newDate = Calendar.current.date(byAdding: .minute, value: -type.value, to: date)!
         let newDate = Calendar.current.date(byAdding: .second, value: type.value, to: date)!
         self.date = newDate
         self.type = type

@@ -12,12 +12,14 @@ class AlarmViewModel {
     
     private var notice: MusicalNotice
     private var savedLocalAlarms = [LocalAlarm]()
+    private let alarmService = AlarmService.shared
     private let userDefaultService = UserDefaultService.shared
 
     var fiveMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
     var tenMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
     var twentyMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
     var thirtyMinSwitchIsOn = BehaviorRelay<Bool>(value: false)
+    var customTime = BehaviorRelay<Int>(value: 0)
     
     init(notice: MusicalNotice) {
         self.notice = notice
@@ -49,6 +51,7 @@ class AlarmViewModel {
         if tenMinSwitchIsOn.value { updateLocalAlarm(type: .ten, id: id, title: title, date: date) }
         if twentyMinSwitchIsOn.value { updateLocalAlarm(type: .twenty, id: id, title: title, date: date) }
         if thirtyMinSwitchIsOn.value { updateLocalAlarm(type: .thirty, id: id, title: title, date: date) }
+        if customTime != 0 { updateLocalAlarm(type: <#T##LocalAlarmType#>, id: <#T##String#>, title: <#T##String#>, date: <#T##Date#>)}
     }
 
     func updateLocalAlarm(type: LocalAlarmType, id: String, title: String, date: Date) {

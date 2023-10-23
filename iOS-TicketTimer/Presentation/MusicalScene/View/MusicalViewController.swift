@@ -76,10 +76,10 @@ extension MusicalViewController: UISearchResultsUpdating, UISearchBarDelegate, U
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        updateView(type: .result)
-
         guard let query = searchBar.text else { return }
         viewModel.query = query
+        
+        updateView(type: .result)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {

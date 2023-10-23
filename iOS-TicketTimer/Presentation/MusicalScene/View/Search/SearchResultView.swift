@@ -24,8 +24,6 @@ class SearchResultView: UIView {
     private lazy var input = MusicalViewModel.Input()
     private lazy var output = viewModel.transform(input: input)
     
-    private let emptyLabel = UILabel()
-    
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
@@ -64,8 +62,6 @@ class SearchResultView: UIView {
     private func setUI() {
         self.backgroundColor = .white
         
-        emptyLabel.text = "검색 결과가 없습니다."
-        
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
         
@@ -81,20 +77,30 @@ class SearchResultView: UIView {
             dataSource, tableView, indexPath, item  in
             let cell = tableView.dequeueReusableCell(withIdentifier: NoticeTableViewCell.identifier, for: indexPath) as! NoticeTableViewCell
             cell.cellData.onNext(item)
-            cell.alarmSettingButtonAction = {
+            cell.alarmSettingButtonAction = { [weak self] in
+                guard let self = self else { return }
+                self.viewModel.selectedNotice = item
                 self.delegate?.didTapAlarmSetting(self)
             }
+            cell.selectionStyle = .none
             return cell
         }
         
-        output.bindNoticeLimitedSearch
+        output.bindNoticeSearch
+            .do { [weak self] sections in
+                self?.noticeResultShowAllButton.isHidden = sections[0].items.count < 3
+            }
+            .map { sections in
+                let limitedItems = Array(sections[0].items.prefix(2))
+                let sections = [MusicalNoticeSection(items: limitedItems)]
+                return sections
+            }
             .do { [weak self] sections in
                 let newHeight = sections[0].items.count * 72
                 self?.noticeTableViewHeightConstraint?.update(offset: newHeight)
                 self?.noticeResultLable.text = sections[0].items.isEmpty
                 ? "오픈공지 검색결과가 없습니다."
                 : "오픈공지 검색결과"
-                self?.noticeResultShowAllButton.isHidden = sections[0].items.count < 2
             }
             .bind(to: noticeTableView.rx.items(dataSource: noticeDataSoure))
             .disposed(by: disposeBag)
@@ -121,14 +127,21 @@ class SearchResultView: UIView {
             return cell
         }
         
-        output.bindMusicalLimitedSearch
+        output.bindMusicalSearch
+            .do { [weak self] sections in
+                self?.musicalResultShowAllButton.isHidden = sections[0].items.count < 3
+            }
+            .map { sections in
+                let limitedItems = Array(sections[0].items.prefix(2))
+                let sections = [MusicalsSection(items: limitedItems)]
+                return sections
+            }
             .do { [weak self] sections in
                 let newHeight = sections[0].items.count * 200
                 self?.musicalTableViewHeightConstraint?.update(offset: newHeight)
                 self?.musicalResultLable.text = sections[0].items.isEmpty
                 ? "공연상세 검색결과가 없습니다."
                 : "공연상세 검색결과"
-                self?.musicalResultShowAllButton.isHidden = sections[0].items.count < 2
             }
             .bind(to: musicalTableView.rx.items(dataSource: musicalDataSource))
             .disposed(by: disposeBag)

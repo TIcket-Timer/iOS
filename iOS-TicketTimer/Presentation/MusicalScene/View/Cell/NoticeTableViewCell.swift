@@ -39,7 +39,7 @@ class NoticeTableViewCell: UITableViewCell {
         cellData
             .bind(onNext: { [weak self] data in
                 guard let self = self else { return }
-                self.titleLabel.text = data.title
+                self.titleLabel.text = data.title?.trimmingCharacters(in: ["\n", "\r", "\t"])
                 self.dateLabel.text = data.openDateTime?.toDate()
                 self.timeLabel.text = data.openDateTime?.toTime()
             })
