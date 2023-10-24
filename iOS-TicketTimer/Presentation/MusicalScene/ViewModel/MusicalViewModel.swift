@@ -62,7 +62,7 @@ class MusicalViewModel: ViewModelType {
                     section.items.append(contentsOf: result)
                     output.bindPopularMusicals.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             })
             .disposed(by: disposeBag)
@@ -105,7 +105,7 @@ class MusicalViewModel: ViewModelType {
                     section.items.append(contentsOf: result)
                     output.bindNoticeSearch.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             }
             .disposed(by: disposeBag)
@@ -135,7 +135,7 @@ class MusicalViewModel: ViewModelType {
                     section.items.append(contentsOf: sortedMusicals)
                     output.bindMusicalSearch.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             }
             .disposed(by: disposeBag)
@@ -165,7 +165,7 @@ class MusicalViewModel: ViewModelType {
                     section.items.append(contentsOf: sortedMusicals)
                     output.bindMusicalSearch.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             }
             .disposed(by: disposeBag)

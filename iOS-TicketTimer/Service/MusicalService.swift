@@ -143,7 +143,7 @@ class MusicalService {
         ]
         
         guard let url = urlComponents?.url else {
-            print("[url error]")
+            print("[URL: error]")
             return Observable.empty()
         }
                 
@@ -180,7 +180,7 @@ class MusicalService {
         ]
         
         guard let url = urlComponents?.url else {
-            print("[잘못된 URL]")
+            print("[URL error]")
             return Observable.empty()
         }
 

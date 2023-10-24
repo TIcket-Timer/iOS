@@ -71,11 +71,13 @@ class AlarmTimePickerViewController: UIViewController {
         }
         viewModel.customTime
             .subscribe { [weak self] min in
-                self?.selectedTime = min
-                let hours = min / 60
-                let minutes = min % 60
-                self?.picker.selectRow(hours, inComponent: 1, animated: false)
-                self?.picker.selectRow(minutes, inComponent: 3, animated: false)
+                if min != 0 {
+                    self?.selectedTime = min
+                    let hours = min / 60
+                    let minutes = min % 60
+                    self?.picker.selectRow(hours, inComponent: 1, animated: false)
+                    self?.picker.selectRow(minutes, inComponent: 3, animated: false)
+                }
             }
             .disposed(by: disposeBag)
         

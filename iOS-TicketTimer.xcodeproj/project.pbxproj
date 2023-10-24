@@ -36,7 +36,7 @@
 		8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034942AD3E258001FEC71 /* SearchResultView.swift */; };
 		8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */; };
 		8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */; };
-		8FAC38782AE0CA5800F26558 /* LocalAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38772AE0CA5800F26558 /* LocalAlarm.swift */; };
+		8FAC38782AE0CA5800F26558 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38772AE0CA5800F26558 /* Alarm.swift */; };
 		8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38792AE0CABA00F26558 /* AlarmViewModel.swift */; };
 		8FAC387E2AE0DBDA00F26558 /* String+toDateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC387D2AE0DBDA00F26558 /* String+toDateType.swift */; };
 		8FAC38802AE10BC200F26558 /* String+toDateAndTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC387F2AE10BC200F26558 /* String+toDateAndTime.swift */; };
@@ -47,6 +47,7 @@
 		8FAC38962AE5F95200F26558 /* AlarmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38952AE5F95200F26558 /* AlarmService.swift */; };
 		8FAC38982AE6223C00F26558 /* AlarmTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38972AE6223C00F26558 /* AlarmTimePickerViewController.swift */; };
 		8FAC389A2AE6226600F26558 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38992AE6226600F26558 /* CustomNavigationController.swift */; };
+		8FC975192AE78BE300DC654C /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC975182AE78BE300DC654C /* UserNotificationService.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
 		9A00CD952AD12FC300E9813F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD942AD12FC300E9813F /* Response.swift */; };
 		9A00CD972AD1314400E9813F /* Musicals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD962AD1314400E9813F /* Musicals.swift */; };
@@ -127,7 +128,7 @@
 		8FA034942AD3E258001FEC71 /* SearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyResearchedTableViewCell.swift; sourceTree = "<group>"; };
 		8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalDetailViewController.swift; sourceTree = "<group>"; };
-		8FAC38772AE0CA5800F26558 /* LocalAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAlarm.swift; sourceTree = "<group>"; };
+		8FAC38772AE0CA5800F26558 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		8FAC38792AE0CABA00F26558 /* AlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmViewModel.swift; sourceTree = "<group>"; };
 		8FAC387D2AE0DBDA00F26558 /* String+toDateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDateType.swift"; sourceTree = "<group>"; };
 		8FAC387F2AE10BC200F26558 /* String+toDateAndTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDateAndTime.swift"; sourceTree = "<group>"; };
@@ -138,6 +139,7 @@
 		8FAC38952AE5F95200F26558 /* AlarmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmService.swift; sourceTree = "<group>"; };
 		8FAC38972AE6223C00F26558 /* AlarmTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimePickerViewController.swift; sourceTree = "<group>"; };
 		8FAC38992AE6226600F26558 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		8FC975182AE78BE300DC654C /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A00CD922AD12BDA00E9813F /* MusicalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalService.swift; sourceTree = "<group>"; };
 		9A00CD942AD12FC300E9813F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -350,6 +352,7 @@
 				9A00CD922AD12BDA00E9813F /* MusicalService.swift */,
 				8FAC38952AE5F95200F26558 /* AlarmService.swift */,
 				8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */,
+				8FC975182AE78BE300DC654C /* UserNotificationService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -373,7 +376,7 @@
 				9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */,
 				9A00CD962AD1314400E9813F /* Musicals.swift */,
 				9A00CD942AD12FC300E9813F /* Response.swift */,
-				8FAC38772AE0CA5800F26558 /* LocalAlarm.swift */,
+				8FAC38772AE0CA5800F26558 /* Alarm.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -821,6 +824,7 @@
 				8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */,
 				8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */,
 				9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */,
+				8FC975192AE78BE300DC654C /* UserNotificationService.swift in Sources */,
 				8F1AFF0A2ADE16D200972CFC /* UserDefaultService.swift in Sources */,
 				9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */,
 				8F33E9312AD4EAC200B7AD21 /* NoticeTableViewCell.swift in Sources */,
@@ -834,7 +838,7 @@
 				8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */,
 				8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */,
 				8FAC388B2AE2294900F26558 /* ChangeUsernameViewController.swift in Sources */,
-				8FAC38782AE0CA5800F26558 /* LocalAlarm.swift in Sources */,
+				8FAC38782AE0CA5800F26558 /* Alarm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

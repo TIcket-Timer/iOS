@@ -13,12 +13,13 @@ import RxGesture
 
 class AlarmSettingViewController: UIViewController {
     
-    private let notice: MusicalNotice
-    private let viewModel: AlarmViewModel
     private let disposeBag = DisposeBag()
+    var viewModel = AlarmViewModel()
+    private lazy var input = AlarmViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
     
     private lazy var platformLabel: PlatformLabel = {
-        let lb = PlatformLabel(platform: stringToPlatformType(string: notice.siteCategory ?? ""))
+        let lb = PlatformLabel(platform: stringToPlatformType(string: viewModel.notice?.siteCategory ?? ""))
         return lb
     }()
     private let titleLabel = UILabel()
@@ -57,16 +58,8 @@ class AlarmSettingViewController: UIViewController {
     
     private var isActiveAutoAddNextSchedule = false
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUI()
-        setAutoLayout()
-        setAction()
-    }
-    
     init(notice: MusicalNotice) {
-        self.notice = notice
-        self.viewModel = AlarmViewModel(notice: notice)
+        viewModel.notice = notice
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -74,7 +67,36 @@ class AlarmSettingViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setAction() {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUI()
+        setAutoLayout()
+        setGesture()
+        bindRx()
+        
+        guard let notice = viewModel.notice else { return }
+        input.getNoticeAlarms.onNext(notice)
+    }
+    
+    private func bindRx() {
+        output.localAlarms
+            .subscribe{ [weak self] alarms in
+                guard let self = self else { return }
+                
+                let times = alarms.map { $0.beforeMin }
+                
+                self.viewModel.fiveMinSwitchIsOn.accept(times.contains(where: { $0 == 5 }))
+                self.viewModel.tenMinSwitchIsOn.accept(times.contains(where: { $0 == 10 }))
+                self.viewModel.twentyMinSwitchIsOn.accept(times.contains(where: { $0 == 20 }))
+                self.viewModel.thirtyMinSwitchIsOn.accept(times.contains(where: { $0 == 30 }))
+                if let time = times.first(where: { ![5, 10, 20, 30].contains($0) }) {
+                    self.viewModel.customTime.accept(time)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func setGesture() {
         bindSwitch(fiveMinSwitch.minSwitch, to: viewModel.fiveMinSwitchIsOn)
         bindSwitch(tenMinSwitch.minSwitch, to: viewModel.tenMinSwitchIsOn)
         bindSwitch(twentyMinSwitch.minSwitch, to: viewModel.twentyMinSwitchIsOn)
@@ -108,8 +130,26 @@ class AlarmSettingViewController: UIViewController {
 
         completeButton.rx.tap
             .subscribe { [weak self] _ in
-                self?.dismiss(animated: true)
-                self?.viewModel.completeButtonAction()
+                guard let self = self else { return }
+                self.dismiss(animated: true)
+                
+                var times = [Int]()
+                if viewModel.fiveMinSwitchIsOn.value { times.append(5) }
+                if viewModel.tenMinSwitchIsOn.value { times.append(10) }
+                if viewModel.twentyMinSwitchIsOn.value { times.append(20) }
+                if viewModel.thirtyMinSwitchIsOn.value { times.append(30) }
+                if viewModel.customTime.value != 0 {
+                    times.append(viewModel.customTime.value)
+                }
+                times.sort(by: <)
+                
+                if let alarmId = viewModel.alarmId {
+                    input.upateNotcieAlarms.onNext(times)
+                } else {
+                    input.postNoticeAlarms.onNext(times)
+                }
+                
+                //self?.viewModel.completeButtonAction()
             }
             .disposed(by: disposeBag)
     }
@@ -128,11 +168,11 @@ class AlarmSettingViewController: UIViewController {
     private func setUI() {
         self.view.backgroundColor = .white
 
-        platformLabel.platform = stringToPlatformType(string: notice.siteCategory ?? "")
-        titleLabel.setup(text: notice.title?.trimmingCharacters(in: ["\n", "\r", "\t"]) ?? "", color: .gray100, size: 17, weight: .medium)
+        platformLabel.platform = stringToPlatformType(string: viewModel.notice?.siteCategory ?? "")
+        titleLabel.setup(text: viewModel.notice?.title?.trimmingCharacters(in: ["\n", "\r", "\t"]) ?? "", color: .gray100, size: 17, weight: .medium)
         titleLabel.numberOfLines = 0
         reservationLabel.setup(text: "예매 일정", color: .gray100, size: 15, weight: .medium)
-        reservationDetail.setup(text: notice.openDateTime?.toDateAndTime() ?? "", color: .mainColor, size: 15, weight: .medium)
+        reservationDetail.setup(text: viewModel.notice?.openDateTime?.toDateAndTime() ?? "", color: .mainColor, size: 15, weight: .medium)
         
         titleStackView.axis = .horizontal
         titleStackView.spacing = 8
