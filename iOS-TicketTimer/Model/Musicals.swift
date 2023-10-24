@@ -26,10 +26,11 @@ struct Actor: Codable, Equatable {
     let actorId: Int?
     let actorName: String?
     let profileUrl: String?
-    let siteCategory: String?
+    //let siteCategory: String?
+    let roleName: String
 }
 
-struct MusicalNotice: Codable {
+struct MusicalNotice: Codable, Equatable {
     let id: String?
     let siteCategory: String?
     let openDateTime: String?

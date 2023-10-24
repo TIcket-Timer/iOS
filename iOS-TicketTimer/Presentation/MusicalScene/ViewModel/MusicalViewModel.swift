@@ -41,10 +41,8 @@ class MusicalViewModel: ViewModelType {
         var bindPopularMusicals = PublishSubject<[MusicalsSection]>()
         var bindSearchHistory = PublishSubject<[SearchHistorySection]>()
         var bindMuscialHistory = PublishSubject<[MusicalsSection]>()
-        var bindNoticeLimitedSearch = PublishSubject<[MusicalNoticeSection]>()
-        var bindNoticeAllSearch = PublishSubject<[MusicalNoticeSection]>()
-        var bindMusicalLimitedSearch = PublishSubject<[MusicalsSection]>()
-        var bindMusicalAllSearch = PublishSubject<[MusicalsSection]>()
+        var bindNoticeSearch = PublishSubject<[MusicalNoticeSection]>()
+        var bindMusicalSearch = PublishSubject<[MusicalsSection]>()
     }
     
     func transform(input: Input) -> Output {
@@ -64,7 +62,7 @@ class MusicalViewModel: ViewModelType {
                     section.items.append(contentsOf: result)
                     output.bindPopularMusicals.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             })
             .disposed(by: disposeBag)
@@ -103,16 +101,11 @@ class MusicalViewModel: ViewModelType {
                 
                 if response.code == 200 {
                     guard let result = response.result else { return }
-                    
-                    var limited = MusicalNoticeSection(items: [])
-                    limited.items.append(contentsOf: result.prefix(2))
-                    output.bindNoticeLimitedSearch.onNext([limited])
-                    
-                    var all = MusicalNoticeSection(items: [])
-                    all.items.append(contentsOf: result)
-                    output.bindNoticeAllSearch.onNext([all])
+                    var section = MusicalNoticeSection(items: [])
+                    section.items.append(contentsOf: result)
+                    output.bindNoticeSearch.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             }
             .disposed(by: disposeBag)
@@ -121,7 +114,6 @@ class MusicalViewModel: ViewModelType {
             .observe(on: MainScheduler.instance)
             .flatMap { query -> Observable<Response<[Musicals]>> in
                 return self.musicalService.searchMusicalsWithAllSites(query: query)
-                //return self.musicalService.getPopularMusicals(platform: .interpark)
             }
             .subscribe { response in
                 print("[\(response.code)] \(response.message)")
@@ -129,15 +121,21 @@ class MusicalViewModel: ViewModelType {
                 if response.code == 200 {
                     guard let result = response.result else { return }
                     
-                    var limited = MusicalsSection(items: [])
-                    limited.items.append(contentsOf: result.prefix(2))
-                    output.bindMusicalLimitedSearch.onNext([limited])
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
                     
-                    var all = MusicalsSection(items: [])
-                    all.items.append(contentsOf: result)
-                    output.bindMusicalAllSearch.onNext([all])
+                    let sortedMusicals = result.sorted { firstElement, secondElement in
+                        guard let firstDate = dateFormatter.date(from: firstElement.startDate ?? ""),
+                              let secondDate = dateFormatter.date(from: secondElement.startDate ?? "")
+                        else { return false }
+                        return firstDate > secondDate
+                    }
+                    
+                    var section = MusicalsSection(items: [])
+                    section.items.append(contentsOf: sortedMusicals)
+                    output.bindMusicalSearch.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             }
             .disposed(by: disposeBag)
@@ -152,11 +150,22 @@ class MusicalViewModel: ViewModelType {
                 
                 if response.code == 200 {
                     guard let result = response.result else { return }
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    
+                    let sortedMusicals = result.sorted { firstElement, secondElement in
+                        guard let firstDate = dateFormatter.date(from: firstElement.startDate ?? ""),
+                              let secondDate = dateFormatter.date(from: secondElement.startDate ?? "")
+                        else { return false }
+                        return firstDate > secondDate
+                    }
+                    
                     var section = MusicalsSection(items: [])
-                    section.items.append(contentsOf: result)
-                    output.bindMusicalAllSearch.onNext([section])
+                    section.items.append(contentsOf: sortedMusicals)
+                    output.bindMusicalSearch.onNext([section])
                 } else {
-                    print("[status code is not 200]")
+                    print("[\(response.code)] \(response.message)")
                 }
             }
             .disposed(by: disposeBag)
