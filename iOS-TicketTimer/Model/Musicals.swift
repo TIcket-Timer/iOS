@@ -26,7 +26,8 @@ struct Actor: Codable, Equatable {
     let actorId: Int?
     let actorName: String?
     let profileUrl: String?
-    let siteCategory: String?
+    //let siteCategory: String?
+    let roleName: String
 }
 
 struct MusicalNotice: Codable, Equatable {

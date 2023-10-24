@@ -56,7 +56,7 @@ class AlarmService {
                             observer.onCompleted()
                         }
                     case .failure(let error):
-                        print("[getAllAlarms 실패] \(error)")
+                        print("[getAllAlarms 실패] \(error.localizedDescription)")
                         observer.onCompleted()
                     }
                 }
@@ -110,7 +110,7 @@ class AlarmService {
                             observer.onCompleted()
                         }
                     case .failure(let error):
-                        print("[getAllAlarms 실패] \(error)")
+                        print("[getAllAlarms 실패] \(error.localizedDescription)")
                         observer.onCompleted()
                     }
                 }
@@ -189,7 +189,7 @@ class AlarmService {
                 completion(true)
                 self?.userNotificationService.cancelNotification(alarms: alarms)
             case .failure(let error):
-                print("[알람 삭제 실패] \(error)")
+                print("[알람 삭제 실패] \(error.localizedDescription)")
             }
         }
     }

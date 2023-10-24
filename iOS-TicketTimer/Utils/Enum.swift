@@ -61,7 +61,7 @@ enum Platform: String, CaseIterable {
         case .melon:
             return "멜론 티켓"
         case .yes24:
-            return "yes24 티켓"
+            return "yes24"
         }
     }
     

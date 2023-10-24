@@ -48,6 +48,7 @@
 		8FAC38982AE6223C00F26558 /* AlarmTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38972AE6223C00F26558 /* AlarmTimePickerViewController.swift */; };
 		8FAC389A2AE6226600F26558 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38992AE6226600F26558 /* CustomNavigationController.swift */; };
 		8FC975192AE78BE300DC654C /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC975182AE78BE300DC654C /* UserNotificationService.swift */; };
+		8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC9751A2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
 		9A00CD952AD12FC300E9813F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD942AD12FC300E9813F /* Response.swift */; };
 		9A00CD972AD1314400E9813F /* Musicals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD962AD1314400E9813F /* Musicals.swift */; };
@@ -140,6 +141,7 @@
 		8FAC38972AE6223C00F26558 /* AlarmTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimePickerViewController.swift; sourceTree = "<group>"; };
 		8FAC38992AE6226600F26558 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		8FC975182AE78BE300DC654C /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
+		8FC9751A2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A00CD922AD12BDA00E9813F /* MusicalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalService.swift; sourceTree = "<group>"; };
 		9A00CD942AD12FC300E9813F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */,
 				8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */,
 				8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */,
+				8FC9751A2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -792,6 +795,7 @@
 				8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */,
 				8F33E9282AD4D55500B7AD21 /* PlatformLabel.swift in Sources */,
 				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
+				8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
 				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,

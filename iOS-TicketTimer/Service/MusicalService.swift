@@ -32,7 +32,7 @@ class MusicalService {
 						observer.onNext(data)
 						observer.onCompleted()
 					case .failure(let error):
-						print("[getDeadlineMusicalNotices 실패] \(error)")
+						print("[getDeadlineMusicalNotices 실패] \(error.localizedDescription)")
 						observer.onError(error)
 						observer.onCompleted()
 					}
@@ -63,7 +63,7 @@ class MusicalService {
 						observer.onNext(data)
 						observer.onCompleted()
 					case .failure(let error):
-						print("[getLatestMusicalNotices 실패] \(error)")
+						print("[getLatestMusicalNotices 실패] \(error.localizedDescription)")
 						observer.onError(error)
 						observer.onCompleted()
 					}
@@ -94,7 +94,7 @@ class MusicalService {
                         observer.onNext(data)
                         observer.onCompleted()
                     case .failure(let error):
-                        print("[getLatestMusicals 실패] \(error)")
+                        print("[getLatestMusicals 실패] \(error.localizedDescription)")
                         observer.onError(error)
                         observer.onCompleted()
                     }
@@ -120,11 +120,10 @@ class MusicalService {
                 .responseDecodable(of: Response<[Musicals]>.self) { response in
                     switch response.result {
                     case .success(let musicals):
-                        //print("[getPopularMusicals 성공 - \(platform.rawValue)]")
                         observer.onNext(musicals)
                         observer.onCompleted()
                     case .failure(let error):
-                        print("[getPopularMusicals 실패] \(error)")
+                        print("[getPopularMusicals 실패] \(error.localizedDescription)")
                         observer.onCompleted()
                     }
                 }
@@ -156,11 +155,10 @@ class MusicalService {
                 .responseDecodable(of: Response<[MusicalNotice]>.self) { response in
                     switch response.result {
                     case .success(let notices):
-                        //print("[searchMusicalNotices 성공]")
                         observer.onNext(notices)
                         observer.onCompleted()
                     case .failure(let error):
-                        print("[searchMusicalNotices 실패] \(error)")
+                        print("[searchMusicalNotices 실패] \(error.localizedDescription)")
                         observer.onCompleted()
                     }
                 }
@@ -193,11 +191,10 @@ class MusicalService {
                 .responseDecodable(of: Response<[Musicals]>.self) { response in
                     switch response.result {
                     case .success(let musicals):
-                        //print("[searchMusicalsWithSite 성공 - \(platform.rawValue)]")
                         observer.onNext(musicals)
                         observer.onCompleted()
                     case .failure(let error):
-                        print("[searchMusicalsWithSite 실패] \(error)")
+                        print("[searchMusicalsWithSite 실패] \(error.localizedDescription)")
                         observer.onCompleted()
                     }
                 }

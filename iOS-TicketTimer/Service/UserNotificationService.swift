@@ -26,8 +26,6 @@ class UserNotificationService {
         center.add(request) { (error) in
             if let error = error {
                 print(error)
-            } else {
-                self.logScheduledNotifications()
             }
         }
     }
@@ -38,15 +36,4 @@ class UserNotificationService {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: identifiers)
     }
-    
-    func logScheduledNotifications() {
-            let center = UNUserNotificationCenter.current()
-            center.getPendingNotificationRequests { (requests) in
-                print("\n----- PENDING NOTIFICATIONS -----")
-                for request in requests {
-                    print(request)
-                }
-                print("----- END ----- \n")
-            }
-        }
 }
