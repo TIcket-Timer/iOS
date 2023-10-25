@@ -14,6 +14,9 @@ import RxGesture
 class ChangeUsernameViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
+    var viewModel = SettingsViewModel()
+    private lazy var input = SettingsViewModel.Input()
+    private var output: SettingsViewModel.Output?
     
     private let textField = UITextField()
     private let container = UIView()
@@ -29,6 +32,8 @@ class ChangeUsernameViewController: UIViewController {
         setUI()
         setAutoLayout()
         setGesture()
+        
+        output = viewModel.transform(input: input)
     }
     
     private func setGesture() {
@@ -41,6 +46,9 @@ class ChangeUsernameViewController: UIViewController {
         completeButton.rx.tap
             .subscribe { [weak self] _ in
                 self?.dismiss(animated: true)
+                if let text = self?.textField.text, text != "" {
+                    self?.input.updatNickname.accept(text)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -98,7 +106,8 @@ class ChangeUsernameViewController: UIViewController {
         }
         
         buttonContainer.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            //make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(container.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             make.height.equalTo(48)

@@ -53,7 +53,8 @@ class SettingsViewController: UIViewController {
             .when(.recognized)
             .subscribe { [weak self] _ in
                 let vc = AlarmConfigureViewController()
-                self?.navigationController?.pushViewController(vc, animated: true)
+                let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 390)
+                self?.present(nav, animated: true)
             }
             .disposed(by: disposeBag)
         

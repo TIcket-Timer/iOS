@@ -36,7 +36,6 @@ class MusicalViewModel: ViewModelType {
         var getMusicalSearch = PublishSubject<String>()
         var getMusicalSearchWithSite = PublishSubject<(Platform, String)>()
     }
-    
     struct Output {
         var bindPopularMusicals = PublishSubject<[MusicalsSection]>()
         var bindSearchHistory = PublishSubject<[SearchHistorySection]>()
@@ -44,7 +43,6 @@ class MusicalViewModel: ViewModelType {
         var bindNoticeSearch = PublishSubject<[MusicalNoticeSection]>()
         var bindMusicalSearch = PublishSubject<[MusicalsSection]>()
     }
-    
     func transform(input: Input) -> Output {
         let output = Output()
         
@@ -195,23 +193,17 @@ class MusicalViewModel: ViewModelType {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             viewController.navigationController?.pushViewController(vc, animated: true)
         }
-        //presentAlarmSettingViewController(viewController: viewController)
     }
     
     func presentAlarmSettingViewController(viewController: UIViewController) {
         guard let notice = self.selectedNotice else { return }
         let vc = AlarmSettingViewController(notice: notice)
-//        let vc = AlarmSettingViewController(notice: MusicalNotice(id: "1", siteCategory: "MELON", openDateTime: "202310202000", title: "타이틀", url: ""))
         vc.navigationItem.title = "알람 설정"
         
-        let navigationController = UINavigationController(rootViewController: vc)
-        navigationController.modalPresentationStyle = .automatic
+        let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 640)
+        nav.modalPresentationStyle = .automatic
         
-        if let sheet = navigationController.sheetPresentationController {
-            sheet.prefersGrabberVisible = true
-        }
-        
-        viewController.present(navigationController, animated: true, completion: nil)
+        viewController.present(nav, animated: true, completion: nil)
     }
 }
 

@@ -14,124 +14,151 @@ import RxGesture
 class AlarmConfigureViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
+    var viewModel = SettingsViewModel()
+    private lazy var input = SettingsViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
     
-    private let timeSettingLabel = UILabel()
-    private let fiveMinSwitch = AlarmSwitch(min: .five)
-    private let tenMinSwitch = AlarmSwitch(min: .ten)
-    private let twentyMinSwitch = AlarmSwitch(min: .twenty)
-    private let thirtyMinSwitch = AlarmSwitch(min: .thirty)
-    private lazy var minStackView = UIStackView(arrangedSubviews: [fiveMinSwitch, tenMinSwitch, twentyMinSwitch, thirtyMinSwitch])
+    private let interparkSwitch = SiteSwitch(site: .interpark)
+    private let melonSwitch = SiteSwitch(site: .melon)
+    private let yes24Switch = SiteSwitch(site: .yes24)
+    private lazy var siteStackView = UIStackView(arrangedSubviews: [interparkSwitch, melonSwitch, yes24Switch])
     
-    private let divider1 = UIView()
-    
-    private let soundSettingLabel = UILabel()
-    private let soundLabel = UILabel()
-    private let soundSpacer = UIView()
-    private let changeSoundLabel = UILabel()
-    private lazy var soundStackView = UIStackView(arrangedSubviews: [soundLabel, soundSpacer, changeSoundLabel])
-    
-    private let divider2 = UIView()
+    private let cancelButton = UIButton()
+    private let completeButton = UIButton()
+    private lazy var ButtonStackView = UIStackView(arrangedSubviews: [cancelButton, completeButton])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setAutoLayout()
         setGesture()
+        bindData()
+        
+        input.getSiteAlarmSettings.onNext(PushAlarmSetting(interAlarm: false, melonAlarm: false, yesAlarm: false))
+    }
+    
+    private func bindData() {
+        output.bindSiteAlarmSettings
+            .subscribe { [weak self] settings in
+                self?.interparkSwitch.siteSwitch.isOn = settings.interAlarm
+                self?.melonSwitch.siteSwitch.isOn = settings.melonAlarm
+                self?.yes24Switch.siteSwitch.isOn = settings.yesAlarm
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setGesture() {
-        fiveMinSwitch.minSwitch.rx.tapGesture()
-            .when(.recognized)
+//        interparkSwitch.siteSwitch.rx.tapGesture()
+//            .when(.recognized)
+//            .subscribe { [weak self] _ in
+//
+//            }
+//            .disposed(by: disposeBag)
+//
+//        melonSwitch.siteSwitch.rx.tapGesture()
+//            .when(.recognized)
+//            .subscribe { [weak self] _ in
+//
+//            }
+//            .disposed(by: disposeBag)
+//
+//        yes24Switch.siteSwitch.rx.tapGesture()
+//            .when(.recognized)
+//            .subscribe { [weak self] _ in
+//
+//            }
+//            .disposed(by: disposeBag)
+        
+        cancelButton.rx.tap
             .subscribe { [weak self] _ in
-                
+                self?.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
-        
-        tenMinSwitch.minSwitch.rx.tapGesture()
-            .when(.recognized)
+
+        completeButton.rx.tap
             .subscribe { [weak self] _ in
+                guard let self = self else { return }
+                self.dismiss(animated: true)
                 
-            }
-            .disposed(by: disposeBag)
-        
-        twentyMinSwitch.minSwitch.rx.tapGesture()
-            .when(.recognized)
-            .subscribe { [weak self] _ in
-                
-            }
-            .disposed(by: disposeBag)
-        
-        thirtyMinSwitch.minSwitch.rx.tapGesture()
-            .when(.recognized)
-            .subscribe { [weak self] _ in
-                
-            }
-            .disposed(by: disposeBag)
-        
-        changeSoundLabel.rx.tapGesture()
-            .when(.recognized)
-            .subscribe { [weak self] _ in
-                
+                let settings = PushAlarmSetting(
+                    interAlarm: interparkSwitch.siteSwitch.isOn,
+                    melonAlarm: melonSwitch.siteSwitch.isOn,
+                    yesAlarm: yes24Switch.siteSwitch.isOn
+                )
+                input.updateAllSiteAlarmSettings.onNext(settings)
             }
             .disposed(by: disposeBag)
     }
     
     private func setUI() {
         self.view.backgroundColor = .white
-        self.navigationItem.title = "알람 성정"
+        self.navigationItem.title = "새로 오픈한 공연정보 알림 받기"
         
-        timeSettingLabel.setup(text: "시간 설정", color: .black, size: 17, weight: .bold)
-        minStackView.axis = .vertical
-        minStackView.spacing = 17
+        siteStackView.axis = .vertical
+        siteStackView.spacing = 24
         
-        divider1.backgroundColor = UIColor("#F9F9F9")
+        cancelButton.setTitle("취소", for: .normal)
+        cancelButton.setTitleColor(.gray80, for: .normal)
+        cancelButton.backgroundColor = .gray20
+        cancelButton.layer.cornerRadius = 10
         
-        soundSettingLabel.setup(text: "소리 설정", color: .black, size: 17, weight: .bold)
-        soundLabel.setup(text: "기본음 1", color: .black, size: 17, weight: .regular)
-        changeSoundLabel.setup(text: "변경", color: UIColor("#8A8A8A"), size: 15, weight: .regular)
-        soundStackView.axis = .horizontal
-        soundStackView.distribution = .fill
+        completeButton.setTitle("완료", for: .normal)
+        completeButton.setTitleColor(.white, for: .normal)
+        completeButton.backgroundColor = .mainColor
+        completeButton.layer.cornerRadius = 10
         
-        divider2.backgroundColor = UIColor("#F9F9F9")
+        ButtonStackView.axis = .horizontal
+        ButtonStackView.distribution = .fillEqually
+        ButtonStackView.spacing = 24
     }
     
     private func setAutoLayout() {
-        self.view.addSubviews([timeSettingLabel, minStackView, soundSettingLabel, soundStackView, divider1, divider2])
+        self.view.addSubviews([siteStackView, ButtonStackView])
         
-        timeSettingLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(24)
+        siteStackView.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
-        
-        minStackView.snp.makeConstraints { make in
-            make.top.equalTo(timeSettingLabel.snp.bottom).offset(24)
+ 
+        ButtonStackView.snp.makeConstraints { make in
+            make.top.equalTo(siteStackView.snp.bottom).offset(24)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
+            make.height.equalTo(48)
         }
+    }
+}
+
+class SiteSwitch: UIView {
+    
+    let site: Platform
+    
+    private let siteLabel = UILabel()
+    private let spacer = UIView()
+    let siteSwitch = UISwitch()
+    private lazy var stackView = UIStackView(arrangedSubviews: [siteLabel, spacer, siteSwitch])
+    
+    init(site: Platform) {
+        self.site = site
+        super.init(frame: .zero)
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configure() {
+        siteLabel.setup(text: site.ticket, color: .gray100, size: 15, weight: .regular)
         
-        divider1.snp.makeConstraints { make in
-            make.top.equalTo(minStackView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(8)
-        }
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fill
         
-        soundSettingLabel.snp.makeConstraints { make in
-            make.top.equalTo(divider1.snp.bottom).offset(24)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-        }
-        
-        soundStackView.snp.makeConstraints { make in
-            make.top.equalTo(soundSettingLabel.snp.bottom).offset(36)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-        }
-        
-        divider2.snp.makeConstraints { make in
-            make.top.equalTo(soundStackView.snp.bottom).offset(24)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(8)
+        self.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
 }
