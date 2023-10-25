@@ -282,9 +282,9 @@ class AlarmSettingViewController: UIViewController {
         
         // buttonContainer
         buttonContainer.snp.makeConstraints { make in
+            make.top.equalTo(alarmContainer.snp.bottom).offset(24)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-30)
         }
         ButtonStackView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()

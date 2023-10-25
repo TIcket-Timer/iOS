@@ -46,9 +46,11 @@
 		8FAC388B2AE2294900F26558 /* ChangeUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC388A2AE2294900F26558 /* ChangeUsernameViewController.swift */; };
 		8FAC38962AE5F95200F26558 /* AlarmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38952AE5F95200F26558 /* AlarmService.swift */; };
 		8FAC38982AE6223C00F26558 /* AlarmTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38972AE6223C00F26558 /* AlarmTimePickerViewController.swift */; };
-		8FAC389A2AE6226600F26558 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38992AE6226600F26558 /* CustomNavigationController.swift */; };
+		8FAC389A2AE6226600F26558 /* BottomSheetNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38992AE6226600F26558 /* BottomSheetNavigationController.swift */; };
 		8FC975192AE78BE300DC654C /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC975182AE78BE300DC654C /* UserNotificationService.swift */; };
 		8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC9751A2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift */; };
+		8FF52FB12AE8C3F1009F1907 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF52FB02AE8C3F1009F1907 /* UserService.swift */; };
+		8FF52FB32AE8C436009F1907 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF52FB22AE8C436009F1907 /* User.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
 		9A00CD952AD12FC300E9813F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD942AD12FC300E9813F /* Response.swift */; };
 		9A00CD972AD1314400E9813F /* Musicals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD962AD1314400E9813F /* Musicals.swift */; };
@@ -139,9 +141,11 @@
 		8FAC388A2AE2294900F26558 /* ChangeUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeUsernameViewController.swift; sourceTree = "<group>"; };
 		8FAC38952AE5F95200F26558 /* AlarmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmService.swift; sourceTree = "<group>"; };
 		8FAC38972AE6223C00F26558 /* AlarmTimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimePickerViewController.swift; sourceTree = "<group>"; };
-		8FAC38992AE6226600F26558 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		8FAC38992AE6226600F26558 /* BottomSheetNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetNavigationController.swift; sourceTree = "<group>"; };
 		8FC975182AE78BE300DC654C /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
 		8FC9751A2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		8FF52FB02AE8C3F1009F1907 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		8FF52FB22AE8C436009F1907 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		9A00CD922AD12BDA00E9813F /* MusicalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalService.swift; sourceTree = "<group>"; };
 		9A00CD942AD12FC300E9813F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
@@ -281,7 +285,7 @@
 			children = (
 				8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */,
 				8F33E9272AD4D55500B7AD21 /* PlatformLabel.swift */,
-				8FAC38992AE6226600F26558 /* CustomNavigationController.swift */,
+				8FAC38992AE6226600F26558 /* BottomSheetNavigationController.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -356,6 +360,7 @@
 				8FAC38952AE5F95200F26558 /* AlarmService.swift */,
 				8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */,
 				8FC975182AE78BE300DC654C /* UserNotificationService.swift */,
+				8FF52FB02AE8C3F1009F1907 /* UserService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				9A00CD962AD1314400E9813F /* Musicals.swift */,
 				9A00CD942AD12FC300E9813F /* Response.swift */,
 				8FAC38772AE0CA5800F26558 /* Alarm.swift */,
+				8FF52FB22AE8C436009F1907 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -795,12 +801,13 @@
 				8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */,
 				8F33E9282AD4D55500B7AD21 /* PlatformLabel.swift in Sources */,
 				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
+				8FF52FB32AE8C436009F1907 /* User.swift in Sources */,
 				8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
 				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,
 				9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */,
-				8FAC389A2AE6226600F26558 /* CustomNavigationController.swift in Sources */,
+				8FAC389A2AE6226600F26558 /* BottomSheetNavigationController.swift in Sources */,
 				9A00CD972AD1314400E9813F /* Musicals.swift in Sources */,
 				9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */,
 				8FAC387E2AE0DBDA00F26558 /* String+toDateType.swift in Sources */,
@@ -819,6 +826,7 @@
 				8FAC38872AE217FB00F26558 /* AlarmConfigureViewController.swift in Sources */,
 				9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */,
 				8F33E92B2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift in Sources */,
+				8FF52FB12AE8C3F1009F1907 /* UserService.swift in Sources */,
 				8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */,
 				8F70CD162AD00D6A00586847 /* MusicalTableViewCell.swift in Sources */,
 				9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */,

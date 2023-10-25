@@ -14,11 +14,13 @@ import RxGesture
 class MypageViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
+    var viewModel = SettingsViewModel()
+    private lazy var input = SettingsViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
 
-    private let userImageView = UIImageView()
-    private let usernameLabel = UILabel()
-    private let userSpacer = UIView()
-    private lazy var userStackView = UIStackView(arrangedSubviews: [userImageView, usernameLabel, userSpacer])
+    private let nicknameLabel = UILabel()
+    private let emailLabel = UILabel()
+    private lazy var userStackView = UIStackView(arrangedSubviews: [nicknameLabel, emailLabel])
     
     private let divider = UIView()
     
@@ -27,14 +29,27 @@ class MypageViewController: UIViewController {
     private let socialImageView = UIImageView()
     private lazy var socialStackView = UIStackView(arrangedSubviews: [socialLabel, socialSpacer, socialImageView])
     
-    private let settingUsernameLabel = UILabel()
-    private let settingUserimageLabel = UILabel()
+    private let settingUsernameLabel = SettingDetail(title: "닉네임 설정")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
         setAutoLayout()
         setGesture()
+        bindData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        input.getUserInfo.accept(User(nickname: "", email: ""))
+    }
+    
+    private func bindData() {
+        output.bindUserInfo
+            .subscribe { [weak self] user in
+                self?.nicknameLabel.text = user.nickname
+                self?.emailLabel.text = user.email
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setGesture() {
@@ -42,18 +57,8 @@ class MypageViewController: UIViewController {
             .when(.recognized)
             .subscribe { [weak self] _ in
                 let vc = ChangeUsernameViewController()
-                let nav = UINavigationController(rootViewController: vc)
-                if let sheet = nav.sheetPresentationController {
-                    sheet.prefersGrabberVisible = true
-                }
+                let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 260)
                 self?.present(nav, animated: true)
-            }
-            .disposed(by: disposeBag)
-        
-        settingUserimageLabel.rx.tapGesture()
-            .when(.recognized)
-            .subscribe { [weak self] _ in
-                
             }
             .disposed(by: disposeBag)
     }
@@ -62,37 +67,27 @@ class MypageViewController: UIViewController {
         self.view.backgroundColor = .white
         self.navigationItem.title = "마이페이지"
         
-        userImageView.image = UIImage(systemName: "person.circle")
-        userImageView.tintColor = .gray
-        userImageView.backgroundColor = .yellow
-        userImageView.clipsToBounds = true
-        userImageView.layer.cornerRadius = 40
-        userImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(80)
-        }
-        usernameLabel.setup(text: "닉네임", color: .black, size: 17, weight: .bold)
-        userStackView.axis = .horizontal
-        userStackView.alignment = .center
-        userStackView.distribution = .fill
-        userStackView.spacing = 24
+        nicknameLabel.setup(text: "닉네임", color: .black, size: 17, weight: .bold)
+        emailLabel.setup(text: "이메일", color: UIColor("8A8A8A"), size: 15, weight: .regular)
+        
+        userStackView.axis = .vertical
+        userStackView.alignment = .leading
+        userStackView.spacing = 7
         
         divider.backgroundColor = UIColor("#F9F9F9")
         
         socialLabel.setup(text: "소셜 로그인", color: .black, size: 17, weight: .regular)
         socialImageView.image = UIImage(systemName: "heart.circle")
-        socialImageView.tintColor = .orange
+        socialImageView.tintColor = .yellow
         socialStackView.axis = .horizontal
         socialStackView.distribution = .fill
-        
-        settingUsernameLabel.setup(text: "닉네임 설정", color: .black, size: 17, weight: .regular)
-        settingUserimageLabel.setup(text: "프로필 사진 변경", color: .black, size: 17, weight: .regular)
     }
     
     private func setAutoLayout() {
-        self.view.addSubviews([userStackView, divider, socialStackView, settingUsernameLabel, settingUserimageLabel])
+        self.view.addSubviews([userStackView, divider, socialStackView, settingUsernameLabel])
         
         userStackView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(17)
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(35)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
@@ -114,11 +109,6 @@ class MypageViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
         }
-        
-        settingUserimageLabel.snp.makeConstraints { make in
-            make.top.equalTo(settingUsernameLabel.snp.bottom).offset(36)
-            make.leading.equalToSuperview().offset(24)
-            make.trailing.equalToSuperview().offset(-24)
-        }
     }
 }
+

@@ -7,6 +7,21 @@
 
 import Foundation
 
+struct PushAlarm: Codable {
+    let id: String
+}
+
+struct PushAlarmSetting: Codable {
+    let interAlarm: Bool
+    let melonAlarm: Bool
+    let yesAlarm: Bool
+}
+
+struct PushAlarmSettingResult: Codable {
+    let site: String
+    let bool: Bool
+}
+
 struct Alarm: Codable {
     let id: Int
     let musicalNotice: MusicalNotice
