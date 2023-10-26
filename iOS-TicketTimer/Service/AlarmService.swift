@@ -14,7 +14,7 @@ class AlarmService {
     
     private let baseUrl = Server.baseUrl.rawValue
     
-    func getAllAlarms() -> Observable<[LocalAlarm]> {
+    func getAllAlarms() -> Observable<[Alarm]> {
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/alarms"
         urlComponents?.path = path
@@ -34,22 +34,9 @@ class AlarmService {
                     switch response.result {
                     case .success(let response):
                         print("[\(response.code)] \(response.message)")
-                        if response.code == 200 {
+                        if response.code == 201 {
                             guard let alarms = response.result else { return }
-                            var localAlarms = [LocalAlarm]()
-                            alarms.forEach {
-                                let alarmId = String($0.id)
-                                let notice = $0.musicalNotice
-                                
-                                $0.alarmTimes.forEach {
-                                    let localAlarm = LocalAlarm(
-                                        alarmId: alarmId,
-                                        notice: notice,
-                                        beforeMin: $0)
-                                    localAlarms.append(localAlarm)
-                                }
-                            }
-                            observer.onNext(localAlarms)
+                            observer.onNext(alarms)
                             observer.onCompleted()
                         } else {
                             print("[\(response.code)] \(response.message)")
@@ -64,8 +51,8 @@ class AlarmService {
             return Disposables.create()
         }
     }
-    
-    func getNoticeAlarms(notice: MusicalNotice) -> Observable<[LocalAlarm]> {
+
+    func getLocalAlarms(notice: MusicalNotice) -> Observable<[LocalAlarm]> {
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/alarms"
         urlComponents?.path = path

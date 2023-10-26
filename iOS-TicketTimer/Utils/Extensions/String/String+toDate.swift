@@ -17,5 +17,15 @@ extension String {
         dateFormatter.dateFormat = "yyyy.MM.dd"
         return dateFormatter.string(from: date)
     }
+    
+    func toDateKor() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyMMdd"
+        
+        let date = dateFormatter.date(from: self)!
+        
+        dateFormatter.dateFormat = "yyyy년 M월 d일"
+        return dateFormatter.string(from: date)
+    }
 }
 

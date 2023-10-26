@@ -5,7 +5,7 @@
 //  Created by 심현석 on 2023/10/19.
 //
 
-import Foundation
+import RxDataSources
 
 struct PushAlarm: Codable {
     let id: String
@@ -72,5 +72,19 @@ enum LocalAlarmType: Codable {
         case .thirty:
             return "30분 전"
         }
+    }
+}
+
+struct AlarmSection {
+    var items: [Item]
+    var header: String
+}
+
+extension AlarmSection: SectionModelType {
+    typealias Item = Alarm
+    
+    init(original: AlarmSection, items: [Alarm]) {
+        self = original
+        self.items = items
     }
 }

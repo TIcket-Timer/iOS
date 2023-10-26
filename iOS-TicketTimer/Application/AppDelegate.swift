@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         requestNotificationAuthorization()
         UNUserNotificationCenter.current().delegate = self
 		KakaoSDK.initSDK(appKey: Keys.kakao.rawValue)
+        
         return true
     }
 

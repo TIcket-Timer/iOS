@@ -198,9 +198,7 @@ class MusicalViewModel: ViewModelType {
     func presentAlarmSettingViewController(viewController: UIViewController) {
         guard let notice = self.selectedNotice else { return }
         let vc = AlarmSettingViewController(notice: notice)
-        vc.navigationItem.title = "알람 설정"
-        
-        let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 640)
+        let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 650)
         nav.modalPresentationStyle = .automatic
         
         viewController.present(nav, animated: true, completion: nil)
