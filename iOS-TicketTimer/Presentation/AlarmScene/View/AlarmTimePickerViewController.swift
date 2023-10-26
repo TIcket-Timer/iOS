@@ -120,9 +120,9 @@ class AlarmTimePickerViewController: UIViewController {
         }
         
         ButtonStackView.snp.makeConstraints { make in
+            make.top.equalTo(picker.snp.bottom).offset(30)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview().offset(-30)
             make.height.equalTo(48)
         }
     }

@@ -26,34 +26,66 @@ class AlarmViewModel: ViewModelType {
     var customTime = BehaviorRelay<Int>(value: 0)
     
     struct Input {
-        var getAllAlarms = PublishSubject<[LocalAlarm]>()
+        var getAllAlarms = PublishSubject<[Alarm]>()
+        var getAlarmSections = PublishSubject<[Alarm]>()
         var getNoticeAlarms = PublishSubject<MusicalNotice>()
         var upateNotcieAlarms = PublishSubject<[Int]>()
         var postNoticeAlarms = PublishSubject<[Int]>()
     }
     struct Output {
-        var localAlarms = PublishSubject<[LocalAlarm]>()
+        var alarms = PublishRelay<[Alarm]>()
+        var alarmSections = PublishRelay<[AlarmSection]>()
+        var localAlarms = PublishRelay<[LocalAlarm]>()
     }
     func transform(input: Input) -> Output {
         let output = Output()
         
         input.getAllAlarms
-            .observe(on: MainScheduler.instance)
             .flatMap { _ in
                 return self.alarmService.getAllAlarms()
             }
-            .subscribe { alarms in
-                output.localAlarms.onNext(alarms)
-            }
+            .subscribe(onNext: { alarms in
+                let section = AlarmSection(items: alarms, header: "")
+                output.alarmSections.accept([section])
+            })
             .disposed(by: disposeBag)
         
+        input.getAlarmSections
+            .flatMap { _ in
+                return self.alarmService.getAllAlarms()
+            }
+            .subscribe(onNext: { alarms in
+                var sections: [AlarmSection] = []
+                var groupedAlarms = [String: [Alarm]]()
+
+                let sortedAlarms = alarms.sorted {
+                    $0.musicalNotice.openDateTime ?? "" < $1.musicalNotice.openDateTime ?? ""
+                }
+                sortedAlarms.forEach { alarm in
+                    let header = String(alarm.musicalNotice.openDateTime?.prefix(8) ?? "")
+                    if groupedAlarms[header] == nil {
+                        groupedAlarms[header] = [alarm]
+                    } else {
+                        groupedAlarms[header]?.append(alarm)
+                    }
+                }
+
+                for (header, alarms) in groupedAlarms {
+                    let section = AlarmSection(items: alarms, header: header)
+                    sections.append(section)
+                }
+                
+                output.alarmSections.accept(sections)
+            })
+            .disposed(by: disposeBag)
+
         input.getNoticeAlarms
             .observe(on: MainScheduler.instance)
             .flatMap { notice -> Observable<[LocalAlarm]> in
-                return self.alarmService.getNoticeAlarms(notice: notice)
+                return self.alarmService.getLocalAlarms(notice: notice)
             }
             .subscribe{ [weak self] alarms in
-                output.localAlarms.onNext(alarms)
+                output.localAlarms.accept(alarms)
                 
                 self?.savedLocalAlarms = alarms
                 if !alarms.isEmpty {

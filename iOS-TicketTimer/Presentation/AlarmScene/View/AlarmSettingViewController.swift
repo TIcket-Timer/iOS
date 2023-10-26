@@ -11,12 +11,18 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
+protocol AlarmSettingDelegate: AnyObject {
+    func viewWillDisappear()
+}
+
 class AlarmSettingViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel = AlarmViewModel()
     private lazy var input = AlarmViewModel.Input()
     private lazy var output = viewModel.transform(input: input)
+    
+    weak var delegate: AlarmSettingDelegate?
     
     private lazy var platformLabel: PlatformLabel = {
         let lb = PlatformLabel(platform: stringToPlatformType(string: viewModel.notice?.siteCategory ?? ""))
@@ -107,10 +113,7 @@ class AlarmSettingViewController: UIViewController {
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
                 let vc = AlarmTimePickerViewController(viewModel: self.viewModel)
-                let nav = UINavigationController(rootViewController: vc)
-                if let sheet = nav.sheetPresentationController {
-                    sheet.prefersGrabberVisible = true
-                }
+                let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 380)
                 self.present(nav, animated: true)
             }
             .disposed(by: disposeBag)
@@ -143,13 +146,13 @@ class AlarmSettingViewController: UIViewController {
                 }
                 times.sort(by: <)
                 
-                if let alarmId = viewModel.alarmId {
+                if viewModel.alarmId != nil {
                     input.upateNotcieAlarms.onNext(times)
                 } else {
                     input.postNoticeAlarms.onNext(times)
                 }
                 
-                //self?.viewModel.completeButtonAction()
+                self.delegate?.viewWillDisappear()
             }
             .disposed(by: disposeBag)
     }
@@ -167,6 +170,7 @@ class AlarmSettingViewController: UIViewController {
     
     private func setUI() {
         self.view.backgroundColor = .white
+        navigationItem.title = "알람 설정"
 
         platformLabel.platform = stringToPlatformType(string: viewModel.notice?.siteCategory ?? "")
         titleLabel.setup(text: viewModel.notice?.title?.trimmingCharacters(in: ["\n", "\r", "\t"]) ?? "", color: .gray100, size: 17, weight: .medium)
