@@ -28,14 +28,12 @@ class LoginService {
             .responseDecodable(of: Response<User>.self) { response in
                 switch response.result {
                 case .success(let response):
-                    print("[\(response.code): \(response.message)]")
                     if response.code == 200 {
                         completion(true)
                     } else {
                         completion(false)
                     }
                 case .failure(let error):
-                    print("[로그인 상태 확인 실패] \(error.localizedDescription)")
                     completion(false)
                 }
             }
