@@ -31,6 +31,8 @@ class LoginViewController: UIViewController {
     private let appleCirButton = UIImageView()
     private lazy var cirButtonSocialstackView = UIStackView(arrangedSubviews: [kakaoCirButton, appleCirButton])
     
+    private var currentNonce: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setAttribute()
@@ -152,15 +154,37 @@ extension LoginViewController {
     }
 }
 
-extension LoginViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) { }
+extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func appleLogin() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return UIApplication.shared.windows.first!
+    }
 
     func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            let user = credential.user
-            guard let email = credential.email else { return }
-            viewModel.input.login.onNext(.apple)
-            //viewModel.inputs.appleLogin.onNext(user)
+            
+            guard let appleIDToken = credential.identityToken else {
+                print("Unable to fetch identity token")
+                return
+            }
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                return
+            }
+            
+            //viewModel.input.login.onNext(.apple)
         }
     }
+    
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) { }
 }

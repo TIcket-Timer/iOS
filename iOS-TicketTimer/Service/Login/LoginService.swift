@@ -44,7 +44,7 @@ class LoginService {
         case .kakao:
             return kakaoLoginService.login()
         case .apple:
-            return kakaoLoginService.login()
+            return Observable.just(SocialLoginResult(token: "", SocialLoginType: .apple))
         }
     }
     
@@ -62,7 +62,8 @@ class LoginService {
             "Authorization": "Bearer \(token)",
             "resource": type.rawValue
         ]
-        
+        print("[Authorization: \(token)]")
+        print("[resource: \(type.rawValue)]")
         return Observable.create { observer -> Disposable in
             AF.request(url, headers: header)
                 .responseDecodable(of: Response<LoginResult>.self) { response in
@@ -70,9 +71,11 @@ class LoginService {
                     case .success(let response):
                         print("[\(response.code)] \(response.message)")
                         guard let result = response.result else { return }
+                        print("#1")
                         observer.onNext(result)
                         observer.onCompleted()
                     case .failure(let error):
+                        print("#2")
                         print("\(error.localizedDescription)")
                         observer.onCompleted()
                     }

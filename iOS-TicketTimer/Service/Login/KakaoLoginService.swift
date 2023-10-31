@@ -42,6 +42,7 @@ class KakaoLoginService {
     private func loginWithKakaoAccount() -> Observable<SocialLoginResult> {
         return UserApi.shared.rx.loginWithKakaoAccount()
             .map { oauthToken in
+                print("[oauthToken: \(oauthToken.accessToken)]")
                 return SocialLoginResult(token: oauthToken.accessToken, SocialLoginType: .kakao)
             }
     }
