@@ -100,10 +100,11 @@ class MusicalService {
     //MARK: - 인기 뮤지컬 조회
     func getPopularMusicals(platform: Platform) -> Observable<[Musicals]> {
         var urlComponents = URLComponents(string: baseUrl)
-        let path = "/api/musicals/site/\(platform.site)"
+        let path = "/api/musicals/ranking"
         urlComponents?.path = path
         
         urlComponents?.queryItems = [
+            URLQueryItem(name: "site", value: platform.siteCapital),
             URLQueryItem(name: "page", value: "0"),
             URLQueryItem(name: "search", value: "10")
         ]
