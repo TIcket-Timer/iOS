@@ -28,6 +28,7 @@
 		8F33E92D2AD4D81000B7AD21 /* UIColor+HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92C2AD4D81000B7AD21 /* UIColor+HexColor.swift */; };
 		8F33E92F2AD4E01D00B7AD21 /* UILabel+setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */; };
 		8F33E9312AD4EAC200B7AD21 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */; };
+		8F411EEE2AF0A9B600C801BA /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F411EED2AF0A9B600C801BA /* PresentationManager.swift */; };
 		8F4FEA1B2AE9E02D00443701 /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA1A2AE9E02D00443701 /* AlarmListViewController.swift */; };
 		8F4FEA1D2AE9F2A700443701 /* String+toSiteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */; };
 		8F4FEA252AEA18D200443701 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */; };
@@ -132,6 +133,7 @@
 		8F33E92C2AD4D81000B7AD21 /* UIColor+HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexColor.swift"; sourceTree = "<group>"; };
 		8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+setup.swift"; sourceTree = "<group>"; };
 		8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
+		8F411EED2AF0A9B600C801BA /* PresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		8F4FEA1A2AE9E02D00443701 /* AlarmListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewController.swift; sourceTree = "<group>"; };
 		8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toSiteType.swift"; sourceTree = "<group>"; };
 		8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
@@ -431,8 +433,9 @@
 		9AB92BC52ACC475A002C4B0A /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				8F4FEA352AEB855900443701 /* AuthInterceptor.swift */,
+				8F411EED2AF0A9B600C801BA /* PresentationManager.swift */,
 				9A00CD922AD12BDA00E9813F /* MusicalService.swift */,
+				8F4FEA352AEB855900443701 /* AuthInterceptor.swift */,
 				8FAC38952AE5F95200F26558 /* AlarmService.swift */,
 				8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */,
 				8FC975182AE78BE300DC654C /* UserNotificationService.swift */,
@@ -911,6 +914,7 @@
 				8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */,
 				8F70CD162AD00D6A00586847 /* MusicalTableViewCell.swift in Sources */,
 				9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */,
+				8F411EEE2AF0A9B600C801BA /* PresentationManager.swift in Sources */,
 				8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */,
 				A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */,
 				8F4FEA2E2AEB516D00443701 /* KakaoLoginService.swift in Sources */,

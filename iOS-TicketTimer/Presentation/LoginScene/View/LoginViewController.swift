@@ -28,14 +28,14 @@ class LoginViewController: UIViewController {
     private let kakaoCirButton = UIImageView()
     private let appleCirButton = UIImageView()
     private lazy var cirButtonSocialstackView = UIStackView(arrangedSubviews: [kakaoCirButton, appleCirButton])
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setAttribute()
         setLayout()
         setBinding()
     }
-
+    
     private func setBinding() {
         kakaoRecButton.rx.tapGesture()
             .when(.recognized)
@@ -66,9 +66,10 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.loginSuccess
-            .subscribe(onNext: { [weak self] success in
+            .subscribe(onNext: { success in
                 if success {
-                    self?.dismiss(animated: true)
+                    let vc = TabBarViewController()
+                    PresentationManager.shared.changeRootVC(vc)
                 }
             })
             .disposed(by: disposeBag)
@@ -94,7 +95,7 @@ class LoginViewController: UIViewController {
         signupLabel.backgroundColor = .white
         signupLabel.textAlignment = .center
         divier.backgroundColor = .gray40
-                
+        
         kakaoCirButton.image = UIImage(named: "kakaoCircle")
         kakaoCirButton.snp.makeConstraints { $0.height.width.equalTo(50) }
         kakaoCirButton.layer.cornerRadius = 25

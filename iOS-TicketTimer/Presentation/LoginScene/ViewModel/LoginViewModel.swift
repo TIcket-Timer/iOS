@@ -28,8 +28,6 @@ class LoginViewModel {
             .subscribe(onNext: { [weak self] result in
                 self?.tokenService.saveAccessToken(with: result.accessToken)
                 self?.tokenService.saveRefreshToken(with: result.refreshToken)
-                print("[저장 accessToken: \(result.accessToken)]")
-                print("[저장 refreshToken: \(result.refreshToken)]")
                 self?.output.loginSuccess.onNext(true)
             })
             .disposed(by: disposeBag)
@@ -44,3 +42,4 @@ extension LoginViewModel {
         var loginSuccess = PublishSubject<Bool>()
     }
 }
+

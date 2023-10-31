@@ -103,13 +103,10 @@ class SettingsViewController: UIViewController {
             .disposed(by: disposeBag)
         
         output.logoutSuccess
-            .subscribe(onNext: { [weak self] success in
+            .subscribe(onNext: { success in
                 if success {
                     let vc = LoginViewController()
-                    vc.modalPresentationStyle = .fullScreen
-                    self?.present(vc, animated: true, completion: {
-                        self?.tabBarController?.selectedIndex = 0
-                    })
+                    PresentationManager.shared.changeRootVC(vc)
                 }
             })
             .disposed(by: disposeBag)

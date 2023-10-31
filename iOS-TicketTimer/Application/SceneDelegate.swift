@@ -17,8 +17,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = UINavigationController(rootViewController: TabBarViewController())
-        //window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
+
+        if UserDefaults.standard.bool(forKey: "isLogin") {
+            self.window?.rootViewController = UINavigationController(rootViewController: TabBarViewController())
+        } else {
+            self.window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
+        }
+
         window?.makeKeyAndVisible()
     }
     
@@ -31,3 +36,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
+extension SceneDelegate {
+    func changeRootVC(_ vc: UIViewController) {
+        guard let window = self.window else { return }
+        window.rootViewController = vc
+        
+        UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+      }
+}
