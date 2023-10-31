@@ -17,5 +17,10 @@ class TokenService {
     func saveRefreshToken(with token: String) {
         UserDefaults.standard.set(token, forKey: "refreshToken")
     }
+    
+    func deleteToken() {
+        UserDefaults.standard.removeObject(forKey: "accessToken")
+        UserDefaults.standard.removeObject(forKey: "refreshToken")
+    }
 }
     

@@ -134,6 +134,7 @@
 		8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+setup.swift"; sourceTree = "<group>"; };
 		8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
 		8F411EED2AF0A9B600C801BA /* PresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
+		8F411EEF2AF0D09E00C801BA /* iOS-TicketTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS-TicketTimer.entitlements"; sourceTree = "<group>"; };
 		8F4FEA1A2AE9E02D00443701 /* AlarmListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewController.swift; sourceTree = "<group>"; };
 		8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toSiteType.swift"; sourceTree = "<group>"; };
 		8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
@@ -246,6 +247,7 @@
 		658C86532A78E04D002C65F0 /* iOS-TicketTimer */ = {
 			isa = PBXGroup;
 			children = (
+				8F411EEF2AF0D09E00C801BA /* iOS-TicketTimer.entitlements */,
 				9AB92BC92ACC4822002C4B0A /* Model */,
 				9AB92BC52ACC475A002C4B0A /* Service */,
 				9AB92BC72ACC47AE002C4B0A /* Presentation */,
@@ -361,9 +363,9 @@
 		8F4FEA2C2AEB515000443701 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				8F4FEA332AEB5D1A00443701 /* TokenService.swift */,
 				8F4FEA282AEB49D800443701 /* LoginService.swift */,
 				8F4FEA2D2AEB516D00443701 /* KakaoLoginService.swift */,
+				8F4FEA332AEB5D1A00443701 /* TokenService.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1106,6 +1108,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "iOS-TicketTimer/iOS-TicketTimer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6RZ3FF956G;
@@ -1136,6 +1139,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "iOS-TicketTimer/iOS-TicketTimer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6RZ3FF956G;

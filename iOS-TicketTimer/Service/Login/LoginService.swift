@@ -83,6 +83,7 @@ class LoginService {
     
     func logout() {
         kakaoLoginService.logout()
+        TokenService.shared.deleteToken()
     }
     
     func saveSocialLoginType(_ type: String) {

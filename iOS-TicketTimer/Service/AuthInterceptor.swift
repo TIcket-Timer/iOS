@@ -12,11 +12,13 @@ class AuthInterceptor: RequestInterceptor {
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         var urlRequest = urlRequest
         
-        guard let accessToken = UserDefaults.standard.string(forKey: "accessToken") else {
-            print("[accessToken error]")
-            return
-        }
-        
+//        guard let accessToken = UserDefaults.standard.string(forKey: "accessToken") else {
+//            print("[accessToken error]")
+//            return
+//        }
+  
+        let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
+
         urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         completion(.success(urlRequest))
     }

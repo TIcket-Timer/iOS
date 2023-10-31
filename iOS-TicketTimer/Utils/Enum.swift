@@ -13,7 +13,7 @@ enum Server: String, Codable {
 }
 
 enum Keys: String, Codable {
-	case kakao = "146854dc657d698352dbda87b92c20b1"
+	case kakao = "1237cdb96724bfb06de71c875f8d5132"
 }
 
 enum Tab: Int {

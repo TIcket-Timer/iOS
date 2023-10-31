@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
+import AuthenticationServices
+
 class LoginViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
@@ -47,7 +49,12 @@ class LoginViewController: UIViewController {
         appleRecButton.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                self?.viewModel.input.login.onNext(.kakao)
+                let request = ASAuthorizationAppleIDProvider().createRequest()
+                request.requestedScopes = [.fullName, .email]
+                let controller = ASAuthorizationController(authorizationRequests: [request])
+                controller.delegate = self
+                controller.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
+                controller.performRequests()
             }
             .disposed(by: disposeBag)
         
@@ -141,6 +148,19 @@ extension LoginViewController {
         cirButtonSocialstackView.snp.makeConstraints { make in
             make.top.equalTo(signupLabel.snp.bottom).offset(18)
             make.centerX.equalToSuperview()
+        }
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) { }
+
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let user = credential.user
+            guard let email = credential.email else { return }
+            viewModel.input.login.onNext(.apple)
+            //viewModel.inputs.appleLogin.onNext(user)
         }
     }
 }
