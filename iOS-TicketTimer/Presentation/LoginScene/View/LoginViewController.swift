@@ -174,14 +174,15 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
         if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
             
             guard let appleIDToken = credential.identityToken else {
-                print("Unable to fetch identity token")
+                print("identityToken error")
                 return
             }
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                print("appleIDToken error")
                 return
             }
             
+            print("[idTokenString: \(idTokenString)]")
             //viewModel.input.login.onNext(.apple)
         }
     }

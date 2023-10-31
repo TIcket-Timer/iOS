@@ -29,6 +29,8 @@
 		8F33E92F2AD4E01D00B7AD21 /* UILabel+setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */; };
 		8F33E9312AD4EAC200B7AD21 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */; };
 		8F411EEE2AF0A9B600C801BA /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F411EED2AF0A9B600C801BA /* PresentationManager.swift */; };
+		8F411EF12AF0F7CE00C801BA /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F411EF02AF0F7CE00C801BA /* PrivacyPolicyViewController.swift */; };
+		8F411EF32AF0FAAA00C801BA /* 개인정보 처리방침.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8F411EF22AF0FAAA00C801BA /* 개인정보 처리방침.txt */; };
 		8F4FEA1B2AE9E02D00443701 /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA1A2AE9E02D00443701 /* AlarmListViewController.swift */; };
 		8F4FEA1D2AE9F2A700443701 /* String+toSiteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */; };
 		8F4FEA252AEA18D200443701 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */; };
@@ -135,6 +137,8 @@
 		8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
 		8F411EED2AF0A9B600C801BA /* PresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
 		8F411EEF2AF0D09E00C801BA /* iOS-TicketTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS-TicketTimer.entitlements"; sourceTree = "<group>"; };
+		8F411EF02AF0F7CE00C801BA /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		8F411EF22AF0FAAA00C801BA /* 개인정보 처리방침.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "개인정보 처리방침.txt"; sourceTree = SOURCE_ROOT; };
 		8F4FEA1A2AE9E02D00443701 /* AlarmListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewController.swift; sourceTree = "<group>"; };
 		8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toSiteType.swift"; sourceTree = "<group>"; };
 		8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
@@ -427,6 +431,7 @@
 			children = (
 				658C865D2A78E051002C65F0 /* Assets.xcassets */,
 				658C865F2A78E051002C65F0 /* LaunchScreen.storyboard */,
+				8F411EF22AF0FAAA00C801BA /* 개인정보 처리방침.txt */,
 				65709A102A91D2E200A9DF7A /* KakaoLogin.swift */,
 			);
 			path = Resources;
@@ -584,6 +589,7 @@
 				8FAC38862AE217FB00F26558 /* AlarmConfigureViewController.swift */,
 				8FAC38882AE218BD00F26558 /* UseInfoViewController.swift */,
 				8FAC388A2AE2294900F26558 /* ChangeUsernameViewController.swift */,
+				8F411EF02AF0F7CE00C801BA /* PrivacyPolicyViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -761,6 +767,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F411EF32AF0FAAA00C801BA /* 개인정보 처리방침.txt in Resources */,
 				658C86612A78E051002C65F0 /* LaunchScreen.storyboard in Resources */,
 				658C865E2A78E051002C65F0 /* Assets.xcassets in Resources */,
 			);
@@ -939,6 +946,7 @@
 				8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */,
 				8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */,
 				8FAC388B2AE2294900F26558 /* ChangeUsernameViewController.swift in Sources */,
+				8F411EF12AF0F7CE00C801BA /* PrivacyPolicyViewController.swift in Sources */,
 				8FAC38782AE0CA5800F26558 /* Alarm.swift in Sources */,
 				8F4FEA342AEB5D1A00443701 /* TokenService.swift in Sources */,
 			);
@@ -1111,7 +1119,7 @@
 				CODE_SIGN_ENTITLEMENTS = "iOS-TicketTimer/iOS-TicketTimer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6RZ3FF956G;
+				DEVELOPMENT_TEAM = 89BLGRU39K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1144,7 +1152,7 @@
 				CODE_SIGN_ENTITLEMENTS = "iOS-TicketTimer/iOS-TicketTimer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6RZ3FF956G;
+				DEVELOPMENT_TEAM = 89BLGRU39K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

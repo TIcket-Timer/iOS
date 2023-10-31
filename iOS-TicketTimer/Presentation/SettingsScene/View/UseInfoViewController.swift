@@ -33,18 +33,12 @@ class UseInfoViewController: UIViewController {
                 
             }
             .disposed(by: disposeBag)
-
-        serviceTermLabel.rx.tapGesture()
-            .when(.recognized)
-            .subscribe { [weak self] _ in
-                
-            }
-            .disposed(by: disposeBag)
         
         privacyPolicyLabel.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                
+                let vc = PrivacyPolicyViewController()
+                self?.navigationController?.pushViewController(vc, animated: true)
             }
             .disposed(by: disposeBag)
     }
