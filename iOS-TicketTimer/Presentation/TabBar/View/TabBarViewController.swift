@@ -35,12 +35,27 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 		super.viewDidLoad()
 		setTabBar()
 		self.navigationController?.isNavigationBarHidden = true
+        
+        showLogin()
+        input.checkLogin.onNext(())
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 	}
+    
+    private func showLogin() {
+        output.showLogin
+            .subscribe { [weak self] isLogin in
+                if isLogin == false {
+                    let vc = LoginViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self?.present(vc, animated: false)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
 	
 	// MARK: - 탭바 세팅
 	private func setTabBar() {

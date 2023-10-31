@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct RefreshTokenResult: Codable {
+    let accessToken: String
+    let refreshToken: String
+}

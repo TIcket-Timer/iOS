@@ -101,7 +101,6 @@ class SearchAllResultsView: UIView {
         output.bindNoticeSearch
             .do { [weak self] sections in
                 let newHeight = sections[0].items.count * 72
-                print("[newHeight: \(newHeight)]")
                 self?.noticeTableViewHeightConstraint?.update(offset: newHeight)
                 self?.noticeResultLable.text = "오픈공지 검색결과 \(sections[0].items.count)건"
             }
@@ -127,8 +126,7 @@ class SearchAllResultsView: UIView {
             .observe(on: MainScheduler.instance)
             .do { [weak self] sections in
                 let newHeight = sections[0].items.count * 200
-                print("[newHeight: \(newHeight)]")
-                self?.musicalTableViewHeightConstraint?.update(offset: newHeight)
+                    self?.musicalTableViewHeightConstraint?.update(offset: newHeight)
                 self?.musicalResultLable.text = "공연상세 검색결과 \(sections[0].items.count)건"
             }
             .bind(to: musicalTableView.rx.items(dataSource: musicalDataSource))

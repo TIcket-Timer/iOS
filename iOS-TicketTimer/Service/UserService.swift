@@ -22,13 +22,10 @@ class UserService {
             print("[URL error]")
             return Observable.empty()
         }
-                
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
         
         return Observable.create { observer -> Disposable in
-            AF.request(url, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<User>.self) { response in
                     switch response.result {
                     case .success(let response):
@@ -38,7 +35,6 @@ class UserService {
                             observer.onNext(user)
                             observer.onCompleted()
                         } else {
-                            print("[\(response.code)] \(response.message)")
                             observer.onCompleted()
                         }
                     case .failure(let error):
@@ -52,7 +48,6 @@ class UserService {
     }
     
     func updateUserNickname(nickname: String) {
-        print("진입")
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/members/nickname"
         urlComponents?.path = path
@@ -61,16 +56,13 @@ class UserService {
             print("[URL error]")
             return
         }
-        
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
                 
         let body: [String: Any] = [
             "name": nickname
         ]
         
-        AF.request(url, method: .patch, parameters: body, encoding: JSONEncoding.default, headers: header)
+        AF.request(url, method: .patch, parameters: body, encoding: JSONEncoding.default, interceptor: AuthInterceptor())
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: Response<String>.self) { response in
             switch response.result {
             case .success(let response):
@@ -90,13 +82,10 @@ class UserService {
             print("[URL error]")
             return Observable.empty()
         }
-                
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
         
         return Observable.create { observer -> Disposable in
-            AF.request(url, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<PushAlarmSetting>.self) { response in
                     switch response.result {
                     case .success(let response):
@@ -107,7 +96,6 @@ class UserService {
                             observer.onNext(setting)
                             observer.onCompleted()
                         } else {
-                            print("[\(response.code)] \(response.message)")
                             observer.onCompleted()
                         }
                     case .failure(let error):
@@ -129,17 +117,14 @@ class UserService {
             print("[URL error]")
             return
         }
-        
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
                 
         let body: [String: Any] = [
             "site": site.site,
             "bool": isOn
         ]
-        print("[body: \(body)]")
-        AF.request(url, method: .patch, parameters: body, encoding: JSONEncoding.default, headers: header)
+
+        AF.request(url, method: .patch, parameters: body, encoding: JSONEncoding.default, interceptor: AuthInterceptor())
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: Response<PushAlarmSettingResult>.self) { response in
             switch response.result {
             case .success(let response):

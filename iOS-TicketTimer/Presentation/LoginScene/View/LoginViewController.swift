@@ -6,63 +6,111 @@
 //
 
 import UIKit
+import SnapKit
+import RxSwift
+import RxCocoa
+import RxGesture
 
 class LoginViewController: UIViewController {
     
+    private let disposeBag = DisposeBag()
+    var viewModel = LoginViewModel()
+    
     private let logoImageView = UIImageView()
     
-    private let kakaoImageView = UIImageView()
-    private let appleImageView = UIImageView()
-    private lazy var socialStackView = UIStackView(arrangedSubviews: [kakaoImageView, appleImageView])
+    private let kakaoRecButton = UIImageView()
+    private let appleRecButton = UIImageView()
+    private lazy var recButtonStackView = UIStackView(arrangedSubviews: [kakaoRecButton, appleRecButton])
     
     private let signupLabel = UILabel()
     private let divier = UIView()
     
-    private let smallKakaoImageView = UIImageView()
-    private let smallAppleImageView = UIImageView()
-    private lazy var smallSocialstackView = UIStackView(arrangedSubviews: [smallKakaoImageView, smallAppleImageView])
+    private let kakaoCirButton = UIImageView()
+    private let appleCirButton = UIImageView()
+    private lazy var cirButtonSocialstackView = UIStackView(arrangedSubviews: [kakaoCirButton, appleCirButton])
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
-        setAutoLayout()
+        setAttribute()
+        setLayout()
+        setBinding()
+    }
+
+    private func setBinding() {
+        kakaoRecButton.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { [weak self] _ in
+                self?.viewModel.input.login.onNext(.kakao)
+            }
+            .disposed(by: disposeBag)
+        
+        appleRecButton.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { [weak self] _ in
+                self?.viewModel.input.login.onNext(.kakao)
+            }
+            .disposed(by: disposeBag)
+        
+        kakaoCirButton.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { [weak self] _ in
+                self?.viewModel.input.login.onNext(.kakao)
+            }
+            .disposed(by: disposeBag)
+        
+        appleCirButton.rx.tapGesture()
+            .when(.recognized)
+            .subscribe { [weak self] _ in
+                self?.viewModel.input.login.onNext(.kakao)
+            }
+            .disposed(by: disposeBag)
+        
+        viewModel.output.loginSuccess
+            .subscribe(onNext: { [weak self] success in
+                if success {
+                    self?.dismiss(animated: true)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
-    private func setUI() {
+    private func setAttribute() {
         view.backgroundColor = .white
         
         logoImageView.image = UIImage(named: "splashLogo")
         
-        kakaoImageView.backgroundColor = .yellow
-        kakaoImageView.snp.makeConstraints { $0.height.equalTo(45) }
-        kakaoImageView.layer.cornerRadius = 5
+        kakaoRecButton.image = UIImage(named: "kakaoRectangle")
+        kakaoRecButton.snp.makeConstraints { $0.height.equalTo(45) }
+        kakaoRecButton.layer.cornerRadius = 5
         
-        appleImageView.backgroundColor = .black
-        appleImageView.snp.makeConstraints { $0.height.equalTo(45) }
-        appleImageView.layer.cornerRadius = 5
+        appleRecButton.image = UIImage(named: "appleRectangle")
+        appleRecButton.snp.makeConstraints { $0.height.equalTo(45) }
+        appleRecButton.layer.cornerRadius = 5
         
-        socialStackView.axis = .vertical
-        socialStackView.spacing = 16
+        recButtonStackView.axis = .vertical
+        recButtonStackView.spacing = 16
         
         signupLabel.setup(text: "회원가입", color: .gray80, size: 13, weight: .regular)
         signupLabel.backgroundColor = .white
         signupLabel.textAlignment = .center
         divier.backgroundColor = .gray40
                 
-        smallKakaoImageView.backgroundColor = .yellow
-        smallKakaoImageView.snp.makeConstraints { $0.height.width.equalTo(50) }
-        smallKakaoImageView.layer.cornerRadius = 25
+        kakaoCirButton.image = UIImage(named: "kakaoCircle")
+        kakaoCirButton.snp.makeConstraints { $0.height.width.equalTo(50) }
+        kakaoCirButton.layer.cornerRadius = 25
         
-        smallAppleImageView.backgroundColor = .black
-        smallAppleImageView.snp.makeConstraints { $0.height.width.equalTo(50) }
-        smallAppleImageView.layer.cornerRadius = 25
+        appleCirButton.image = UIImage(named: "appleCircle")
+        appleCirButton.snp.makeConstraints { $0.height.width.equalTo(50) }
+        appleCirButton.layer.cornerRadius = 25
         
-        smallSocialstackView.axis = .horizontal
-        smallSocialstackView.spacing = 18
+        cirButtonSocialstackView.axis = .horizontal
+        cirButtonSocialstackView.spacing = 18
     }
-    
-    private func setAutoLayout() {
-        self.view.addSubviews([logoImageView, socialStackView, divier, smallSocialstackView])
+}
+
+extension LoginViewController {
+    private func setLayout() {
+        self.view.addSubviews([logoImageView, recButtonStackView, divier, cirButtonSocialstackView])
         divier.addSubview(signupLabel)
         
         logoImageView.snp.makeConstraints { make in
@@ -71,14 +119,14 @@ class LoginViewController: UIViewController {
             make.height.width.equalTo(125)
         }
         
-        socialStackView.snp.makeConstraints { make in
+        recButtonStackView.snp.makeConstraints { make in
             make.top.equalTo(logoImageView.snp.bottom).offset(133)
             make.leading.equalToSuperview().offset(45)
             make.trailing.equalToSuperview().offset(-45)
         }
         
         divier.snp.makeConstraints { make in
-            make.top.equalTo(socialStackView.snp.bottom).offset(58)
+            make.top.equalTo(recButtonStackView.snp.bottom).offset(58)
             make.leading.equalToSuperview().offset(45)
             make.trailing.equalToSuperview().offset(-45)
             make.height.equalTo(1)
@@ -89,7 +137,7 @@ class LoginViewController: UIViewController {
             make.width.equalTo(60)
         }
         
-        smallSocialstackView.snp.makeConstraints { make in
+        cirButtonSocialstackView.snp.makeConstraints { make in
             make.top.equalTo(signupLabel.snp.bottom).offset(18)
             make.centerX.equalToSuperview()
         }

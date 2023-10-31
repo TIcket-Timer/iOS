@@ -15,7 +15,7 @@ class MypageViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel = SettingsViewModel()
-    private lazy var input = SettingsViewModel.Input()
+    lazy var input = SettingsViewModel.Input()
     private lazy var output = viewModel.transform(input: input)
 
     private let nicknameLabel = UILabel()
@@ -37,10 +37,8 @@ class MypageViewController: UIViewController {
         setAutoLayout()
         setGesture()
         bindData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        input.getUserInfo.accept(User(nickname: "", email: ""))
+        
+        input.getUserInfo.accept(())
     }
     
     private func bindData() {
@@ -50,15 +48,22 @@ class MypageViewController: UIViewController {
                 self?.emailLabel.text = user.email
             }
             .disposed(by: disposeBag)
+        
+        viewModel.output.bindNickName
+            .subscribe { [weak self] nickname in
+                self?.nicknameLabel.text = nickname
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setGesture() {
         settingUsernameLabel.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                let vc = ChangeUsernameViewController()
+                guard let self = self else { return }
+                let vc = ChangeUsernameViewController(viewModel: self.viewModel)
                 let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 260)
-                self?.present(nav, animated: true)
+                self.present(nav, animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -77,8 +82,11 @@ class MypageViewController: UIViewController {
         divider.backgroundColor = UIColor("#F9F9F9")
         
         socialLabel.setup(text: "소셜 로그인", color: .black, size: 17, weight: .regular)
-        socialImageView.image = UIImage(systemName: "heart.circle")
-        socialImageView.tintColor = .yellow
+        
+        let imageString = UserDefaults.standard.string(forKey: "socialLoginType") ?? "kakao"
+        socialImageView.image = UIImage(named: imageString == "kakao" ? "kakaoCircle" : "appleCircle")
+        socialImageView.snp.makeConstraints { $0.height.width.equalTo(20) }
+        
         socialStackView.axis = .horizontal
         socialStackView.distribution = .fill
     }
@@ -111,4 +119,3 @@ class MypageViewController: UIViewController {
         }
     }
 }
-

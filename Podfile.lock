@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.8.0)
+  - Alamofire (5.8.1)
   - Differentiator (5.0.0)
   - FSCalendar (2.8.4)
   - KakaoSDKAuth (2.18.1):
@@ -14,6 +14,11 @@ PODS:
   - KakaoSDKUser (2.18.1):
     - KakaoSDKAuth (= 2.18.1)
   - Kingfisher (7.6.2)
+  - RxAlamofire (6.1.1):
+    - RxAlamofire/Core (= 6.1.1)
+  - RxAlamofire/Core (6.1.1):
+    - Alamofire (~> 5.4)
+    - RxSwift (~> 6.0)
   - RxCocoa (6.6.0):
     - RxRelay (= 6.6.0)
     - RxSwift (= 6.6.0)
@@ -24,6 +29,23 @@ PODS:
   - RxGesture (4.0.4):
     - RxCocoa (~> 6.0)
     - RxSwift (~> 6.0)
+  - RxKakaoSDKAuth (2.18.1):
+    - KakaoSDKAuth (= 2.18.1)
+    - RxKakaoSDKCommon (= 2.18.1)
+  - RxKakaoSDKCommon (2.18.1):
+    - RxKakaoSDKCommon/Common (= 2.18.1)
+    - RxKakaoSDKCommon/Network (= 2.18.1)
+  - RxKakaoSDKCommon/Common (2.18.1):
+    - KakaoSDKCommon/Common (= 2.18.1)
+    - RxCocoa
+    - RxSwift (~> 6.0)
+  - RxKakaoSDKCommon/Network (2.18.1):
+    - KakaoSDKCommon/Network (= 2.18.1)
+    - RxAlamofire (~> 6.0)
+    - RxKakaoSDKCommon/Common (= 2.18.1)
+  - RxKakaoSDKUser (2.18.1):
+    - KakaoSDKUser (= 2.18.1)
+    - RxKakaoSDKAuth (= 2.18.1)
   - RxRelay (6.6.0):
     - RxSwift (= 6.6.0)
   - RxSwift (6.6.0)
@@ -38,6 +60,9 @@ DEPENDENCIES:
   - RxCocoa
   - RxDataSources (~> 5.0)
   - RxGesture
+  - RxKakaoSDKAuth
+  - RxKakaoSDKCommon
+  - RxKakaoSDKUser
   - RxSwift
   - SnapKit (~> 5.6.0)
 
@@ -50,28 +75,36 @@ SPEC REPOS:
     - KakaoSDKCommon
     - KakaoSDKUser
     - Kingfisher
+    - RxAlamofire
     - RxCocoa
     - RxDataSources
     - RxGesture
+    - RxKakaoSDKAuth
+    - RxKakaoSDKCommon
+    - RxKakaoSDKUser
     - RxRelay
     - RxSwift
     - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: 0e92e751b3e9e66d7982db43919d01f313b8eb91
+  Alamofire: 3ca42e259043ee0dc5c0cdd76c4bc568b8e42af7
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   KakaoSDKAuth: 303975500e97d5e20ddbf0acff9b332b545a1f3c
   KakaoSDKCommon: e8928c15b6239f74ea4b48a772dbbf7a5dd79134
   KakaoSDKUser: 0c285d9837fa0cbf7713934a6e1f79c15678903d
   Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
+  RxAlamofire: beb75a1c452d0de225651db4903f5d29d034a620
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
+  RxKakaoSDKAuth: 08bf9fc2862b7264d8dcccc6772dc1057662c509
+  RxKakaoSDKCommon: 9bda463bb5ead9e660e4f7945a94f02d81ac3a8d
+  RxKakaoSDKUser: 9f18f35457f34531571b0b6e2879da7fa1dda9f6
   RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 375305e490b6f4738d30cb61220a377f3b34b6d1
+PODFILE CHECKSUM: 251cec75cdd48b2aaa86e570f5c9185e1f45bf94
 
 COCOAPODS: 1.11.3
