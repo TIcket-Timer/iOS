@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 enum Server: String, Codable {
-	case baseUrl = "http://43.202.78.122:8080"
+	case baseUrl = "https://nengcipe-server.store"
 }
 
 enum Keys: String, Codable {

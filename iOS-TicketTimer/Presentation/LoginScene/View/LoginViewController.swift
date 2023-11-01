@@ -51,12 +51,7 @@ class LoginViewController: UIViewController {
         appleRecButton.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                let request = ASAuthorizationAppleIDProvider().createRequest()
-                request.requestedScopes = [.fullName, .email]
-                let controller = ASAuthorizationController(authorizationRequests: [request])
-                controller.delegate = self
-                controller.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
-                controller.performRequests()
+                self?.viewModel.input.login.onNext(.apple)
             }
             .disposed(by: disposeBag)
         
@@ -70,7 +65,7 @@ class LoginViewController: UIViewController {
         appleCirButton.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                self?.viewModel.input.login.onNext(.kakao)
+                self?.viewModel.input.login.onNext(.apple)
             }
             .disposed(by: disposeBag)
         
@@ -152,40 +147,4 @@ extension LoginViewController {
             make.centerX.equalToSuperview()
         }
     }
-}
-
-extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    func appleLogin() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        controller.delegate = self
-        controller.presentationContextProvider = self
-        controller.performRequests()
-    }
-    
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return UIApplication.shared.windows.first!
-    }
-
-    func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            
-            guard let appleIDToken = credential.identityToken else {
-                print("identityToken error")
-                return
-            }
-            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("appleIDToken error")
-                return
-            }
-            
-            print("[idTokenString: \(idTokenString)]")
-            //viewModel.input.login.onNext(.apple)
-        }
-    }
-    
-    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) { }
 }

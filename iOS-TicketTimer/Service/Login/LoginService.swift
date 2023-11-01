@@ -12,6 +12,7 @@ class LoginService {
     static let shared = LoginService()
 
     private let kakaoLoginService = KakaoLoginService()
+    private let appleLoginService = AppleLoginService()
     
     func checkLogin(completion: @escaping (Bool) -> Void) {
         var urlComponents = URLComponents(string: Server.baseUrl.rawValue)
@@ -33,7 +34,7 @@ class LoginService {
                     } else {
                         completion(false)
                     }
-                case .failure(let error):
+                case .failure(_):
                     completion(false)
                 }
             }
@@ -44,13 +45,13 @@ class LoginService {
         case .kakao:
             return kakaoLoginService.login()
         case .apple:
-            return Observable.just(SocialLoginResult(token: "", SocialLoginType: .apple))
+            return appleLoginService.login()
         }
     }
     
     func sendToken(_ type: SocialLoginType, with token: String) -> Observable<LoginResult> {
         var urlComponents = URLComponents(string: Server.baseUrl.rawValue)
-        let path = "/api/oauth2/\(type)"
+        let path = "/api/oauth2"
         urlComponents?.path = path
         
         guard let url = urlComponents?.url else {
@@ -58,12 +59,19 @@ class LoginService {
             return Observable.empty()
         }
         
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(token)",
-            "resource": type.rawValue
-        ]
-        print("[Authorization: \(token)]")
-        print("[resource: \(type.rawValue)]")
+        var header: HTTPHeaders
+        if type == .kakao {
+            header = [
+                "Authorization": "Bearer \(token)",
+                "resource": type.rawValue
+            ]
+        } else {
+            header = [
+                "Authorization": "\(token)",
+                "resource": type.rawValue
+            ]
+        }
+
         return Observable.create { observer -> Disposable in
             AF.request(url, headers: header)
                 .responseDecodable(of: Response<LoginResult>.self) { response in
@@ -71,11 +79,9 @@ class LoginService {
                     case .success(let response):
                         print("[\(response.code)] \(response.message)")
                         guard let result = response.result else { return }
-                        print("#1")
                         observer.onNext(result)
                         observer.onCompleted()
                     case .failure(let error):
-                        print("#2")
                         print("\(error.localizedDescription)")
                         observer.onCompleted()
                     }
