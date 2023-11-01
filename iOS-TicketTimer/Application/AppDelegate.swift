@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        //MARK: - Bar 설정
+        setBarAppearance()
+        
         return true
     }
     
@@ -71,5 +74,20 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // 앱이 실행 중 일때 알람
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.list, .banner])
+    }
+    
+    func setBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.shadowColor = .clear
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = .white
+        tabBarAppearance.shadowColor = .gray40
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 }
