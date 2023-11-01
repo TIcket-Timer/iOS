@@ -16,8 +16,8 @@ class UseInfoViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private let tutorialLabel = UILabel()
-    private let serviceTermLabel = UILabel()
-    private let privacyPolicyLabel = UILabel()
+    private let privacyPolicyLabel = SettingDetail(title: "개인정보 처리방침")
+    private let serviceTermLabel = SettingDetail(title: "서비스 이용약관")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +45,12 @@ class UseInfoViewController: UIViewController {
     
     private func setUI() {
         self.view.backgroundColor = .white
+        
         self.navigationItem.title = "이용 안내"
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButtonItem
         
         tutorialLabel.setup(text: "튜토리얼 다시보기", color: .black, size: 17, weight: .regular)
-        serviceTermLabel.setup(text: "서비스 이용약관", color: .black, size: 17, weight: .regular)
-        privacyPolicyLabel.setup(text: "개인정보 처리방침", color: .black, size: 17, weight: .regular)
     }
     
     private func setAutoLayout() {
