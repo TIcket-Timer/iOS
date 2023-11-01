@@ -59,18 +59,10 @@ class LoginService {
             return Observable.empty()
         }
         
-        var header: HTTPHeaders
-        if type == .kakao {
-            header = [
-                "Authorization": "Bearer \(token)",
-                "resource": type.rawValue
-            ]
-        } else {
-            header = [
-                "Authorization": "\(token)",
-                "resource": type.rawValue
-            ]
-        }
+        var header: HTTPHeaders = [
+            "Authorization": token,
+            "resource": type.rawValue
+        ]
 
         return Observable.create { observer -> Disposable in
             AF.request(url, headers: header)
