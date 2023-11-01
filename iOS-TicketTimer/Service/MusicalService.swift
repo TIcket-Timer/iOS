@@ -18,17 +18,14 @@ class MusicalService {
 		let path = "/api/musicalNotices/deadline?page=\(page)&size=\(size)"
 		let url = baseUrl + path
 		
-		let header: HTTPHeaders = [
-			"Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-		]
-		
 		let observable = Observable<Response<[MusicalNotice]>>.create { observer -> Disposable in
 			
-			AF.request(url, method: .get, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
 				.responseDecodable(of: Response<[MusicalNotice]>.self) { response in
 					switch response.result {
 					case .success(let data):
-						print("[getDeadlineMusicalNotices 성공] \(data)")
+						//print("[getDeadlineMusicalNotices 성공] \(data)")
 						observer.onNext(data)
 						observer.onCompleted()
 					case .failure(let error):
@@ -48,18 +45,15 @@ class MusicalService {
 	func getLatestMusicalNotices(page: Int, size: Int) -> Observable<Response<[MusicalNotice]>> {
 		let path = "/api/musicalNotices/latest?page=\(page)&size=\(size)"
 		let url = baseUrl + path
-        
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
 		
 		let observable = Observable<Response<[MusicalNotice]>>.create { observer -> Disposable in
 			
-			AF.request(url, method: .get, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
 				.responseDecodable(of: Response<[MusicalNotice]>.self) { response in
 					switch response.result {
 					case .success(let data):
-						print("[getLatestMusicalNotices 성공] \(data)")
+						//print("[getLatestMusicalNotices 성공] \(data)")
 						observer.onNext(data)
 						observer.onCompleted()
 					case .failure(let error):
@@ -80,17 +74,14 @@ class MusicalService {
         let path = "/api/musicals/latest?page=\(page)&size=\(size)"
         let url = baseUrl + path
         
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
-        
         let observable = Observable<Response<[Musicals]>>.create { observer -> Disposable in
             
-            AF.request(url, method: .get, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<[Musicals]>.self) { response in
                     switch response.result {
                     case .success(let data):
-                        print("[getLatestMusicals 성공] \(data)")
+                        //print("[getLatestMusicals 성공] \(data)")
                         observer.onNext(data)
                         observer.onCompleted()
                     case .failure(let error):
@@ -107,23 +98,34 @@ class MusicalService {
     }
     
     //MARK: - 인기 뮤지컬 조회
-    func getPopularMusicals(platform: Platform) -> Observable<Response<[Musicals]>> {
-        let path = "/api/musicals/site/\(platform.site)?page=0&size=10"
-        let url = baseUrl + path
-
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
+    func getPopularMusicals(platform: Platform) -> Observable<[Musicals]> {
+        var urlComponents = URLComponents(string: baseUrl)
+        let path = "/api/musicals/ranking"
+        urlComponents?.path = path
+        
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "site", value: platform.siteCapital),
+            URLQueryItem(name: "page", value: "0"),
+            URLQueryItem(name: "search", value: "10")
         ]
         
+        guard let url = urlComponents?.url else {
+            print("[URL: error]")
+            return Observable.empty()
+        }
+        
         return Observable.create { observer -> Disposable in
-            AF.request(url, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<[Musicals]>.self) { response in
                     switch response.result {
-                    case .success(let musicals):
-                        observer.onNext(musicals)
+                    case .success(let response):
+                        print("[\(response.code)] \(response.message)")
+                        guard let result = response.result else { return }
+                        observer.onNext(result)
                         observer.onCompleted()
                     case .failure(let error):
-                        print("[getPopularMusicals 실패] \(error.localizedDescription)")
+                        print("[인기 뮤지컬 가져오기 실패] \(error.localizedDescription)")
                         observer.onCompleted()
                     }
                 }
@@ -133,7 +135,9 @@ class MusicalService {
     
     //MARK: - 공지 제목으로 검색
     func searchMusicalNotices(query: String) -> Observable<Response<[MusicalNotice]>> {
-        var urlComponents = URLComponents(string: baseUrl + "/api/musicalNotices/search")
+        var urlComponents = URLComponents(string: baseUrl)
+        let path = "/api/musicalNotices/search"
+        urlComponents?.path = path
         
         urlComponents?.queryItems = [
             URLQueryItem(name: "q", value: query),
@@ -145,13 +149,10 @@ class MusicalService {
             print("[URL: error]")
             return Observable.empty()
         }
-                
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
         
         return Observable.create { observer -> Disposable in
-            AF.request(url, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<[MusicalNotice]>.self) { response in
                     switch response.result {
                     case .success(let notices):
@@ -168,7 +169,9 @@ class MusicalService {
     
     //MARK: - 사이트별 뮤지컬 제목으로 검색
     func searchMusicalsWithSite(platform: Platform, query: String) -> Observable<Response<[Musicals]>> {
-        var urlComponents = URLComponents(string: baseUrl + "/api/musicals/search")
+        var urlComponents = URLComponents(string: baseUrl)
+        let path = "/api/musicals/search"
+        urlComponents?.path = path
         
         urlComponents?.queryItems = [
             URLQueryItem(name: "q", value: query),
@@ -181,13 +184,10 @@ class MusicalService {
             print("[URL error]")
             return Observable.empty()
         }
-
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
         
         return Observable.create { observer -> Disposable in
-            AF.request(url, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<[Musicals]>.self) { response in
                     switch response.result {
                     case .success(let musicals):

@@ -23,13 +23,10 @@ class AlarmService {
             print("[URL error]")
             return Observable.empty()
         }
-                
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
         
         return Observable.create { observer -> Disposable in
-            AF.request(url, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<[Alarm]>.self) { response in
                     switch response.result {
                     case .success(let response):
@@ -39,7 +36,6 @@ class AlarmService {
                             observer.onNext(alarms)
                             observer.onCompleted()
                         } else {
-                            print("[\(response.code)] \(response.message)")
                             observer.onCompleted()
                         }
                     case .failure(let error):
@@ -61,13 +57,10 @@ class AlarmService {
             print("[URL error]")
             return Observable.empty()
         }
-        
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
-        
+
         return Observable.create { observer -> Disposable in
-            AF.request(url, headers: header)
+            AF.request(url, interceptor: AuthInterceptor())
+                .validate(statusCode: 200..<300)
                 .responseDecodable(of: Response<[Alarm]>.self) { response in
                     switch response.result {
                     case .success(let response):
@@ -93,7 +86,6 @@ class AlarmService {
                             observer.onNext(filteredLocalAlarms)
                             observer.onCompleted()
                         } else {
-                            print("[\(response.code)] \(response.message)")
                             observer.onCompleted()
                         }
                     case .failure(let error):
@@ -115,17 +107,14 @@ class AlarmService {
             print("[URL error]")
             return
         }
-        
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
                 
         let body: [String: Any] = [
             "musicalNoticeId": notice.id ?? "",
             "alarmTimes": alarmTimes
         ]
         
-        AF.request(url, method: .post, parameters: body, encoding: JSONEncoding.default, headers: header)
+        AF.request(url, method: .post, parameters: body, encoding: JSONEncoding.default, interceptor: AuthInterceptor())
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: Response<AlarmResult>.self) { [weak self] response in
             switch response.result {
             case .success(let response):
@@ -163,12 +152,9 @@ class AlarmService {
             print("[URL error]")
             return
         }
-                
-        let header: HTTPHeaders = [
-            "Authorization": "Bearer \(TestToken.accessToken.rawValue)"
-        ]
 
-        AF.request(url, method: .delete, headers: header)
+        AF.request(url, method: .delete, interceptor: AuthInterceptor())
+            .validate(statusCode: 200..<300)
             .responseDecodable(of: Response<AlarmResult>.self) { [weak self] response in
             switch response.result {
             case .success(let response):

@@ -48,8 +48,8 @@ struct LocalAlarm: Codable {
         self.title = "예매 시작 \(beforeMin)분 전입니다!"
         self.body = notice.title ?? ""
         let date = notice.openDateTime?.toDateType()
-        //let newDate = Calendar.current.date(byAdding: .minute, value: -beforeMin, to: date)! //TODO: - newDate 변경
-        let newDate = Calendar.current.date(byAdding: .second, value: beforeMin, to: Date())!
+        let newDate = Calendar.current.date(byAdding: .minute, value: -beforeMin, to: date ?? Date())!
+        //let newDate = Calendar.current.date(byAdding: .second, value: beforeMin, to: Date())!
         self.date = newDate
         self.beforeMin = beforeMin
     }

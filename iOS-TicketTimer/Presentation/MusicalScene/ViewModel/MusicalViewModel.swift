@@ -12,7 +12,7 @@ class MusicalViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     private let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .default)
     private let musicalService = MusicalService.shared
-    private let userDefaultService = UserDefaultService.shared
+    private let searchHistoryService = SearchHistoryService.shared
     
     var selectedNotice: MusicalNotice? = nil
     var selectedMusical: Musicals? = nil {
@@ -48,27 +48,20 @@ class MusicalViewModel: ViewModelType {
         
         input.getPopularMusicals
             .observe(on: backgroundScheduler)
-            .flatMap { platform -> Observable<Response<[Musicals]>> in
+            .flatMap { platform -> Observable<[Musicals]> in
                 return self.musicalService.getPopularMusicals(platform: platform)
             }
-            .subscribe(onNext: { response in
-                print("[\(response.code)] \(response.message)")
-                
-                if response.code == 200 {
-                    guard let result = response.result else { return }
-                    var section = MusicalsSection(items: [])
-                    section.items.append(contentsOf: result)
-                    output.bindPopularMusicals.onNext([section])
-                } else {
-                    print("[\(response.code)] \(response.message)")
-                }
+            .subscribe(onNext: { musicals in
+                var section = MusicalsSection(items: [])
+                section.items.append(contentsOf: musicals)
+                output.bindPopularMusicals.onNext([section])
             })
             .disposed(by: disposeBag)
         
         input.getSearchHistory
             .observe(on: MainScheduler.instance)
             .flatMap { _ -> Observable<[String]> in
-                return self.userDefaultService.getSearchHistory()
+                return self.searchHistoryService.getSearchHistory()
             }
             .subscribe(onNext: { searches in
                 var section = SearchHistorySection(items: [])
@@ -80,7 +73,7 @@ class MusicalViewModel: ViewModelType {
         input.getMuscialHistory
             .observe(on: MainScheduler.instance)
             .flatMap { _ -> Observable<[Musicals]> in
-                return self.userDefaultService.getMusicalHistory()
+                return self.searchHistoryService.getMusicalHistory()
             }
             .subscribe(onNext: { musicals in
                 var section = MusicalsSection(items: [])
@@ -172,15 +165,15 @@ class MusicalViewModel: ViewModelType {
     }
     
     func addSearchHistory(query: String) {
-        userDefaultService.addSearchHistory(query: query)
+        searchHistoryService.addSearchHistory(query: query)
     }
     
     func deleteSearchHistory(query: String) {
-        userDefaultService.deleteSearchHistory(query: query)
+        searchHistoryService.deleteSearchHistory(query: query)
     }
     
     func addViewdMusicalHistory(musical: Musicals) {
-        userDefaultService.updateMusicalHistory(musical: musical)
+        searchHistoryService.updateMusicalHistory(musical: musical)
     }
     
     func showMusicalDetailViewController(viewController: UIViewController) {

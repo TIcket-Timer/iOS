@@ -53,7 +53,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 		
 		let homeTab = UINavigationController(rootViewController: HomeViewController())
 		let showTab = UINavigationController(rootViewController: MusicalViewController())
-		let calendarTab = UINavigationController(rootViewController: CalendarViewController())
+		let calendarTab = UINavigationController(rootViewController: AlarmListViewController())
 		let settingsTab = UINavigationController(rootViewController: SettingsViewController())
 		
 		homeTab.tabBarItem = tabBarItems[.Home]

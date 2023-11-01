@@ -7,33 +7,55 @@
 
 import UIKit
 import UserNotifications
-import KakaoSDKCommon
+import RxKakaoSDKCommon
+import RxKakaoSDKAuth
+import KakaoSDKAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
+
+        //MARK: - 로컬 알림 설정
         requestNotificationAuthorization()
         UNUserNotificationCenter.current().delegate = self
-		KakaoSDK.initSDK(appKey: Keys.kakao.rawValue)
+        
+        //MARK: - 카카오 SDK 초기화
+        RxKakaoSDK.initSDK(appKey: Keys.kakao.rawValue)
+        
+        //MARK: - 스플래쉬 시간 설정
+        sleep(1)
+        
+        //MARK: - 로그인 상태 확인
+        LoginService.shared.checkLogin { isLogin in
+            print("[로그인 상태: \(isLogin)]")
+            if isLogin {
+                UserDefaults.standard.set(true, forKey: "isLogin")
+            } else {
+                UserDefaults.standard.set(false, forKey: "isLogin")
+            }
+        }
+        
+        //MARK: - Bar 설정
+        setBarAppearance()
         
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            return AuthController.rx.handleOpenUrl(url: url)
+        }
+        
+        return false
     }
 
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 }
 
@@ -52,5 +74,20 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     // 앱이 실행 중 일때 알람
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler([.list, .banner])
+    }
+    
+    func setBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+        appearance.shadowColor = .clear
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.backgroundColor = .white
+        tabBarAppearance.shadowColor = .gray40
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
     }
 }

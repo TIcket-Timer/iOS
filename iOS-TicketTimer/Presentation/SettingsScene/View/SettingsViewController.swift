@@ -14,6 +14,9 @@ import RxGesture
 class SettingsViewController: UIViewController {
     
     let disposeBag = DisposeBag()
+    let viewModel = SettingsViewModel()
+    private lazy var input = SettingsViewModel.Input()
+    private lazy var output = viewModel.transform(input: input)
     
     let mypage = SettingDetail(title: "마이페이지")
     let divider1 = UIView()
@@ -66,6 +69,8 @@ class SettingsViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        //MARK: - 회원탈퇴
+        
         deleteAccountLabel.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
@@ -81,19 +86,29 @@ class SettingsViewController: UIViewController {
             }
             .disposed(by: disposeBag)
         
+        //MARK: - 로그아웃
+        
         signOutLabel.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
                 let alertController = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
                 let confirmAction = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
-                    //TODO: - 로그아웃
-                    print("로그아웃")
+                    self?.input.logout.onNext(())
                 }
                 alertController.addAction(cancelAction)
                 alertController.addAction(confirmAction)
                 self?.present(alertController, animated: true, completion: nil)
             }
+            .disposed(by: disposeBag)
+        
+        output.logoutSuccess
+            .subscribe(onNext: { success in
+                if success {
+                    let vc = LoginViewController()
+                    PresentationManager.shared.changeRootVC(vc)
+                }
+            })
             .disposed(by: disposeBag)
     }
     

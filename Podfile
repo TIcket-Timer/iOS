@@ -13,8 +13,11 @@ target 'iOS-TicketTimer' do
 	pod 'KakaoSDKAuth'
 	pod 'KakaoSDKUser'
 	pod 'KakaoSDKCommon'
+	pod 'RxKakaoSDKCommon'
+	pod 'RxKakaoSDKAuth'
+	pod 'RxKakaoSDKUser'
 	pod 'FSCalendar'
-  pod 'Kingfisher', '~> 7.6.2'
+  	pod 'Kingfisher', '~> 7.6.2'
 end
 
 target 'iOS-TicketTimerTests' do

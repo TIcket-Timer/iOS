@@ -1,5 +1,5 @@
 //
-//  UserDefaultService.swift
+//  SearchHistoryService.swift
 //  iOS-TicketTimer
 //
 //  Created by 심현석 on 2023/10/17.
@@ -7,8 +7,8 @@
 
 import RxSwift
 
-class UserDefaultService {
-    static let shared = UserDefaultService()
+class SearchHistoryService {
+    static let shared = SearchHistoryService()
     
     //MARK: - 최근 검색기록 가져오기
     func getSearchHistory() -> Observable<[String]> {
@@ -81,44 +81,4 @@ class UserDefaultService {
         
         UserDefaults.standard.set(try! PropertyListEncoder().encode(musicalHistory), forKey:"musicalHistory")
     }
-    
-//    //MARK: - 공지 알람 정보 가져오기
-//    func getLocalAlarmData(notice: MusicalNotice) -> [LocalAlarm] {
-//        let noticeId = notice.id
-//        var alarms: [LocalAlarm] = []
-//
-//        if let data = UserDefaults.standard.value(forKey:"noticeAlarm") as? Data {
-//            alarms = try! PropertyListDecoder().decode([LocalAlarm].self, from: data)
-//        }
-//
-//        return alarms.filter({ $0.noticeId == noticeId })
-//    }
-//
-//    //MARK: - 공지 알람 정보 저장하기
-//    func saveLocalAlarmData(alarms newAlarms: LocalAlarm) {
-//        var alarms: [LocalAlarm] = []
-//
-//        if let data = UserDefaults.standard.value(forKey:"noticeAlarm") as? Data {
-//            alarms = try! PropertyListDecoder().decode([LocalAlarm].self, from: data)
-//        }
-//
-//        alarms.append(newAlarms)
-//
-//        UserDefaults.standard.set(try! PropertyListEncoder().encode(alarms), forKey:"noticeAlarm")
-//    }
-//
-//    //MARK: - 공지 알람 정보 삭제하기
-//    func deleteLocalAlarmData(alarms deletedAlarms: [LocalAlarm]) {
-//        var alarms: [LocalAlarm] = []
-//
-//        if let data = UserDefaults.standard.value(forKey:"noticeAlarm") as? Data {
-//            alarms = try! PropertyListDecoder().decode([LocalAlarm].self, from: data)
-//        }
-//
-//        let deletedIds = Set(deletedAlarms.map { $0.noticeId })
-//
-//        alarms.removeAll(where: { deletedIds.contains($0.noticeId) })
-//
-//        UserDefaults.standard.set(try! PropertyListEncoder().encode(alarms), forKey:"noticeAlarm")
-//    }
 }

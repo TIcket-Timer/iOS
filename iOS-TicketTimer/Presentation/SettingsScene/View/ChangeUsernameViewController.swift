@@ -14,7 +14,7 @@ import RxGesture
 class ChangeUsernameViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
-    var viewModel = SettingsViewModel()
+    var viewModel: SettingsViewModel
     private lazy var input = SettingsViewModel.Input()
     private var output: SettingsViewModel.Output?
     
@@ -26,6 +26,15 @@ class ChangeUsernameViewController: UIViewController {
     private let completeButton = UIButton()
     private lazy var buttonStackView = UIStackView(arrangedSubviews: [cancleButton, divider, completeButton])
     private let buttonContainer = UIView()
+        
+    init(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +54,11 @@ class ChangeUsernameViewController: UIViewController {
         
         completeButton.rx.tap
             .subscribe { [weak self] _ in
-                self?.dismiss(animated: true)
                 if let text = self?.textField.text, text != "" {
                     self?.input.updatNickname.accept(text)
+                    self?.viewModel.input.getNickName.accept(text)
                 }
+                self?.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
     }

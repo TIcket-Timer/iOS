@@ -19,7 +19,7 @@
 		658C86782A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */; };
 		8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */; };
 		8F1AFF072ADCD6E700972CFC /* SearchAllResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */; };
-		8F1AFF0A2ADE16D200972CFC /* UserDefaultService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */; };
+		8F1AFF0A2ADE16D200972CFC /* SearchHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */; };
 		8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */; };
 		8F1AFF0E2ADF68CD00972CFC /* String+toTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */; };
 		8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */; };
@@ -28,10 +28,20 @@
 		8F33E92D2AD4D81000B7AD21 /* UIColor+HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92C2AD4D81000B7AD21 /* UIColor+HexColor.swift */; };
 		8F33E92F2AD4E01D00B7AD21 /* UILabel+setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */; };
 		8F33E9312AD4EAC200B7AD21 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */; };
+		8F411EEE2AF0A9B600C801BA /* PresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F411EED2AF0A9B600C801BA /* PresentationManager.swift */; };
+		8F411EF12AF0F7CE00C801BA /* PrivacyPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F411EF02AF0F7CE00C801BA /* PrivacyPolicyViewController.swift */; };
+		8F411EF32AF0FAAA00C801BA /* 개인정보 처리방침.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8F411EF22AF0FAAA00C801BA /* 개인정보 처리방침.txt */; };
+		8F411EF52AF1CD1D00C801BA /* AppleLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F411EF42AF1CD1D00C801BA /* AppleLoginService.swift */; };
 		8F4FEA1B2AE9E02D00443701 /* AlarmListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA1A2AE9E02D00443701 /* AlarmListViewController.swift */; };
 		8F4FEA1D2AE9F2A700443701 /* String+toSiteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */; };
 		8F4FEA252AEA18D200443701 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */; };
 		8F4FEA272AEA1B3E00443701 /* UILabel+lineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA262AEA1B3E00443701 /* UILabel+lineSpacing.swift */; };
+		8F4FEA292AEB49D800443701 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA282AEB49D800443701 /* LoginService.swift */; };
+		8F4FEA2B2AEB49E100443701 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA2A2AEB49E100443701 /* Login.swift */; };
+		8F4FEA2E2AEB516D00443701 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA2D2AEB516D00443701 /* KakaoLoginService.swift */; };
+		8F4FEA342AEB5D1A00443701 /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA332AEB5D1A00443701 /* TokenService.swift */; };
+		8F4FEA362AEB855900443701 /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA352AEB855900443701 /* AuthInterceptor.swift */; };
+		8F4FEA3B2AF06F1F00443701 /* SocialLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA3A2AF06F1F00443701 /* SocialLogin.swift */; };
 		8F70CD162AD00D6A00586847 /* MusicalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F70CD152AD00D6A00586847 /* MusicalTableViewCell.swift */; };
 		8FA0347F2AD0F324001FEC71 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */; };
 		8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */; };
@@ -73,8 +83,7 @@
 		9AB92BF32ACC4A69002C4B0A /* MusicalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */; };
 		9AB92BF62ACC4B7C002C4B0A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF52ACC4B7C002C4B0A /* Extension.swift */; };
 		9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF72ACC4BC8002C4B0A /* Enum.swift */; };
-		9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BF92ACC4D61002C4B0A /* AuthService.swift */; };
-		9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */; };
+		9AB92BFC2ACC4D6F002C4B0A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BFB2ACC4D6F002C4B0A /* Token.swift */; };
 		9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */; };
 		A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95CEE852ACE8CA100DED768 /* HomeCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -118,7 +127,7 @@
 		6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllResultsView.swift; sourceTree = "<group>"; };
-		8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultService.swift; sourceTree = "<group>"; };
+		8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryService.swift; sourceTree = "<group>"; };
 		8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDate.swift"; sourceTree = "<group>"; };
 		8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toTime.swift"; sourceTree = "<group>"; };
 		8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
@@ -127,10 +136,21 @@
 		8F33E92C2AD4D81000B7AD21 /* UIColor+HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexColor.swift"; sourceTree = "<group>"; };
 		8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+setup.swift"; sourceTree = "<group>"; };
 		8F33E9302AD4EAC200B7AD21 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
+		8F411EED2AF0A9B600C801BA /* PresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationManager.swift; sourceTree = "<group>"; };
+		8F411EEF2AF0D09E00C801BA /* iOS-TicketTimer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "iOS-TicketTimer.entitlements"; sourceTree = "<group>"; };
+		8F411EF02AF0F7CE00C801BA /* PrivacyPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyViewController.swift; sourceTree = "<group>"; };
+		8F411EF22AF0FAAA00C801BA /* 개인정보 처리방침.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "개인정보 처리방침.txt"; sourceTree = SOURCE_ROOT; };
+		8F411EF42AF1CD1D00C801BA /* AppleLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginService.swift; sourceTree = "<group>"; };
 		8F4FEA1A2AE9E02D00443701 /* AlarmListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListViewController.swift; sourceTree = "<group>"; };
 		8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toSiteType.swift"; sourceTree = "<group>"; };
 		8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
 		8F4FEA262AEA1B3E00443701 /* UILabel+lineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+lineSpacing.swift"; sourceTree = "<group>"; };
+		8F4FEA282AEB49D800443701 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		8F4FEA2A2AEB49E100443701 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		8F4FEA2D2AEB516D00443701 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
+		8F4FEA332AEB5D1A00443701 /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
+		8F4FEA352AEB855900443701 /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		8F4FEA3A2AF06F1F00443701 /* SocialLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLogin.swift; sourceTree = "<group>"; };
 		8F70CD152AD00D6A00586847 /* MusicalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalTableViewCell.swift; sourceTree = "<group>"; };
 		8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyViewdCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -173,8 +193,7 @@
 		9AB92BF22ACC4A69002C4B0A /* MusicalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalViewModel.swift; sourceTree = "<group>"; };
 		9AB92BF52ACC4B7C002C4B0A /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		9AB92BF72ACC4BC8002C4B0A /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
-		9AB92BF92ACC4D61002C4B0A /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Auth.swift; sourceTree = "<group>"; };
+		9AB92BFB2ACC4D6F002C4B0A /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		9AB92BFE2ACC51CE002C4B0A /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		9C912B141105A893374DFADD /* Pods-iOS-TicketTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer/Pods-iOS-TicketTimer.debug.xcconfig"; sourceTree = "<group>"; };
 		A95CEE852ACE8CA100DED768 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -234,6 +253,7 @@
 		658C86532A78E04D002C65F0 /* iOS-TicketTimer */ = {
 			isa = PBXGroup;
 			children = (
+				8F411EEF2AF0D09E00C801BA /* iOS-TicketTimer.entitlements */,
 				9AB92BC92ACC4822002C4B0A /* Model */,
 				9AB92BC52ACC475A002C4B0A /* Service */,
 				9AB92BC72ACC47AE002C4B0A /* Presentation */,
@@ -346,6 +366,27 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		8F4FEA2C2AEB515000443701 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8F4FEA282AEB49D800443701 /* LoginService.swift */,
+				8F4FEA2D2AEB516D00443701 /* KakaoLoginService.swift */,
+				8F411EF42AF1CD1D00C801BA /* AppleLoginService.swift */,
+				8F4FEA332AEB5D1A00443701 /* TokenService.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		8F4FEA392AF06F1100443701 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8F4FEA2A2AEB49E100443701 /* Login.swift */,
+				8F4FEA3A2AF06F1F00443701 /* SocialLogin.swift */,
+				9AB92BFB2ACC4D6F002C4B0A /* Token.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		8F70CD142AD00CEC00586847 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,6 +434,7 @@
 			children = (
 				658C865D2A78E051002C65F0 /* Assets.xcassets */,
 				658C865F2A78E051002C65F0 /* LaunchScreen.storyboard */,
+				8F411EF22AF0FAAA00C801BA /* 개인정보 처리방침.txt */,
 				65709A102A91D2E200A9DF7A /* KakaoLogin.swift */,
 			);
 			path = Resources;
@@ -401,12 +443,14 @@
 		9AB92BC52ACC475A002C4B0A /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				9AB92BF92ACC4D61002C4B0A /* AuthService.swift */,
+				8F411EED2AF0A9B600C801BA /* PresentationManager.swift */,
+				8F4FEA352AEB855900443701 /* AuthInterceptor.swift */,
 				9A00CD922AD12BDA00E9813F /* MusicalService.swift */,
 				8FAC38952AE5F95200F26558 /* AlarmService.swift */,
-				8F1AFF092ADE16D200972CFC /* UserDefaultService.swift */,
+				8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */,
 				8FC975182AE78BE300DC654C /* UserNotificationService.swift */,
 				8FF52FB02AE8C3F1009F1907 /* UserService.swift */,
+				8F4FEA2C2AEB515000443701 /* Login */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -428,11 +472,11 @@
 		9AB92BC92ACC4822002C4B0A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9AB92BFB2ACC4D6F002C4B0A /* Auth.swift */,
 				9A00CD962AD1314400E9813F /* Musicals.swift */,
 				9A00CD942AD12FC300E9813F /* Response.swift */,
 				8FAC38772AE0CA5800F26558 /* Alarm.swift */,
 				8FF52FB22AE8C436009F1907 /* User.swift */,
+				8F4FEA392AF06F1100443701 /* Login */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -548,6 +592,7 @@
 				8FAC38862AE217FB00F26558 /* AlarmConfigureViewController.swift */,
 				8FAC38882AE218BD00F26558 /* UseInfoViewController.swift */,
 				8FAC388A2AE2294900F26558 /* ChangeUsernameViewController.swift */,
+				8F411EF02AF0F7CE00C801BA /* PrivacyPolicyViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -725,6 +770,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F411EF32AF0FAAA00C801BA /* 개인정보 처리방침.txt in Resources */,
 				658C86612A78E051002C65F0 /* LaunchScreen.storyboard in Resources */,
 				658C865E2A78E051002C65F0 /* Assets.xcassets in Resources */,
 			);
@@ -845,12 +891,12 @@
 				8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */,
 				8F4FEA252AEA18D200443701 /* AlarmListTableViewCell.swift in Sources */,
 				8F33E9282AD4D55500B7AD21 /* PlatformLabel.swift in Sources */,
-				9AB92BFA2ACC4D61002C4B0A /* AuthService.swift in Sources */,
 				8FF52FB32AE8C436009F1907 /* User.swift in Sources */,
 				8F4FEA272AEA1B3E00443701 /* UILabel+lineSpacing.swift in Sources */,
 				8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
-				9AB92BFC2ACC4D6F002C4B0A /* Auth.swift in Sources */,
+				8F4FEA292AEB49D800443701 /* LoginService.swift in Sources */,
+				9AB92BFC2ACC4D6F002C4B0A /* Token.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,
 				9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */,
 				8FAC389A2AE6226600F26558 /* BottomSheetNavigationController.swift in Sources */,
@@ -867,6 +913,7 @@
 				8FAC38982AE6223C00F26558 /* AlarmTimePickerViewController.swift in Sources */,
 				8F4FEA1D2AE9F2A700443701 /* String+toSiteType.swift in Sources */,
 				9A00CD952AD12FC300E9813F /* Response.swift in Sources */,
+				8F4FEA2B2AEB49E100443701 /* Login.swift in Sources */,
 				9AB92BDC2ACC4921002C4B0A /* HomeViewModel.swift in Sources */,
 				9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */,
 				9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */,
@@ -875,17 +922,21 @@
 				8F33E92B2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift in Sources */,
 				8FF52FB12AE8C3F1009F1907 /* UserService.swift in Sources */,
 				8F4FEA1B2AE9E02D00443701 /* AlarmListViewController.swift in Sources */,
+				8F4FEA362AEB855900443701 /* AuthInterceptor.swift in Sources */,
 				8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */,
 				8F70CD162AD00D6A00586847 /* MusicalTableViewCell.swift in Sources */,
 				9AB92BDE2ACC492A002C4B0A /* HomeViewController.swift in Sources */,
+				8F411EEE2AF0A9B600C801BA /* PresentationManager.swift in Sources */,
 				8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */,
 				A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */,
+				8F4FEA2E2AEB516D00443701 /* KakaoLoginService.swift in Sources */,
 				8FAC38962AE5F95200F26558 /* AlarmService.swift in Sources */,
 				8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */,
 				8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */,
+				8F4FEA3B2AF06F1F00443701 /* SocialLogin.swift in Sources */,
 				9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */,
 				8FC975192AE78BE300DC654C /* UserNotificationService.swift in Sources */,
-				8F1AFF0A2ADE16D200972CFC /* UserDefaultService.swift in Sources */,
+				8F1AFF0A2ADE16D200972CFC /* SearchHistoryService.swift in Sources */,
 				9AB92BD82ACC490C002C4B0A /* TabBarViewModel.swift in Sources */,
 				8F33E9312AD4EAC200B7AD21 /* NoticeTableViewCell.swift in Sources */,
 				8FAC38852AE2162300F26558 /* MypageViewController.swift in Sources */,
@@ -898,7 +949,10 @@
 				8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */,
 				8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */,
 				8FAC388B2AE2294900F26558 /* ChangeUsernameViewController.swift in Sources */,
+				8F411EF12AF0F7CE00C801BA /* PrivacyPolicyViewController.swift in Sources */,
 				8FAC38782AE0CA5800F26558 /* Alarm.swift in Sources */,
+				8F411EF52AF1CD1D00C801BA /* AppleLoginService.swift in Sources */,
+				8F4FEA342AEB5D1A00443701 /* TokenService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1066,15 +1120,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "iOS-TicketTimer/iOS-TicketTimer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6RZ3FF956G;
+				DEVELOPMENT_TEAM = 89BLGRU39K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1082,11 +1136,14 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Jinhyung.iOS-TicketTimer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Ticket-Timer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1096,15 +1153,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "iOS-TicketTimer/iOS-TicketTimer.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6RZ3FF956G;
+				DEVELOPMENT_TEAM = 89BLGRU39K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS-TicketTimer/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1112,11 +1169,14 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Jinhyung.iOS-TicketTimer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Ticket-Timer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
