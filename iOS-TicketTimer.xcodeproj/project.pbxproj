@@ -36,7 +36,7 @@
 		8F4FEA1D2AE9F2A700443701 /* String+toSiteType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */; };
 		8F4FEA252AEA18D200443701 /* AlarmListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */; };
 		8F4FEA272AEA1B3E00443701 /* UILabel+lineSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA262AEA1B3E00443701 /* UILabel+lineSpacing.swift */; };
-		8F4FEA292AEB49D800443701 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA282AEB49D800443701 /* LoginService.swift */; };
+		8F4FEA292AEB49D800443701 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA282AEB49D800443701 /* AuthService.swift */; };
 		8F4FEA2B2AEB49E100443701 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA2A2AEB49E100443701 /* Login.swift */; };
 		8F4FEA2E2AEB516D00443701 /* KakaoLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA2D2AEB516D00443701 /* KakaoLoginService.swift */; };
 		8F4FEA342AEB5D1A00443701 /* TokenService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4FEA332AEB5D1A00443701 /* TokenService.swift */; };
@@ -145,7 +145,7 @@
 		8F4FEA1C2AE9F2A700443701 /* String+toSiteType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toSiteType.swift"; sourceTree = "<group>"; };
 		8F4FEA242AEA18D200443701 /* AlarmListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmListTableViewCell.swift; sourceTree = "<group>"; };
 		8F4FEA262AEA1B3E00443701 /* UILabel+lineSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+lineSpacing.swift"; sourceTree = "<group>"; };
-		8F4FEA282AEB49D800443701 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		8F4FEA282AEB49D800443701 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8F4FEA2A2AEB49E100443701 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		8F4FEA2D2AEB516D00443701 /* KakaoLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginService.swift; sourceTree = "<group>"; };
 		8F4FEA332AEB5D1A00443701 /* TokenService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenService.swift; sourceTree = "<group>"; };
@@ -254,12 +254,12 @@
 			isa = PBXGroup;
 			children = (
 				8F411EEF2AF0D09E00C801BA /* iOS-TicketTimer.entitlements */,
+				9AB92BC12ACC458A002C4B0A /* Application */,
 				9AB92BC92ACC4822002C4B0A /* Model */,
 				9AB92BC52ACC475A002C4B0A /* Service */,
 				9AB92BC72ACC47AE002C4B0A /* Presentation */,
 				9AB92BFD2ACC4F87002C4B0A /* Utils */,
 				9AB92BC22ACC4601002C4B0A /* Resources */,
-				9AB92BC12ACC458A002C4B0A /* Application */,
 				658C86622A78E051002C65F0 /* Info.plist */,
 			);
 			path = "iOS-TicketTimer";
@@ -297,11 +297,19 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8F15F6012AF479F000813199 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8F411EED2AF0A9B600C801BA /* PresentationManager.swift */,
+				8F4FEA352AEB855900443701 /* AuthInterceptor.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		8F1AFF082ADD05AD00972CFC /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */,
-				8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */,
 				8F4FEA1F2AEA042800443701 /* View */,
 			);
 			path = Search;
@@ -366,25 +374,25 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		8F4FEA2C2AEB515000443701 /* Login */ = {
+		8F4FEA2C2AEB515000443701 /* AuthService */ = {
 			isa = PBXGroup;
 			children = (
-				8F4FEA282AEB49D800443701 /* LoginService.swift */,
+				8F4FEA282AEB49D800443701 /* AuthService.swift */,
 				8F4FEA2D2AEB516D00443701 /* KakaoLoginService.swift */,
 				8F411EF42AF1CD1D00C801BA /* AppleLoginService.swift */,
 				8F4FEA332AEB5D1A00443701 /* TokenService.swift */,
 			);
-			path = Login;
+			path = AuthService;
 			sourceTree = "<group>";
 		};
-		8F4FEA392AF06F1100443701 /* Login */ = {
+		8F4FEA392AF06F1100443701 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				8F4FEA2A2AEB49E100443701 /* Login.swift */,
 				8F4FEA3A2AF06F1F00443701 /* SocialLogin.swift */,
 				9AB92BFB2ACC4D6F002C4B0A /* Token.swift */,
 			);
-			path = Login;
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		8F70CD142AD00CEC00586847 /* Cell */ = {
@@ -443,14 +451,13 @@
 		9AB92BC52ACC475A002C4B0A /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				8F411EED2AF0A9B600C801BA /* PresentationManager.swift */,
-				8F4FEA352AEB855900443701 /* AuthInterceptor.swift */,
+				8F15F6012AF479F000813199 /* Utils */,
 				9A00CD922AD12BDA00E9813F /* MusicalService.swift */,
 				8FAC38952AE5F95200F26558 /* AlarmService.swift */,
 				8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */,
 				8FC975182AE78BE300DC654C /* UserNotificationService.swift */,
 				8FF52FB02AE8C3F1009F1907 /* UserService.swift */,
-				8F4FEA2C2AEB515000443701 /* Login */,
+				8F4FEA2C2AEB515000443701 /* AuthService */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -476,7 +483,7 @@
 				9A00CD942AD12FC300E9813F /* Response.swift */,
 				8FAC38772AE0CA5800F26558 /* Alarm.swift */,
 				8FF52FB22AE8C436009F1907 /* User.swift */,
-				8F4FEA392AF06F1100443701 /* Login */,
+				8F4FEA392AF06F1100443701 /* Auth */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -562,6 +569,7 @@
 			children = (
 				9AB92BEF2ACC4A4D002C4B0A /* ViewModel */,
 				9AB92BEE2ACC4A45002C4B0A /* View */,
+				8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */,
 			);
 			path = MusicalScene;
 			sourceTree = "<group>";
@@ -895,7 +903,7 @@
 				8F4FEA272AEA1B3E00443701 /* UILabel+lineSpacing.swift in Sources */,
 				8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
-				8F4FEA292AEB49D800443701 /* LoginService.swift in Sources */,
+				8F4FEA292AEB49D800443701 /* AuthService.swift in Sources */,
 				9AB92BFC2ACC4D6F002C4B0A /* Token.swift in Sources */,
 				658C86552A78E04D002C65F0 /* AppDelegate.swift in Sources */,
 				9AB92BF82ACC4BC8002C4B0A /* Enum.swift in Sources */,

@@ -20,14 +20,15 @@ struct Musicals: Codable, Equatable {
     let runningTime: String?
     let siteLink: String?
 	let actors: [Actor?]
+    let age: String?
+    let price : [String?]
 }
 
 struct Actor: Codable, Equatable {
     let actorId: Int?
     let actorName: String?
     let profileUrl: String?
-    //let siteCategory: String?
-    let roleName: String
+    let roleName: String?
 }
 
 struct MusicalNotice: Codable, Equatable {

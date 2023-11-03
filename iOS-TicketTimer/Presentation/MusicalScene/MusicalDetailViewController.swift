@@ -201,7 +201,15 @@ class MusicalInfo: UIView {
     private let durationDetail = UILabel()
     lazy private var durationStackView = UIStackView(arrangedSubviews: [durationLabel, durationDetail])
     
-    lazy private var stackViewContainer = UIStackView(arrangedSubviews: [venueStackView, durationStackView])
+    private let ageLabel = UILabel()
+    private let ageDetail = UILabel()
+    lazy private var ageStackView = UIStackView(arrangedSubviews: [ageLabel, ageDetail])
+    
+    private let priceLabel = UILabel()
+    private let priceDetail = UILabel()
+    lazy private var priceStackView = UIStackView(arrangedSubviews: [priceLabel, priceDetail])
+    
+    lazy private var stackViewContainer = UIStackView(arrangedSubviews: [venueStackView, durationStackView, ageStackView, priceStackView])
     
     init(musical: Musicals) {
         self.musical =  musical
@@ -220,10 +228,11 @@ class MusicalInfo: UIView {
 
         venueLabel.setup(text: "공연장", color: .gray100, size: 13, weight: .medium)
         venueDetail.setup(text: musical.place ?? "", color: .gray80, size: 13, weight: .regular)
+        venueDetail.numberOfLines = 0
         
         venueStackView.axis = .horizontal
         venueStackView.spacing = 26
-        venueStackView.alignment = .center
+        venueStackView.alignment = .top
 
         durationLabel.setup(text: "공연기간", color: .gray100, size: 13, weight: .medium)
         guard
@@ -234,7 +243,22 @@ class MusicalInfo: UIView {
         
         durationStackView.axis = .horizontal
         durationStackView.spacing = 14
-        durationStackView.alignment = .center
+        
+        ageLabel.setup(text: "관람연령", color: .gray100, size: 13, weight: .medium)
+        ageDetail.setup(text: musical.age ?? "", color: .gray80, size: 13, weight: .regular)
+        
+        ageStackView.axis = .horizontal
+        ageStackView.spacing = 14
+        
+        priceLabel.setup(text: "가격", color: .gray100, size: 13, weight: .medium)
+        let price = musical.price.compactMap { $0 }.joined(separator: "\n")
+        priceDetail.setup(text: price, color: .gray80, size: 13, weight: .regular)
+        priceDetail.numberOfLines = 0
+        priceDetail.lineSpacing(4)
+        
+        priceStackView.axis = .horizontal
+        priceStackView.spacing = 37
+        priceStackView.alignment = .top
 
         stackViewContainer.axis = .vertical
         stackViewContainer.spacing = 8

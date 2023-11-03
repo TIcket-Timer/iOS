@@ -13,7 +13,7 @@ import KakaoSDKAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         //MARK: - 로컬 알림 설정
@@ -25,17 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //MARK: - 스플래쉬 시간 설정
         sleep(1)
-        
-        //MARK: - 로그인 상태 확인
-        LoginService.shared.checkLogin { isLogin in
-            print("[로그인 상태: \(isLogin)]")
-            if isLogin {
-                UserDefaults.standard.set(true, forKey: "isLogin")
-            } else {
-                UserDefaults.standard.set(false, forKey: "isLogin")
-            }
-        }
-        
+
         //MARK: - Bar 설정
         setBarAppearance()
         

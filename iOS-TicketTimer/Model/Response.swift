@@ -12,3 +12,5 @@ struct Response<T: Codable>: Codable {
 	let message: String
 	let result: T?
 }
+
+struct EmptyResult: Codable {}
