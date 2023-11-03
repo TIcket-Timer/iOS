@@ -15,6 +15,8 @@ class AlarmTimePickerViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel: AlarmViewModel
+    lazy var input = viewModel.input
+    lazy var output = viewModel.output
     
     private var selectedTime = 0
     
@@ -54,7 +56,7 @@ class AlarmTimePickerViewController: UIViewController {
         completeButton.rx.tap
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
-                self.viewModel.customTime.accept(self.selectedTime)
+                self.input.setCustomTime.onNext(self.selectedTime)
                 self.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
@@ -69,7 +71,7 @@ class AlarmTimePickerViewController: UIViewController {
         picker.snp.makeConstraints { make in
             make.height.equalTo(150)
         }
-        viewModel.customTime
+        output.customTime
             .subscribe { [weak self] min in
                 if min != 0 {
                     self?.selectedTime = min
