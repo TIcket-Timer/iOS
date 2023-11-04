@@ -13,7 +13,7 @@ class SettingsViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     private let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .default)
     private let userService = UserService.shared
-    private let loginService = LoginService.shared
+    private let authService = AuthService.shared
     
     let input = Input()
     let output = Output()
@@ -31,12 +31,14 @@ class SettingsViewModel: ViewModelType {
         var updateAllSiteAlarmSettings = PublishSubject<PushAlarmSetting>()
         var logout = PublishSubject<Void>()
         var getNickName = PublishRelay<String>()
+        var signout = PublishSubject<Void>()
     }
     struct Output {
         var bindUserInfo = PublishRelay<User>()
         var bindSiteAlarmSettings = PublishRelay<PushAlarmSetting>()
         var logoutSuccess = PublishSubject<Bool>()
         var bindNickName = PublishRelay<String>()
+        var signoutSuccess = PublishSubject<Bool>()
     }
     func transform(input: Input) -> Output {
         let output = Output()
@@ -69,8 +71,15 @@ class SettingsViewModel: ViewModelType {
         
         input.logout
             .subscribe { [weak self] _ in
-                self?.loginService.logout()
+                self?.authService.logout()
                 output.logoutSuccess.onNext(true)
+            }
+            .disposed(by: disposeBag)
+        
+        input.signout
+            .subscribe { [weak self] _ in
+                self?.authService.signout()
+                output.signoutSuccess.onNext(true)
             }
             .disposed(by: disposeBag)
         

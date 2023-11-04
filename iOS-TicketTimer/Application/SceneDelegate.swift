@@ -18,12 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
 
-        if UserDefaults.standard.bool(forKey: "isLogin") {
-            self.window?.rootViewController = UINavigationController(rootViewController: TabBarViewController())
-        } else {
-            self.window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
-        }
-
+        let LaunchScreen = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
+        window?.rootViewController = LaunchScreen
+        
+        checkLogin()
         window?.makeKeyAndVisible()
     }
     
@@ -37,10 +35,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 }
 
 extension SceneDelegate {
-    func changeRootVC(_ vc: UIViewController) {
-        guard let window = self.window else { return }
-        window.rootViewController = vc
-        
-        UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
-      }
+    private func checkLogin() {
+        AuthService.shared.checkLogin { [weak self] isLogin in
+            let rootViewController: UIViewController
+            if isLogin {
+                rootViewController = UINavigationController(rootViewController: TabBarViewController())
+            } else {
+                rootViewController = UINavigationController(rootViewController: LoginViewController())
+            }
+            UIView.transition(with: self?.window ?? UIWindow(), duration: 0.3, options: .transitionCrossDissolve, animations: {
+                self?.window?.rootViewController = rootViewController
+            })
+        }
+    }
 }

@@ -77,13 +77,21 @@ class SettingsViewController: UIViewController {
                 let alertController = UIAlertController(title: "회원탈퇴", message: "정말로 탈퇴를 하시겠습니까?", preferredStyle: .alert)
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
                 let confirmAction = UIAlertAction(title: "확인", style: .destructive) { [weak self] _ in
-                    //TODO: - 회원 탈퇴
-                    print("회원 탈퇴")
+                    self?.input.signout.onNext(())
                 }
                 alertController.addAction(cancelAction)
                 alertController.addAction(confirmAction)
                 self?.present(alertController, animated: true, completion: nil)
             }
+            .disposed(by: disposeBag)
+        
+        output.signoutSuccess
+            .subscribe(onNext: { success in
+                if success {
+                    let vc = LoginViewController()
+                    PresentationManager.shared.changeRootVC(vc)
+                }
+            })
             .disposed(by: disposeBag)
         
         //MARK: - 로그아웃

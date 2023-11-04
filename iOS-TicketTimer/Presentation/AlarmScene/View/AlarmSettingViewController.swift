@@ -11,19 +11,13 @@ import RxSwift
 import RxCocoa
 import RxGesture
 
-protocol AlarmSettingDelegate: AnyObject {
-    func viewWillDisappear()
-}
-
 class AlarmSettingViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
-    var viewModel = AlarmViewModel()
-    private lazy var input = AlarmViewModel.Input()
-    private lazy var output = viewModel.transform(input: input)
-    
-    weak var delegate: AlarmSettingDelegate?
-    
+    var viewModel: AlarmViewModel
+    private lazy var input = viewModel.input
+    private lazy var output = viewModel.output
+        
     private lazy var platformLabel: PlatformLabel = {
         let lb = PlatformLabel(platform: stringToPlatformType(string: viewModel.notice?.siteCategory ?? ""))
         return lb
@@ -64,7 +58,11 @@ class AlarmSettingViewController: UIViewController {
     
     private var isActiveAutoAddNextSchedule = false
     
-    init(notice: MusicalNotice) {
+    init(
+        viewModel: AlarmViewModel = AlarmViewModel(),
+        notice: MusicalNotice
+    ) {
+        self.viewModel = viewModel
         viewModel.notice = notice
         super.init(nibName: nil, bundle: nil)
     }
@@ -81,33 +79,38 @@ class AlarmSettingViewController: UIViewController {
         bindRx()
         
         guard let notice = viewModel.notice else { return }
-        input.getNoticeAlarms.onNext(notice)
+        input.getLocalAlarms.onNext(notice)
     }
     
     private func bindRx() {
         output.localAlarms
-            .subscribe{ [weak self] alarms in
+            .subscribe { [weak self] alarms in
                 guard let self = self else { return }
                 
                 let times = alarms.map { $0.beforeMin }
-                
-                self.viewModel.fiveMinSwitchIsOn.accept(times.contains(where: { $0 == 5 }))
-                self.viewModel.tenMinSwitchIsOn.accept(times.contains(where: { $0 == 10 }))
-                self.viewModel.twentyMinSwitchIsOn.accept(times.contains(where: { $0 == 20 }))
-                self.viewModel.thirtyMinSwitchIsOn.accept(times.contains(where: { $0 == 30 }))
-                if let time = times.first(where: { ![5, 10, 20, 30].contains($0) }) {
-                    self.viewModel.customTime.accept(time)
+  
+                self.fiveMinSwitch.minSwitch.isOn = times.contains(where: { $0 == 5 })
+                self.tenMinSwitch.minSwitch.isOn = times.contains(where: { $0 == 10 })
+                self.twentyMinSwitch.minSwitch.isOn = times.contains(where: { $0 == 20 })
+                self.thirtyMinSwitch.minSwitch.isOn = times.contains(where: { $0 == 30 })
+                if let customTime = times.first(where: { ![5, 10, 20, 30].contains($0) }) {
+                    self.input.setCustomTime.onNext(customTime)
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        output.customTime
+            .subscribe { [weak self] min in
+                let hours = min / 60
+                let minutes = min % 60
+                self?.customTimePicker.text = (min == 0)
+                ? "--분 전"
+                : (hours == 0 ? "" : "\(hours)시간 ") + "\(minutes)분 전"
             }
             .disposed(by: disposeBag)
     }
     
     private func setGesture() {
-        bindSwitch(fiveMinSwitch.minSwitch, to: viewModel.fiveMinSwitchIsOn)
-        bindSwitch(tenMinSwitch.minSwitch, to: viewModel.tenMinSwitchIsOn)
-        bindSwitch(twentyMinSwitch.minSwitch, to: viewModel.twentyMinSwitchIsOn)
-        bindSwitch(thirtyMinSwitch.minSwitch, to: viewModel.thirtyMinSwitchIsOn)
-        
         customTimePicker.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
@@ -137,34 +140,21 @@ class AlarmSettingViewController: UIViewController {
                 self.dismiss(animated: true)
                 
                 var times = [Int]()
-                if viewModel.fiveMinSwitchIsOn.value { times.append(5) }
-                if viewModel.tenMinSwitchIsOn.value { times.append(10) }
-                if viewModel.twentyMinSwitchIsOn.value { times.append(20) }
-                if viewModel.thirtyMinSwitchIsOn.value { times.append(30) }
-                if viewModel.customTime.value != 0 {
-                    times.append(viewModel.customTime.value)
+                if fiveMinSwitch.minSwitch.isOn { times.append(5) }
+                if tenMinSwitch.minSwitch.isOn { times.append(10) }
+                if twentyMinSwitch.minSwitch.isOn { times.append(20) }
+                if thirtyMinSwitch.minSwitch.isOn { times.append(30) }
+                if output.customTime.value != 0 {
+                    times.append(output.customTime.value)
                 }
                 times.sort(by: <)
                 
                 if viewModel.alarmId != nil {
-                    input.upateNotcieAlarms.onNext(times)
+                    input.upateLocalAlarms.onNext(times)
                 } else {
-                    input.postNoticeAlarms.onNext(times)
+                    input.postLocalAlarms.onNext(times)
                 }
-                
-                self.delegate?.viewWillDisappear()
             }
-            .disposed(by: disposeBag)
-    }
-    
-    private func bindSwitch(_ minSwitch: UISwitch, to relay: BehaviorRelay<Bool>) {
-        relay
-            .bind(to: minSwitch.rx.isOn)
-            .disposed(by: disposeBag)
-        
-        minSwitch.rx.controlEvent(.valueChanged)
-            .withLatestFrom(minSwitch.rx.isOn)
-            .bind(to: relay)
             .disposed(by: disposeBag)
     }
     
@@ -191,15 +181,6 @@ class AlarmSettingViewController: UIViewController {
         
         customTimeLabel.setup(text: "사용자 설정", color: .gray100, size: 15, weight: .regular)
         customTimePicker.setup(text: "", color: UIColor("8A8A8A"), size: 15, weight: .regular)
-        viewModel.customTime
-            .subscribe { [weak self] min in
-                let hours = min / 60
-                let minutes = min % 60
-                self?.customTimePicker.text = (min == 0)
-                ? "--분 전"
-                : (hours == 0 ? "" : "\(hours)시간 ") + "\(minutes)분 전"
-            }
-            .disposed(by: disposeBag)
         customTimeStackView.axis = .horizontal
         
         autoAddNextScheduleButtonImage.image = UIImage(systemName: "checkmark.circle.fill")

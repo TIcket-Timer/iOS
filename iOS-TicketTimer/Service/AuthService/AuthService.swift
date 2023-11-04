@@ -1,5 +1,5 @@
 //
-//  LoginService.swift
+//  AuthService.swift
 //  iOS-TicketTimer
 //
 //  Created by 심현석 on 2023/10/27.
@@ -8,8 +8,8 @@
 import RxSwift
 import Alamofire
 
-class LoginService {
-    static let shared = LoginService()
+class AuthService {
+    static let shared = AuthService()
 
     private let kakaoLoginService = KakaoLoginService()
     private let appleLoginService = AppleLoginService()
@@ -49,6 +49,10 @@ class LoginService {
         }
     }
     
+    func saveSocialLoginType(_ type: String) {
+        UserDefaults.standard.set(type, forKey: "socialLoginType")
+    }
+    
     func sendToken(_ type: SocialLoginType, with token: String) -> Observable<LoginResult> {
         var urlComponents = URLComponents(string: Server.baseUrl.rawValue)
         let path = "/api/oauth2"
@@ -59,7 +63,7 @@ class LoginService {
             return Observable.empty()
         }
         
-        var header: HTTPHeaders = [
+        let header: HTTPHeaders = [
             "Authorization": token,
             "resource": type.rawValue
         ]
@@ -74,7 +78,7 @@ class LoginService {
                         observer.onNext(result)
                         observer.onCompleted()
                     case .failure(let error):
-                        print("\(error.localizedDescription)")
+                        print("[서버에 토큰 전송 실패] \(error.localizedDescription)")
                         observer.onCompleted()
                     }
                 }
@@ -87,7 +91,25 @@ class LoginService {
         TokenService.shared.deleteToken()
     }
     
-    func saveSocialLoginType(_ type: String) {
-        UserDefaults.standard.set(type, forKey: "socialLoginType")
+    func signout() {
+        var urlComponents = URLComponents(string: Server.baseUrl.rawValue)
+        let path = "/api/members"
+        urlComponents?.path = path
+
+        guard let url = urlComponents?.url else {
+            print("[URL error]")
+            return
+        }
+        
+        AF.request(url, method: .delete, interceptor: AuthInterceptor())
+            .validate(statusCode: 200..<300)
+            .responseDecodable(of: Response<EmptyResult>.self) { response in
+                switch response.result {
+                case .success(let response):
+                    print("[\(response.code)] \(response.message)")
+                case .failure(let error):
+                    print("[회원 탈퇴 실패] \(error.localizedDescription)")
+                }
+            }
     }
 }

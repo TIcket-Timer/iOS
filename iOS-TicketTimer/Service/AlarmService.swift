@@ -98,7 +98,7 @@ class AlarmService {
         }
     }
     
-    func postNoticeAlarms(notice: MusicalNotice, alarmTimes: [Int]) {
+    func postNoticeAlarms(notice: MusicalNotice, alarmTimes: [Int], completion: @escaping () -> Void) {
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/alarms"
         urlComponents?.path = path
@@ -135,6 +135,7 @@ class AlarmService {
                 localAlarms.forEach { [weak self] in
                     self?.userNotificationService.sendNotification(alarm: $0)
                 }
+                completion()
             case .failure(let error):
                 print("[알람 등록 실패] \(error.localizedDescription)")
             }
@@ -167,11 +168,15 @@ class AlarmService {
         }
     }
     
-    func updateNoticeAlarms(savedLocalAlarms: [LocalAlarm], notice: MusicalNotice, newAlarmTimes: [Int]) {
+    func updateNoticeAlarms(savedLocalAlarms: [LocalAlarm], notice: MusicalNotice, newAlarmTimes: [Int], completion: @escaping () -> Void) {
         deleteNoticeAlarms(alarms: savedLocalAlarms) { [weak self] success in
             if success {
                 if !newAlarmTimes.isEmpty {
-                    self?.postNoticeAlarms(notice: notice, alarmTimes: newAlarmTimes)
+                    self?.postNoticeAlarms(notice: notice, alarmTimes: newAlarmTimes) {
+                        completion()
+                    }
+                } else {
+                    completion()
                 }
             }
         }

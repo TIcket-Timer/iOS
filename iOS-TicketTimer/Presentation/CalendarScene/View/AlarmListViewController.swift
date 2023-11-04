@@ -16,20 +16,21 @@ class AlarmListViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel = AlarmViewModel()
-    private lazy var input = AlarmViewModel.Input()
-    private lazy var output = viewModel.transform(input: input)
+    private lazy var input = viewModel.input
+    private lazy var output = viewModel.output
+    
+    private let emptyLabel = UILabel()
     
     private let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-        setAutoLayout()
-        
+        setEmptyLayout()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        input.getAlarmSections.onNext([])
+        input.getAlarmSections.onNext(())
     }
     
     private func setUI() {
@@ -41,6 +42,8 @@ class AlarmListViewController: UIViewController {
         appearance.shadowColor = .clear
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        
+        emptyLabel.setup(text: "등록된 알람이 없습니다.", color: .gray100, size: 17, weight: .medium)
         
         tableView.register(
             AlarmListTableViewCell.self,
@@ -63,6 +66,13 @@ class AlarmListViewController: UIViewController {
         }
         
         output.alarmSections
+            .do(onNext: { [weak self] sections in
+                if sections.isEmpty {
+                    self?.setEmptyLayout()
+                } else {
+                    self?.setTableViewLayout()
+                }
+            })
             .bind(to: tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
@@ -75,25 +85,32 @@ class AlarmListViewController: UIViewController {
             
             self.tableView.deselectRow(at: indexPath, animated: true)
             
-            let vc = AlarmSettingViewController(notice: item.musicalNotice)
-            vc.delegate = self
+            let vc = AlarmSettingViewController(viewModel: self.viewModel, notice: item.musicalNotice)
             let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 650)
             self.present(nav, animated: true, completion: nil)
         })
         .disposed(by: disposeBag)
     }
     
-    private func setAutoLayout() {
+    
+}
+
+extension AlarmListViewController {
+    private func setEmptyLayout() {
+        self.view.willRemoveSubview(tableView)
+        self.view.addSubview(emptyLabel)
+        
+        emptyLabel.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+    
+    private func setTableViewLayout() {
+        self.view.willRemoveSubview(emptyLabel)
         self.view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-    }
-}
-
-extension AlarmListViewController: AlarmSettingDelegate {
-    func viewWillDisappear() {
-        input.getAlarmSections.onNext([])
     }
 }

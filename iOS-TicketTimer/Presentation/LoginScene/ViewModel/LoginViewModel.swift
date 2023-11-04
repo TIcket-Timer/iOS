@@ -13,22 +13,22 @@ class LoginViewModel {
     let input = Input()
     let output = Output()
     private let backgroundScheduler = ConcurrentDispatchQueueScheduler(qos: .default)
-    private let loginService = LoginService.shared
+    private let authService = AuthService.shared
     private let tokenService = TokenService.shared
     
     init() {
-        input.login
+        input.socialLogin
             .flatMap { [weak self] type -> Observable<SocialLoginResult> in
-                return self?.loginService.login(with: type) ?? Observable.empty()
+                return self?.authService.login(with: type) ?? Observable.empty()
             }
             .flatMap { [weak self] result -> Observable<LoginResult> in
-                self?.loginService.saveSocialLoginType(result.SocialLoginType.rawValue)
-                return self?.loginService.sendToken(result.SocialLoginType, with: result.token) ?? Observable.empty()
+                self?.authService.saveSocialLoginType(result.SocialLoginType.rawValue)
+                return self?.authService.sendToken(result.SocialLoginType, with: result.token) ?? Observable.empty()
             }
             .subscribe(onNext: { [weak self] result in
                 self?.tokenService.saveAccessToken(with: result.accessToken)
                 self?.tokenService.saveRefreshToken(with: result.refreshToken)
-                self?.output.loginSuccess.onNext(true)
+                self?.output.socialLoginSuccess.onNext(true)
             })
             .disposed(by: disposeBag)
     }
@@ -36,10 +36,10 @@ class LoginViewModel {
 
 extension LoginViewModel {
     struct Input {
-        var login = PublishSubject<SocialLoginType>()
+        var socialLogin = PublishSubject<SocialLoginType>()
     }
     struct Output {
-        var loginSuccess = PublishSubject<Bool>()
+        var socialLoginSuccess = PublishSubject<Bool>()
     }
 }
 

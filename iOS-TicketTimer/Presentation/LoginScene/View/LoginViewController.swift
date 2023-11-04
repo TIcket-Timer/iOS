@@ -44,32 +44,32 @@ class LoginViewController: UIViewController {
         kakaoRecButton.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                self?.viewModel.input.login.onNext(.kakao)
+                self?.viewModel.input.socialLogin.onNext(.kakao)
             }
             .disposed(by: disposeBag)
         
         appleRecButton.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                self?.viewModel.input.login.onNext(.apple)
+                self?.viewModel.input.socialLogin.onNext(.apple)
             }
             .disposed(by: disposeBag)
         
         kakaoCirButton.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                self?.viewModel.input.login.onNext(.kakao)
+                self?.viewModel.input.socialLogin.onNext(.kakao)
             }
             .disposed(by: disposeBag)
         
         appleCirButton.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                self?.viewModel.input.login.onNext(.apple)
+                self?.viewModel.input.socialLogin.onNext(.apple)
             }
             .disposed(by: disposeBag)
         
-        viewModel.output.loginSuccess
+        viewModel.output.socialLoginSuccess
             .subscribe(onNext: { success in
                 if success {
                     let vc = TabBarViewController()
