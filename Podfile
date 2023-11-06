@@ -18,6 +18,7 @@ target 'iOS-TicketTimer' do
 	pod 'RxKakaoSDKUser'
 	pod 'FSCalendar'
   	pod 'Kingfisher', '~> 7.6.2'
+	pod 'Firebase/Messaging'
 end
 
 target 'iOS-TicketTimerTests' do

@@ -10,6 +10,8 @@ import UserNotifications
 import RxKakaoSDKCommon
 import RxKakaoSDKAuth
 import KakaoSDKAuth
+import Firebase
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //MARK: - 로컬 알림 설정
         requestNotificationAuthorization()
         UNUserNotificationCenter.current().delegate = self
-        
+
+        //MARK: - 푸쉬 알림 설정
+        FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+        application.registerForRemoteNotifications()
+
         //MARK: - 카카오 SDK 초기화
         RxKakaoSDK.initSDK(appKey: Keys.kakao.rawValue)
         
@@ -49,23 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: UNUserNotificationCenterDelegate {
-    // 알람 허용 설정
-    func requestNotificationAuthorization() {
-        let authOptions: UNAuthorizationOptions = [.alert, .sound, .badge]
-        
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { success, error in
-            if let error = error {
-                print(error)
-            }
-        }
-    }
-    
-    // 앱이 실행 중 일때 알람
-    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.list, .banner])
-    }
-    
+extension AppDelegate {
     func setBarAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -79,5 +70,37 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         tabBarAppearance.shadowColor = .gray40
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // 알람 허용 설정
+    func requestNotificationAuthorization() {
+        let authOptions: UNAuthorizationOptions = [.alert, .sound, .badge]
+
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions) { success, error in
+            if let error = error {
+                print(error)
+            }
+        }
+    }
+
+    // 앱이 실행 중 일때 알람
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.list, .banner])
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        // 여기서 이제 서버로 다시 fcm 토큰을 보내줘야 한다!
+        // 그러나 서버가 없기 때문에 이렇게 token을 출력하게 한다.
+        // 이 토큰은 뒤에서 Test할때 필요하다!
+        guard let token = fcmToken else { return }
+        print("[fcmToken: \(token)]")
     }
 }

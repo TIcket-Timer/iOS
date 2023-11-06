@@ -18,6 +18,7 @@
 		658C86762A78E052002C65F0 /* iOS_TicketTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86752A78E052002C65F0 /* iOS_TicketTimerUITests.swift */; };
 		658C86782A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */; };
 		8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */; };
+		8F15F6052AF8AA4100813199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F15F6042AF8AA4100813199 /* GoogleService-Info.plist */; };
 		8F1AFF072ADCD6E700972CFC /* SearchAllResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */; };
 		8F1AFF0A2ADE16D200972CFC /* SearchHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */; };
 		8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */; };
@@ -126,6 +127,7 @@
 		658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOS_TicketTimerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		8F15F6042AF8AA4100813199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllResultsView.swift; sourceTree = "<group>"; };
 		8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryService.swift; sourceTree = "<group>"; };
 		8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDate.swift"; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				9AB92BFD2ACC4F87002C4B0A /* Utils */,
 				9AB92BC22ACC4601002C4B0A /* Resources */,
 				658C86622A78E051002C65F0 /* Info.plist */,
+				8F15F6042AF8AA4100813199 /* GoogleService-Info.plist */,
 			);
 			path = "iOS-TicketTimer";
 			sourceTree = "<group>";
@@ -465,13 +468,13 @@
 		9AB92BC72ACC47AE002C4B0A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				8F4FEA202AEA043800443701 /* AlarmScene */,
-				9AB92BE12ACC49F5002C4B0A /* SettingsScene */,
-				9AB92BE02ACC49D8002C4B0A /* CalendarScene */,
-				9AB92BDF2ACC49C3002C4B0A /* MusicalScene */,
 				9AB92BD02ACC48C1002C4B0A /* LoginScene */,
 				9AB92BCA2ACC486D002C4B0A /* TabBar */,
 				9AB92BCB2ACC488D002C4B0A /* HomeScene */,
+				9AB92BDF2ACC49C3002C4B0A /* MusicalScene */,
+				9AB92BE02ACC49D8002C4B0A /* CalendarScene */,
+				9AB92BE12ACC49F5002C4B0A /* SettingsScene */,
+				8F4FEA202AEA043800443701 /* AlarmScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -779,6 +782,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F411EF32AF0FAAA00C801BA /* 개인정보 처리방침.txt in Resources */,
+				8F15F6052AF8AA4100813199 /* GoogleService-Info.plist in Resources */,
 				658C86612A78E051002C65F0 /* LaunchScreen.storyboard in Resources */,
 				658C865E2A78E051002C65F0 /* Assets.xcassets in Resources */,
 			);
