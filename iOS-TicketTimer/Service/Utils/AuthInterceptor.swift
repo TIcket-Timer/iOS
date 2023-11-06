@@ -13,8 +13,6 @@ class AuthInterceptor: RequestInterceptor {
         var urlRequest = urlRequest
 
         let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
-        print("[accessToken: \(accessToken)]")
-
         urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         completion(.success(urlRequest))
     }
