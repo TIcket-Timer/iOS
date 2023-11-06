@@ -468,13 +468,13 @@
 		9AB92BC72ACC47AE002C4B0A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				8F4FEA202AEA043800443701 /* AlarmScene */,
-				9AB92BE12ACC49F5002C4B0A /* SettingsScene */,
-				9AB92BE02ACC49D8002C4B0A /* CalendarScene */,
-				9AB92BDF2ACC49C3002C4B0A /* MusicalScene */,
 				9AB92BD02ACC48C1002C4B0A /* LoginScene */,
 				9AB92BCA2ACC486D002C4B0A /* TabBar */,
 				9AB92BCB2ACC488D002C4B0A /* HomeScene */,
+				9AB92BDF2ACC49C3002C4B0A /* MusicalScene */,
+				9AB92BE02ACC49D8002C4B0A /* CalendarScene */,
+				9AB92BE12ACC49F5002C4B0A /* SettingsScene */,
+				8F4FEA202AEA043800443701 /* AlarmScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

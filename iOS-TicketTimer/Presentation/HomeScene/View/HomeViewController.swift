@@ -128,7 +128,7 @@ class HomeViewController: UIViewController {
 		calendar.appearance.weekdayTextColor = .gray60
 		calendar.appearance.headerMinimumDissolvedAlpha = 0.0 // 헤더 양 옆(전달 & 다음 달) 글씨 투명도
 		calendar.appearance.eventDefaultColor = .subGreenColor
-		calendar.appearance.eventSelectionColor = .none
+		//calendar.appearance.eventSelectionColor = .none //error
 		calendar.appearance.selectionColor = .none
 		calendar.appearance.titleTodayColor = .white
 		calendar.appearance.todayColor = .mainColor
