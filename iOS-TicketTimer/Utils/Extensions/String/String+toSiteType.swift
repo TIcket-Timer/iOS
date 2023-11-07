@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    func toSiteType() -> Platform {
+    func toSiteType() -> Site {
         if self == "INTERPARK" {
             return .interpark
         } else if self == "MELON" {

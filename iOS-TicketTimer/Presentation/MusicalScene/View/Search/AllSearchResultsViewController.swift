@@ -25,7 +25,6 @@ class AllSearchResultsViewController: UIViewController {
     
     private let filterButton = UIButton()
     private let filterView = FilterView()
-    private var selectedPlatforms: Platform? = nil
     
     private let noticeResultLable = UILabel()
     private let noticeTableView = UITableView()
@@ -307,7 +306,7 @@ class FilterView: UIView {
     private lazy var melonStackView = UIStackView(arrangedSubviews: [melonLabel, melonSpacer, melonArrow])
     private lazy var yes24StackView = UIStackView(arrangedSubviews: [yes24Label, yes24Spacer, yes24Arrow])
     
-    var filterAction: ((Platform?) -> Void)?
+    var filterAction: ((Site?) -> Void)?
     
     let divider = UIView()
     

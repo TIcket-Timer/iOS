@@ -191,8 +191,8 @@ class MusicalInfo: UIView {
     
     let musical: Musicals
     
-    private lazy var platformLabel: PlatformLabel = {
-        let lb = PlatformLabel(platform: stringToPlatformType(string: musical.siteCategory ?? ""))
+    private lazy var siteLabel: SiteLabel = {
+        let lb = SiteLabel(site: stringToSiteType(string: musical.siteCategory ?? ""))
         return lb
     }()
     
@@ -271,14 +271,14 @@ class MusicalInfo: UIView {
     }
     
     private func setAutoLayout() {
-        self.addSubviews([platformLabel, titleLabel, stackViewContainer])
+        self.addSubviews([siteLabel, titleLabel, stackViewContainer])
         
-        platformLabel.snp.makeConstraints { make in
+        siteLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(platformLabel.snp.bottom).offset(4)
+            make.top.equalTo(siteLabel.snp.bottom).offset(4)
             make.leading.trailing.equalToSuperview()
         }
         
@@ -301,7 +301,7 @@ class MusicalInfo: UIView {
         return dateFormatter.string(from: date)
     }
     
-    private func stringToPlatformType(string: String) -> Platform {
+    private func stringToSiteType(string: String) -> Site {
         if string == "INTERPARK" {
             return .interpark
         } else if string == "MELON" {

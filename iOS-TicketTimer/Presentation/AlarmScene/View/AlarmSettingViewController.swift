@@ -18,8 +18,8 @@ class AlarmSettingViewController: UIViewController {
     private lazy var input = viewModel.input
     private lazy var output = viewModel.output
         
-    private lazy var platformLabel: PlatformLabel = {
-        let lb = PlatformLabel(platform: stringToPlatformType(string: viewModel.notice?.siteCategory ?? ""))
+    private lazy var siteLabel: SiteLabel = {
+        let lb = SiteLabel(site: stringToSiteType(string: viewModel.notice?.siteCategory ?? ""))
         return lb
     }()
     private let titleLabel = UILabel()
@@ -27,7 +27,7 @@ class AlarmSettingViewController: UIViewController {
     private let reservationLabel = UILabel()
     private let reservationDetail = UILabel()
     private let reservationSpacer = UIView()
-    private lazy var titleStackView = UIStackView(arrangedSubviews: [platformLabel, titleLabel, titleSpacer])
+    private lazy var titleStackView = UIStackView(arrangedSubviews: [siteLabel, titleLabel, titleSpacer])
     private lazy var reservationStackView = UIStackView(arrangedSubviews: [reservationLabel, reservationDetail, reservationSpacer])
     private let infoContainer = UIView()
     
@@ -162,7 +162,7 @@ class AlarmSettingViewController: UIViewController {
         self.view.backgroundColor = .white
         navigationItem.title = "알람 설정"
 
-        platformLabel.platform = stringToPlatformType(string: viewModel.notice?.siteCategory ?? "")
+        siteLabel.site = stringToSiteType(string: viewModel.notice?.siteCategory ?? "")
         titleLabel.setup(text: viewModel.notice?.title?.trimmingCharacters(in: ["\n", "\r", "\t"]) ?? "", color: .gray100, size: 17, weight: .medium)
         titleLabel.numberOfLines = 0
         reservationLabel.setup(text: "예매 일정", color: .gray100, size: 15, weight: .medium)
@@ -283,7 +283,7 @@ class AlarmSettingViewController: UIViewController {
         }
     }
     
-    private func stringToPlatformType(string: String) -> Platform {
+    private func stringToSiteType(string: String) -> Site {
         if string == "INTERPARK" {
             return .interpark
         } else if string == "MELON" {

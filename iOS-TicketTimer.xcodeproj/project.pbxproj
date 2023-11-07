@@ -23,7 +23,7 @@
 		8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */; };
 		8F1AFF0E2ADF68CD00972CFC /* String+toTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */; };
 		8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */; };
-		8F33E9282AD4D55500B7AD21 /* PlatformLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9272AD4D55500B7AD21 /* PlatformLabel.swift */; };
+		8F33E9282AD4D55500B7AD21 /* SiteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9272AD4D55500B7AD21 /* SiteLabel.swift */; };
 		8F33E92B2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92A2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift */; };
 		8F33E92D2AD4D81000B7AD21 /* UIColor+HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92C2AD4D81000B7AD21 /* UIColor+HexColor.swift */; };
 		8F33E92F2AD4E01D00B7AD21 /* UILabel+setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */; };
@@ -64,6 +64,7 @@
 		8FCC36072AF9C52400F08B48 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC36062AF9C52400F08B48 /* SearchResultsViewController.swift */; };
 		8FCC36092AF9CA4400F08B48 /* SearchReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC36082AF9CA4400F08B48 /* SearchReadyViewController.swift */; };
 		8FCC360D2AFA052700F08B48 /* AllSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC360C2AFA052700F08B48 /* AllSearchResultsViewController.swift */; };
+		8FCC360F2AFA190900F08B48 /* Site.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC360E2AFA190900F08B48 /* Site.swift */; };
 		8FF52FB12AE8C3F1009F1907 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF52FB02AE8C3F1009F1907 /* UserService.swift */; };
 		8FF52FB32AE8C436009F1907 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF52FB22AE8C436009F1907 /* User.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
@@ -132,7 +133,7 @@
 		8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDate.swift"; sourceTree = "<group>"; };
 		8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toTime.swift"; sourceTree = "<group>"; };
 		8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
-		8F33E9272AD4D55500B7AD21 /* PlatformLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformLabel.swift; sourceTree = "<group>"; };
+		8F33E9272AD4D55500B7AD21 /* SiteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteLabel.swift; sourceTree = "<group>"; };
 		8F33E92A2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorAssests.swift"; sourceTree = "<group>"; };
 		8F33E92C2AD4D81000B7AD21 /* UIColor+HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HexColor.swift"; sourceTree = "<group>"; };
 		8F33E92E2AD4E01D00B7AD21 /* UILabel+setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+setup.swift"; sourceTree = "<group>"; };
@@ -174,6 +175,7 @@
 		8FCC36062AF9C52400F08B48 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		8FCC36082AF9CA4400F08B48 /* SearchReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewController.swift; sourceTree = "<group>"; };
 		8FCC360C2AFA052700F08B48 /* AllSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchResultsViewController.swift; sourceTree = "<group>"; };
+		8FCC360E2AFA190900F08B48 /* Site.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Site.swift; sourceTree = "<group>"; };
 		8FF52FB02AE8C3F1009F1907 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8FF52FB22AE8C436009F1907 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -324,7 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */,
-				8F33E9272AD4D55500B7AD21 /* PlatformLabel.swift */,
+				8F33E9272AD4D55500B7AD21 /* SiteLabel.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -477,6 +479,7 @@
 				9A00CD942AD12FC300E9813F /* Response.swift */,
 				8FAC38772AE0CA5800F26558 /* Alarm.swift */,
 				8FF52FB22AE8C436009F1907 /* User.swift */,
+				8FCC360E2AFA190900F08B48 /* Site.swift */,
 				8F4FEA392AF06F1100443701 /* Auth */,
 			);
 			path = Model;
@@ -894,7 +897,7 @@
 				8FAC38802AE10BC200F26558 /* String+toDateAndTime.swift in Sources */,
 				8FAC387A2AE0CABA00F26558 /* AlarmViewModel.swift in Sources */,
 				8F4FEA252AEA18D200443701 /* AlarmListTableViewCell.swift in Sources */,
-				8F33E9282AD4D55500B7AD21 /* PlatformLabel.swift in Sources */,
+				8F33E9282AD4D55500B7AD21 /* SiteLabel.swift in Sources */,
 				8FF52FB32AE8C436009F1907 /* User.swift in Sources */,
 				8F4FEA272AEA1B3E00443701 /* UILabel+lineSpacing.swift in Sources */,
 				8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */,
@@ -948,6 +951,7 @@
 				8FAC38852AE2162300F26558 /* MypageViewController.swift in Sources */,
 				658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */,
 				8F33E92D2AD4D81000B7AD21 /* UIColor+HexColor.swift in Sources */,
+				8FCC360F2AFA190900F08B48 /* Site.swift in Sources */,
 				8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */,
 				9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */,
 				8FAC38892AE218BD00F26558 /* UseInfoViewController.swift in Sources */,

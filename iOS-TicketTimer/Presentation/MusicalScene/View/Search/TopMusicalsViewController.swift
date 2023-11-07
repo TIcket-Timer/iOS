@@ -23,8 +23,8 @@ class TopMusicalsViewController: UIViewController {
     
     private let popularMusicalLabel = UILabel()
     
-    private var selectedPlatform: Platform = .interpark
-    private let platformButtonContainer = UIView()
+    private var selectedSite: Site = .interpark
+    private let SiteButtonContainer = UIView()
     private let interparkButton = UIButton()
     private let melonButton = UIButton()
     private let yes24Button = UIButton()
@@ -45,10 +45,8 @@ class TopMusicalsViewController: UIViewController {
         super.viewDidLoad()
         setUI()
         setAutoLayout()
-        selectPlatformButton(interparkButton)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+        selectSiteButton(interparkButton)
+        
         input.getTopMusicals.onNext(.interpark)
     }
 
@@ -60,23 +58,23 @@ class TopMusicalsViewController: UIViewController {
         popularMusicalLabel.textColor = .gray100
         popularMusicalLabel.font = .systemFont(ofSize: 15, weight: .bold)
         
-        platformButtonContainer.backgroundColor = .gray20
-        platformButtonContainer.layer.cornerRadius = 16
+        SiteButtonContainer.backgroundColor = .gray20
+        SiteButtonContainer.layer.cornerRadius = 16
         
         interparkButton.setTitle("인터파크", for: .normal)
         interparkButton.setTitleColor(.gray80, for: .normal)
         interparkButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        interparkButton.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
+        interparkButton.addTarget(self, action: #selector(selectSiteButton(_:)), for: .touchUpInside)
         
         melonButton.setTitle("멜론", for: .normal)
         melonButton.setTitleColor(.gray80, for: .normal)
         melonButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        melonButton.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
+        melonButton.addTarget(self, action: #selector(selectSiteButton(_:)), for: .touchUpInside)
         
         yes24Button.setTitle("yes24", for: .normal)
         yes24Button.setTitleColor(.gray80, for: .normal)
         yes24Button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        yes24Button.addTarget(self, action: #selector(selectPlatformButton(_:)), for: .touchUpInside)
+        yes24Button.addTarget(self, action: #selector(selectSiteButton(_:)), for: .touchUpInside)
         
         interparkButton.rx.tap
             .subscribe(onNext:  { [weak self] in
@@ -127,8 +125,8 @@ class TopMusicalsViewController: UIViewController {
     private func setAutoLayout() {
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews([popularMusicalLabel, platformButtonContainer, popularTableView])
-        platformButtonContainer.addSubviews([interparkButton, melonButton, yes24Button])
+        contentView.addSubviews([popularMusicalLabel, SiteButtonContainer, popularTableView])
+        SiteButtonContainer.addSubviews([interparkButton, melonButton, yes24Button])
 
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -144,7 +142,7 @@ class TopMusicalsViewController: UIViewController {
             make.leading.equalToSuperview().offset(24)
         }
 
-        platformButtonContainer.snp.makeConstraints { make in
+        SiteButtonContainer.snp.makeConstraints { make in
             make.top.equalTo(popularMusicalLabel.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(76)
             make.width.equalTo(240)
@@ -169,20 +167,20 @@ class TopMusicalsViewController: UIViewController {
         }
 
         popularTableView.snp.makeConstraints { make in
-            make.top.equalTo(platformButtonContainer.snp.bottom).offset(12)
+            make.top.equalTo(SiteButtonContainer.snp.bottom).offset(12)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
             make.height.equalTo(popularTableViewRowHeight * 10)
         }
     }
     
-    @objc private func selectPlatformButton(_ sender: UIButton) {
+    @objc private func selectSiteButton(_ sender: UIButton) {
         if sender == interparkButton {
-            selectedPlatform = .interpark
+            selectedSite = .interpark
         } else if sender == melonButton {
-            selectedPlatform = .melon
+            selectedSite = .melon
         } else if sender == yes24Button {
-            selectedPlatform = .yes24
+            selectedSite = .yes24
         }
         
         UIView.animate(withDuration: 0.3) {

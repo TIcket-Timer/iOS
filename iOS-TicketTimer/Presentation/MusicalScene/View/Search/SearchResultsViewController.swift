@@ -30,9 +30,7 @@ class SearchResultsViewController: UIViewController {
     private let musicalResultShowAllButton = ShowAllResultsButton()
     private let musicalTableView = UITableView()
     private var musicalTableViewHeightConstraint: Constraint?
-    
-    private var selectedPlatforms: [Platform] = Platform.allCases
-    
+        
     init(viewModel: MusicalViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

@@ -98,13 +98,13 @@ class MusicalService {
     }
     
     //MARK: - 인기 뮤지컬 조회
-    func getTopMusicals(platform: Platform) -> Observable<[Musicals]> {
+    func getTopMusicals(site: Site) -> Observable<[Musicals]> {
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/musicals/ranking"
         urlComponents?.path = path
         
         urlComponents?.queryItems = [
-            URLQueryItem(name: "site", value: platform.siteCapital),
+            URLQueryItem(name: "site", value: site.siteUppercase),
             URLQueryItem(name: "page", value: "0"),
             URLQueryItem(name: "search", value: "10")
         ]
@@ -168,14 +168,14 @@ class MusicalService {
     }
     
     //MARK: - 사이트별 뮤지컬 제목으로 검색
-    func searchMusicalsWithSite(platform: Platform, query: String) -> Observable<Response<[Musicals]>> {
+    func searchMusicalsWithSite(site: Site, query: String) -> Observable<Response<[Musicals]>> {
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/musicals/search"
         urlComponents?.path = path
         
         urlComponents?.queryItems = [
             URLQueryItem(name: "q", value: query),
-            URLQueryItem(name: "site", value: platform.siteCapital),
+            URLQueryItem(name: "site", value: site.siteUppercase),
             URLQueryItem(name: "page", value: "0"),
             URLQueryItem(name: "search", value: "100")
         ]
@@ -204,9 +204,9 @@ class MusicalService {
     
     //MARK: - 모든 사이트로 뮤지컬 제목으로 검색
     func searchMusicalsWithAllSites(query: String) -> Observable<Response<[Musicals]>> {
-        let interpark = searchMusicalsWithSite(platform: .interpark, query: query)
-        let melon = searchMusicalsWithSite(platform: .melon, query: query)
-        let yes24 = searchMusicalsWithSite(platform: .yes24, query: query)
+        let interpark = searchMusicalsWithSite(site: .interpark, query: query)
+        let melon = searchMusicalsWithSite(site: .melon, query: query)
+        let yes24 = searchMusicalsWithSite(site: .yes24, query: query)
         return Observable.zip(interpark, melon, yes24)
             .map { interparkResponse, melonResponse, yes24Response -> Response<[Musicals]> in
                 

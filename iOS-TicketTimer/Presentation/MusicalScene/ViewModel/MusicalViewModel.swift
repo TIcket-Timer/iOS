@@ -21,12 +21,12 @@ class MusicalViewModel: ViewModelType {
     }
     
     struct Input {
-        var getTopMusicals = PublishSubject<Platform>()
+        var getTopMusicals = PublishSubject<Site>()
         var getSearchHistory = PublishSubject<[SearchHistorySection]>()
         var getMuscialHistory = PublishSubject<[MusicalsSection]>()
         var getNoticSearch = PublishSubject<String>()
         var getMusicalSearch = PublishSubject<String>()
-        var getMusicalSearchWithSite = PublishSubject<(Platform, String)>()
+        var getMusicalSearchWithSite = PublishSubject<(Site, String)>()
     }
     struct Output {
         var bindPopularMusicals = PublishSubject<[MusicalsSection]>()
@@ -40,8 +40,8 @@ class MusicalViewModel: ViewModelType {
         
         input.getTopMusicals
             .observe(on: backgroundScheduler)
-            .flatMap { platform -> Observable<[Musicals]> in
-                return self.musicalService.getTopMusicals(platform: platform)
+            .flatMap { site -> Observable<[Musicals]> in
+                return self.musicalService.getTopMusicals(site: site)
             }
             .subscribe(onNext: { musicals in
                 var section = MusicalsSection(items: [])
@@ -126,7 +126,7 @@ class MusicalViewModel: ViewModelType {
         input.getMusicalSearchWithSite
             .observe(on: MainScheduler.instance)
             .flatMap { site, query -> Observable<Response<[Musicals]>> in
-                return self.musicalService.searchMusicalsWithSite(platform: site, query: query)
+                return self.musicalService.searchMusicalsWithSite(site: site, query: query)
             }
             .subscribe { response in
                 print("[\(response.code)] \(response.message)")
