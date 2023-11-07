@@ -1,8 +1,8 @@
 //
-//  SearchReadyView.swift
+//  SearchReadyViewController.swift
 //  iOS-TicketTimer
 //
-//  Created by 심현석 on 2023/10/07.
+//  Created by 심현석 on 2023/11/07.
 //
 
 import UIKit
@@ -28,12 +28,12 @@ extension SearchHistorySection: SectionModelType {
     }
 }
 
-protocol SearchReadyViewDelegate: AnyObject {
-    func didTapCell(_: SearchReadyView)
-    func didTapHistoryButton(_: SearchReadyView, history: String)
+protocol SearchReadyViewControllerDelegate: AnyObject {
+    func didTapHistoryButton(_: SearchReadyViewController, history: String)
 }
 
-class SearchReadyView: UIView {
+
+class SearchReadyViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel: MusicalViewModel
@@ -51,41 +51,43 @@ class SearchReadyView: UIView {
     private let flowLayout = UICollectionViewFlowLayout()
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
     
-    weak var delegate: SearchReadyViewDelegate?
+    weak var delegate: SearchReadyViewControllerDelegate?
     
     init(viewModel: MusicalViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
-        setUI()
-        setAutoLayout()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
+    override func viewDidLoad() {
+        setUI()
+        setAutoLayout()
+    }
+        
+    override func viewWillAppear(_ animated: Bool) {
         self.input.getSearchHistory.onNext([])
         self.input.getMuscialHistory.onNext([])
     }
-        
+    
     private func setUI() {
-        self.backgroundColor = .white
-        
+        self.view.backgroundColor = .white
+
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
-        
+
         recentlyResearchedLabel.text = "최근 검색어"
         recentlyResearchedLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
-        
+
         tableView.register(RecentlyResearchedTableViewCell.self,
                                   forCellReuseIdentifier: RecentlyResearchedTableViewCell.identifier)
         tableView.rowHeight = 30
         tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
-        
+
         let tableViewDataSource = RxTableViewSectionedReloadDataSource<SearchHistorySection> {
             dataSource, tableView, indexPath, item  in
             
@@ -114,17 +116,17 @@ class SearchReadyView: UIView {
             }
             .bind(to: tableView.rx.items(dataSource: tableViewDataSource))
             .disposed(by: disposeBag)
-                
+
         recentlyViewedLabel.text = "최근 본 상품"
         recentlyViewedLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
 
         flowLayout.scrollDirection = .horizontal
         flowLayout.itemSize = CGSize(width: 120, height: 160)
         flowLayout.minimumLineSpacing = 12
-        
+
         collectionView.register(RecentlyViewdCollectionViewCell.self, forCellWithReuseIdentifier: RecentlyViewdCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
-        
+
         let collectionViewDataSource = RxCollectionViewSectionedReloadDataSource<MusicalsSection> {
             dataSource, collectionView, indexPath, item  in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentlyViewdCollectionViewCell.identifier, for: indexPath) as! RecentlyViewdCollectionViewCell
@@ -139,16 +141,13 @@ class SearchReadyView: UIView {
         collectionView.rx.modelSelected(Musicals.self)
             .subscribe(onNext: { [weak self] item in
                 guard let self = self else { return }
-                self.viewModel.selectedMusical = item
-                self.input.getMuscialHistory.onNext([])
-                self.delegate?.didTapCell(self)
-                self.collectionView.setContentOffset(.zero, animated: false)
+                self.viewModel.showMusicalDetail(self, with: item)
             })
             .disposed(by: disposeBag)
     }
     
     private func setAutoLayout() {
-        self.addSubview(scrollView)
+        self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews([recentlyResearchedLabel, tableView, recentlyViewedLabel, collectionView])
         
@@ -171,8 +170,9 @@ class SearchReadyView: UIView {
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             tableViewHeightConstraint = make.height.equalTo(0).constraint
+            //make.height.equalTo(150)
         }
-
+        
         recentlyViewedLabel.snp.makeConstraints { make in
             make.top.equalTo(tableView.snp.bottom).offset(36 - 8)
             make.leading.equalToSuperview().offset(24)
@@ -182,8 +182,8 @@ class SearchReadyView: UIView {
             make.top.equalTo(recentlyViewedLabel.snp.bottom).offset(12)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalToSuperview()
             make.height.equalTo(160)
+            make.bottom.equalToSuperview()
         }
     }
 }

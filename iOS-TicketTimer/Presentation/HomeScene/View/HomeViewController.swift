@@ -76,12 +76,7 @@ class HomeViewController: UIViewController {
 		super.viewWillAppear(animated)
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 	}
-    
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		self.navigationController?.setNavigationBarHidden(false, animated: false)
-	}
-	
+
     private func setUI() {
         self.view.backgroundColor = .white
 		
@@ -257,8 +252,7 @@ class HomeViewController: UIViewController {
 		collectionView.rx.modelSelected(Musicals.self)
 			.withUnretained(self)
 			.subscribe(onNext: { (self, data) in
-				self.musicalViewModel.selectedMusical = data
-				self.musicalViewModel.showMusicalDetailViewController(viewController: self)
+                self.musicalViewModel.showMusicalDetail(self, with: data)
 			})
 			.disposed(by: bag)
 

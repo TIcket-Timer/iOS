@@ -108,7 +108,7 @@ class UserService {
         }
     }
     
-    func updateSiteAlarmSetting(site: Platform, isOn: Bool) {
+    func updateSiteAlarmSetting(site: Site, isOn: Bool) {
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/members/alarms"
         urlComponents?.path = path
@@ -119,7 +119,7 @@ class UserService {
         }
                 
         let body: [String: Any] = [
-            "site": site.site,
+            "site": site.siteLowercase,
             "bool": isOn
         ]
 

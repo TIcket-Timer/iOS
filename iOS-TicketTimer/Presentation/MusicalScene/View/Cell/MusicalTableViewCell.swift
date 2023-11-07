@@ -17,7 +17,7 @@ class MusicalTableViewCell: UITableViewCell {
     private var disposeBag = DisposeBag()
 
     let musicalImageView = UIImageView()
-    let platformLabel = PlatformLabel(platform: .yes24)
+    let siteLabel = SiteLabel(site: .yes24)
     let titleLabel = UILabel()
     let placeLabel = UILabel()
     let dateLabel = UILabel()
@@ -38,7 +38,7 @@ class MusicalTableViewCell: UITableViewCell {
         cellData
             .withUnretained(self)
             .bind(onNext: { (self, data) in
-                self.platformLabel.platform = self.stringToPlatformType(string: data.siteCategory ?? "")
+                self.siteLabel.site = self.stringToSiteType(string: data.siteCategory ?? "")
                 self.titleLabel.text = data.title
                 self.placeLabel.text = data.place
                 self.dateLabel.text = data.startDate
@@ -69,7 +69,7 @@ class MusicalTableViewCell: UITableViewCell {
 
     private func setAutoLayout() {
         contentView.addSubview(container)
-        container.addSubviews([musicalImageView, platformLabel, titleLabel, placeLabel, dateLabel])
+        container.addSubviews([musicalImageView, siteLabel, titleLabel, placeLabel, dateLabel])
         
         container.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
@@ -84,13 +84,13 @@ class MusicalTableViewCell: UITableViewCell {
             make.top.bottom.leading.equalToSuperview()
         }
 
-        platformLabel.snp.makeConstraints { make in
+        siteLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalTo(musicalImageView.snp.trailing).offset(12)
         }
 
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(platformLabel.snp.bottom).offset(8)
+            make.top.equalTo(siteLabel.snp.bottom).offset(8)
             make.leading.equalTo(musicalImageView.snp.trailing).offset(12)
         }
 
@@ -105,7 +105,7 @@ class MusicalTableViewCell: UITableViewCell {
         }
     }
     
-    private func stringToPlatformType(string: String) -> Platform {
+    private func stringToSiteType(string: String) -> Site {
         if string == "INTERPARK" {
             return .interpark
         } else if string == "MELON" {

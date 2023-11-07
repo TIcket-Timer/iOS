@@ -1,8 +1,8 @@
 //
-//  SearchResultView.swift
+//  MusicalSearchReadyViewController.swift
 //  iOS-TicketTimer
 //
-//  Created by 심현석 on 2023/10/07.
+//  Created by 심현석 on 2023/11/07.
 //
 
 import UIKit
@@ -11,13 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-protocol SearchResultViewDelegate: AnyObject {
-    func didTapCell(_ : SearchResultView)
-    func didTapAlarmSetting(_ : SearchResultView)
-    func didTapShowAllResults(resultType: SearchType)
-}
-
-class SearchResultView: UIView {
+class SearchResultsViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel: MusicalViewModel
@@ -31,45 +25,45 @@ class SearchResultView: UIView {
     private let noticeResultShowAllButton = ShowAllResultsButton()
     private let noticeTableView = UITableView()
     private var noticeTableViewHeightConstraint: Constraint?
-
+    
     private let musicalResultLable = UILabel()
     private let musicalResultShowAllButton = ShowAllResultsButton()
     private let musicalTableView = UITableView()
     private var musicalTableViewHeightConstraint: Constraint?
-
-    private var selectedPlatforms: [Platform] = Platform.allCases
-    
-    weak var delegate: SearchResultViewDelegate?
-    
+        
     init(viewModel: MusicalViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
-        setUI()
-        setAutoLayout()
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUI()
+        setAutoLayout()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         let query = viewModel.query
         input.getMusicalSearch.onNext(query)
         input.getNoticSearch.onNext(query)
     }
-
+    
     private func setUI() {
-        self.backgroundColor = .white
+        self.view.backgroundColor = .white
         
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true //> 스크롤뷰가 위로 올라가는 것 방지
         
         noticeResultLable.text = "오픈공지 검색결과"
         noticeResultLable.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         
         noticeTableView.register(NoticeTableViewCell.self,
-                                  forCellReuseIdentifier: NoticeTableViewCell.identifier)
+                                 forCellReuseIdentifier: NoticeTableViewCell.identifier)
         noticeTableView.rowHeight = 72
         noticeTableView.isScrollEnabled = false
         
@@ -79,13 +73,12 @@ class SearchResultView: UIView {
             cell.cellData.onNext(item)
             cell.alarmSettingButtonAction = { [weak self] in
                 guard let self = self else { return }
-                self.viewModel.selectedNotice = item
-                self.delegate?.didTapAlarmSetting(self)
+                self.viewModel.presentAlarmSetting(self, with: item)
             }
             cell.selectionStyle = .none
             return cell
         }
-        
+
         output.bindNoticeSearch
             .do { [weak self] sections in
                 self?.noticeResultShowAllButton.isHidden = sections[0].items.count < 3
@@ -104,11 +97,13 @@ class SearchResultView: UIView {
             }
             .bind(to: noticeTableView.rx.items(dataSource: noticeDataSoure))
             .disposed(by: disposeBag)
-        
+
         noticeResultShowAllButton.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                self?.delegate?.didTapShowAllResults(resultType: .notice)
+                guard let self = self else { return }
+                let vc = AllSearchResultsViewController(type: .notice, viewModel: self.viewModel)
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
         
@@ -152,24 +147,27 @@ class SearchResultView: UIView {
         )
         .subscribe(onNext: { [weak self] indexPath, item in
             guard let self = self else { return }
-            self.viewModel.selectedMusical = item
-            self.delegate?.didTapCell(self)
             self.musicalTableView.deselectRow(at: indexPath, animated: true)
+            
+            self.viewModel.showMusicalDetail(self, with: item)
         })
         .disposed(by: disposeBag)
         
         musicalResultShowAllButton.rx.tapGesture()
             .when(.recognized)
             .subscribe(onNext: { [weak self] _ in
-                self?.delegate?.didTapShowAllResults(resultType: .musical)
+                guard let self = self else { return }
+                let vc = AllSearchResultsViewController(type: .musical, viewModel: self.viewModel)
+                self.navigationController?.pushViewController(vc, animated: true)
             })
             .disposed(by: disposeBag)
     }
     
     private func setAutoLayout() {
-        self.addSubview(scrollView)
+        self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews([noticeResultLable, noticeResultShowAllButton, noticeTableView, musicalResultLable, musicalResultShowAllButton, musicalTableView])
+        contentView.addSubviews([noticeResultLable, noticeTableView, musicalResultLable, musicalTableView])
         
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -189,23 +187,23 @@ class SearchResultView: UIView {
             make.top.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-24)
         }
-        
+
         noticeTableView.snp.makeConstraints { make in
             make.top.equalTo(noticeResultLable.snp.bottom)
             make.leading.trailing.equalToSuperview()
             noticeTableViewHeightConstraint = make.height.equalTo(0).constraint
         }
-        
+
         musicalResultLable.snp.makeConstraints { make in
             make.top.equalTo(noticeTableView.snp.bottom).offset(25)
             make.leading.equalToSuperview().offset(24)
         }
-        
+
         musicalResultShowAllButton.snp.makeConstraints { make in
             make.top.equalTo(noticeTableView.snp.bottom).offset(25)
             make.trailing.equalToSuperview().offset(-24)
         }
-        
+
         musicalTableView.snp.makeConstraints { make in
             make.top.equalTo(musicalResultLable.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview()
