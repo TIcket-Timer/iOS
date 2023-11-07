@@ -22,5 +22,9 @@ class TokenService {
         UserDefaults.standard.removeObject(forKey: "accessToken")
         UserDefaults.standard.removeObject(forKey: "refreshToken")
     }
+    
+    func saveFcmToken(with token: String) {
+        UserDefaults.standard.set(token, forKey: "fcmToken")
+    }
 }
     

@@ -63,9 +63,11 @@ class AuthService {
             return Observable.empty()
         }
         
+        let fcmToken = UserDefaults.standard.string(forKey: "fcmToken") ?? ""
         let header: HTTPHeaders = [
             "Authorization": token,
-            "resource": type.rawValue
+            "resource": type.rawValue,
+            "fcmToken" : fcmToken
         ]
 
         return Observable.create { observer -> Disposable in
