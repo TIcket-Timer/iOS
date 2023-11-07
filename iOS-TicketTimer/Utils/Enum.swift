@@ -27,56 +27,6 @@ enum Execution<T> {
 	case error(_ errorMessage: String)
 }
 
-enum Platform: String, CaseIterable {
-    case interpark = "인터파크"
-    case melon = "멜론"
-    case yes24 = "yse24"
-    
-    var site: String {
-        switch self {
-        case .interpark:
-            return "interpark"
-        case .melon:
-            return "melon"
-        case .yes24:
-            return "yes24"
-        }
-    }
-    
-    var siteCapital: String {
-        switch self {
-        case .interpark:
-            return "INTERPARK"
-        case .melon:
-            return "MELON"
-        case .yes24:
-            return "YES24"
-        }
-    }
-    
-    var ticket: String {
-        switch self {
-        case .interpark:
-            return "인터파크 티켓"
-        case .melon:
-            return "멜론 티켓"
-        case .yes24:
-            return "yes24"
-        }
-    }
-    
-    var color: UIColor {
-        switch self {
-        case .interpark:
-            return UIColor("#8447DF")
-        case .melon:
-            return UIColor.mainColor
-        case .yes24:
-            return UIColor("#377EF7")
-        }
-    }
-}
-
 enum TestToken: String {
     case accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzZXJ2ZXJJZCI6Imtha2FvMjgwMzE2MzU4NyIsImlkIjoxLCJ0eXBlIjoiYWNjZXNzVG9rZW4iLCJpYXQiOjE2OTY1OTI4MDIsImV4cCI6MTY5OTU5MjgwMn0.8fVYvhAI2LP_RsgR0VNIYljLSuv6cCv5tkV3NunKJL4"
     case refreshToken = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwic2VydmVySWQiOiJrYWthbzI4MDMxNjM1ODciLCJ0eXBlIjoicmVmcmVzaFRva2VuIiwiaWF0IjoxNjk2NTkyODAyLCJleHAiOjE3MDI1OTI4MDJ9.a0hmTd92_Cw3OA1XdDTl65eqbChz8bo9c4oWMPK967c"

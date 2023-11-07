@@ -1,8 +1,8 @@
 //
-//  SearchAllResultsView.swift
+//  AllSearchResultsViewController.swift
 //  iOS-TicketTimer
 //
-//  Created by 심현석 on 2023/10/16.
+//  Created by 심현석 on 2023/11/07.
 //
 
 import UIKit
@@ -11,30 +11,20 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-protocol SearchAllResultsViewDelegate: AnyObject {
-    func didTapCell(_ : SearchAllResultsView)
-    func didTapAlarmSetting(_ : SearchAllResultsView)
-}
-
-class SearchAllResultsView: UIView {
+class AllSearchResultsViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel: MusicalViewModel
     private lazy var input = MusicalViewModel.Input()
     private lazy var output = viewModel.transform(input: input)
     
-    var type: SearchType? = nil {
-        didSet {
-            self.updateAutoLayout()
-        }
-    }
+    var type: SearchType
     
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     
     private let filterButton = UIButton()
     private let filterView = FilterView()
-    private var selectedPlatforms: Platform? = nil
     
     private let noticeResultLable = UILabel()
     private let noticeTableView = UITableView()
@@ -44,35 +34,38 @@ class SearchAllResultsView: UIView {
     private let musicalTableView = UITableView()
     private var musicalTableViewHeightConstraint: Constraint?
     
-    weak var delegate: SearchAllResultsViewDelegate?
-    
-    init(viewModel: MusicalViewModel) {
+    init(type: SearchType, viewModel: MusicalViewModel) {
+        self.type = type
         self.viewModel = viewModel
-        super.init(frame: .zero)
-        setUI()
-        setAutoLayout()
-        setFilter()
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func willMove(toSuperview newSuperview: UIView?) {
-        super.willMove(toSuperview: newSuperview)
-        print("진입")
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUI()
+        setAutoLayout()
+        setFilter()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         let query = viewModel.query
         if type == .notice {
-            print("notice")
             input.getNoticSearch.onNext(query)
         } else if type == .musical {
-            print("musical")
             input.getMusicalSearch.onNext(query)
         }
     }
     
     private func setUI() {
-        self.backgroundColor = .white
+        self.view.backgroundColor = .white
+        
+        navigationItem.title = "검색 결과"
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.topItem?.title = ""
         
         scrollView.keyboardDismissMode = .onDrag
         scrollView.showsVerticalScrollIndicator = false
@@ -91,8 +84,7 @@ class SearchAllResultsView: UIView {
             cell.cellData.onNext(item)
             cell.alarmSettingButtonAction = { [weak self] in
                 guard let self = self else { return }
-                self.viewModel.selectedNotice = item
-                self.delegate?.didTapAlarmSetting(self)
+                self.viewModel.presentAlarmSetting(self, with: item)
             }
             cell.selectionStyle = .none
             return cell
@@ -138,17 +130,16 @@ class SearchAllResultsView: UIView {
         )
         .subscribe(onNext: { [weak self] indexPath, item in
             guard let self = self else { return }
-            self.viewModel.selectedMusical = item
-            self.delegate?.didTapCell(self)
             self.musicalTableView.deselectRow(at: indexPath, animated: true)
+            
+            self.viewModel.showMusicalDetail(self, with: item)
         })
         .disposed(by: disposeBag)
     }
     
     private func setAutoLayout() {
-        self.addSubview(scrollView)
+        self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews([filterButton, filterView, noticeResultLable, noticeTableView, musicalResultLable, musicalTableView])
         
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -158,16 +149,10 @@ class SearchAllResultsView: UIView {
             make.edges.equalToSuperview()
             make.width.equalToSuperview()
         }
-    }
-    
-    private func updateAutoLayout() {
+        
         if type == .notice {
-            musicalResultLable.removeFromSuperview()
-            musicalTableView.removeFromSuperview()
-            filterButton.removeFromSuperview()
-            filterView.removeFromSuperview()
             contentView.addSubviews([noticeResultLable, noticeTableView])
-
+            
             noticeResultLable.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(10)
                 make.leading.equalToSuperview().offset(24)
@@ -179,12 +164,9 @@ class SearchAllResultsView: UIView {
                 make.bottom.equalToSuperview()
                 noticeTableViewHeightConstraint = make.height.equalTo(0).constraint
             }
-        } else if type == .musical {
-            noticeResultLable.removeFromSuperview()
-            noticeTableView.removeFromSuperview()
-            contentView.addSubviews([musicalResultLable, musicalTableView, filterButton])
-            contentView.addSubview(filterView)
-            
+        } else {
+            contentView.addSubviews([musicalResultLable, musicalTableView])
+
             musicalResultLable.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(10)
                 make.leading.equalToSuperview().offset(24)
@@ -197,6 +179,8 @@ class SearchAllResultsView: UIView {
                 musicalTableViewHeightConstraint = make.height.equalTo(0).constraint
             }
             
+            contentView.addSubviews([filterButton, filterView])
+
             filterButton.snp.makeConstraints { make in
                 make.top.equalToSuperview().offset(10)
                 make.trailing.equalToSuperview().offset(-24)
@@ -231,7 +215,6 @@ class SearchAllResultsView: UIView {
             .disposed(by: disposeBag)
         
         // filterView
-        //MARK: 사이트별 검색 필터 적용 후에 다시 필터 적용이 안되는 에러
         filterView.isHidden = true
         
         filterView.allButton.rx.tap
@@ -323,7 +306,7 @@ class FilterView: UIView {
     private lazy var melonStackView = UIStackView(arrangedSubviews: [melonLabel, melonSpacer, melonArrow])
     private lazy var yes24StackView = UIStackView(arrangedSubviews: [yes24Label, yes24Spacer, yes24Arrow])
     
-    var filterAction: ((Platform?) -> Void)?
+    var filterAction: ((Site?) -> Void)?
     
     let divider = UIView()
     
@@ -453,3 +436,4 @@ class FilterView: UIView {
         }
     }
 }
+

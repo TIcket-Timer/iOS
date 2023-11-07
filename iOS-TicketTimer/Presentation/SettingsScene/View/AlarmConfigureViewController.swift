@@ -132,14 +132,14 @@ class AlarmConfigureViewController: UIViewController {
 
 class SiteSwitch: UIView {
     
-    let site: Platform
+    let site: Site
     
     private let siteLabel = UILabel()
     private let spacer = UIView()
     let siteSwitch = UISwitch()
     private lazy var stackView = UIStackView(arrangedSubviews: [siteLabel, spacer, siteSwitch])
     
-    init(site: Platform) {
+    init(site: Site) {
         self.site = site
         super.init(frame: .zero)
         configure()
