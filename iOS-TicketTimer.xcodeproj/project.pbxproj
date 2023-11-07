@@ -19,7 +19,6 @@
 		658C86782A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 658C86772A78E052002C65F0 /* iOS_TicketTimerUITestsLaunchTests.swift */; };
 		8CBC4AA1BC923B36CF388B3C /* libPods-iOS-TicketTimerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59F957427AB05DB52C537D /* libPods-iOS-TicketTimerUITests.a */; };
 		8F15F6052AF8AA4100813199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8F15F6042AF8AA4100813199 /* GoogleService-Info.plist */; };
-		8F1AFF072ADCD6E700972CFC /* SearchAllResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */; };
 		8F1AFF0A2ADE16D200972CFC /* SearchHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */; };
 		8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */; };
 		8F1AFF0E2ADF68CD00972CFC /* String+toTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */; };
@@ -46,9 +45,6 @@
 		8F70CD162AD00D6A00586847 /* MusicalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F70CD152AD00D6A00586847 /* MusicalTableViewCell.swift */; };
 		8FA0347F2AD0F324001FEC71 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */; };
 		8FA034912AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */; };
-		8FA034952AD3E258001FEC71 /* SearchReadyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034922AD3E258001FEC71 /* SearchReadyView.swift */; };
-		8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */; };
-		8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA034942AD3E258001FEC71 /* SearchResultView.swift */; };
 		8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */; };
 		8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */; };
 		8FAC38782AE0CA5800F26558 /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38772AE0CA5800F26558 /* Alarm.swift */; };
@@ -64,6 +60,10 @@
 		8FAC389A2AE6226600F26558 /* BottomSheetNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAC38992AE6226600F26558 /* BottomSheetNavigationController.swift */; };
 		8FC975192AE78BE300DC654C /* UserNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC975182AE78BE300DC654C /* UserNotificationService.swift */; };
 		8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC9751A2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift */; };
+		8FCC36052AF9BDEE00F08B48 /* TopMusicalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC36042AF9BDEE00F08B48 /* TopMusicalsViewController.swift */; };
+		8FCC36072AF9C52400F08B48 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC36062AF9C52400F08B48 /* SearchResultsViewController.swift */; };
+		8FCC36092AF9CA4400F08B48 /* SearchReadyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC36082AF9CA4400F08B48 /* SearchReadyViewController.swift */; };
+		8FCC360D2AFA052700F08B48 /* AllSearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCC360C2AFA052700F08B48 /* AllSearchResultsViewController.swift */; };
 		8FF52FB12AE8C3F1009F1907 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF52FB02AE8C3F1009F1907 /* UserService.swift */; };
 		8FF52FB32AE8C436009F1907 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF52FB22AE8C436009F1907 /* User.swift */; };
 		9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A00CD922AD12BDA00E9813F /* MusicalService.swift */; };
@@ -128,7 +128,6 @@
 		6B14AF104037D2946F72EE47 /* Pods-iOS-TicketTimerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerTests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerTests/Pods-iOS-TicketTimerTests.release.xcconfig"; sourceTree = "<group>"; };
 		6F786A4C36DE08404A3DADBB /* Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimer-iOS-TicketTimerUITests/Pods-iOS-TicketTimer-iOS-TicketTimerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8F15F6042AF8AA4100813199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAllResultsView.swift; sourceTree = "<group>"; };
 		8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryService.swift; sourceTree = "<group>"; };
 		8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDate.swift"; sourceTree = "<group>"; };
 		8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toTime.swift"; sourceTree = "<group>"; };
@@ -156,9 +155,6 @@
 		8F70CD152AD00D6A00586847 /* MusicalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalTableViewCell.swift; sourceTree = "<group>"; };
 		8FA0347E2AD0F324001FEC71 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		8FA0348F2AD3E246001FEC71 /* RecentlyViewdCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentlyViewdCollectionViewCell.swift; sourceTree = "<group>"; };
-		8FA034922AD3E258001FEC71 /* SearchReadyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchReadyView.swift; sourceTree = "<group>"; };
-		8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchInactiveView.swift; sourceTree = "<group>"; };
-		8FA034942AD3E258001FEC71 /* SearchResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultView.swift; sourceTree = "<group>"; };
 		8FA0349A2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlyResearchedTableViewCell.swift; sourceTree = "<group>"; };
 		8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicalDetailViewController.swift; sourceTree = "<group>"; };
 		8FAC38772AE0CA5800F26558 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
@@ -174,6 +170,10 @@
 		8FAC38992AE6226600F26558 /* BottomSheetNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetNavigationController.swift; sourceTree = "<group>"; };
 		8FC975182AE78BE300DC654C /* UserNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationService.swift; sourceTree = "<group>"; };
 		8FC9751A2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActorInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		8FCC36042AF9BDEE00F08B48 /* TopMusicalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopMusicalsViewController.swift; sourceTree = "<group>"; };
+		8FCC36062AF9C52400F08B48 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		8FCC36082AF9CA4400F08B48 /* SearchReadyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchReadyViewController.swift; sourceTree = "<group>"; };
+		8FCC360C2AFA052700F08B48 /* AllSearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllSearchResultsViewController.swift; sourceTree = "<group>"; };
 		8FF52FB02AE8C3F1009F1907 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8FF52FB22AE8C436009F1907 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		986F84F978BE7D5AC58A5A50 /* Pods-iOS-TicketTimerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-TicketTimerUITests.release.xcconfig"; path = "Target Support Files/Pods-iOS-TicketTimerUITests/Pods-iOS-TicketTimerUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -312,8 +312,10 @@
 		8F1AFF082ADD05AD00972CFC /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */,
-				8F4FEA1F2AEA042800443701 /* View */,
+				8FCC36042AF9BDEE00F08B48 /* TopMusicalsViewController.swift */,
+				8FCC36082AF9CA4400F08B48 /* SearchReadyViewController.swift */,
+				8FCC36062AF9C52400F08B48 /* SearchResultsViewController.swift */,
+				8FCC360C2AFA052700F08B48 /* AllSearchResultsViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -337,17 +339,6 @@
 				8F4FEA262AEA1B3E00443701 /* UILabel+lineSpacing.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		8F4FEA1F2AEA042800443701 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				8FA034932AD3E258001FEC71 /* SearchInactiveView.swift */,
-				8FA034922AD3E258001FEC71 /* SearchReadyView.swift */,
-				8FA034942AD3E258001FEC71 /* SearchResultView.swift */,
-				8F1AFF062ADCD6E700972CFC /* SearchAllResultsView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		8F4FEA202AEA043800443701 /* AlarmScene */ = {
@@ -572,6 +563,7 @@
 			children = (
 				9AB92BEF2ACC4A4D002C4B0A /* ViewModel */,
 				9AB92BEE2ACC4A45002C4B0A /* View */,
+				9AB92BF02ACC4A5D002C4B0A /* MusicalViewController.swift */,
 				8FA0349C2AD3E521001FEC71 /* MusicalDetailViewController.swift */,
 			);
 			path = MusicalScene;
@@ -915,9 +907,9 @@
 				9A00CD972AD1314400E9813F /* Musicals.swift in Sources */,
 				9A00CD932AD12BDA00E9813F /* MusicalService.swift in Sources */,
 				8FAC387E2AE0DBDA00F26558 /* String+toDateType.swift in Sources */,
+				8FCC36092AF9CA4400F08B48 /* SearchReadyViewController.swift in Sources */,
 				65709A112A91D2E200A9DF7A /* KakaoLogin.swift in Sources */,
 				9A16AC042ACD99C0007C5570 /* HomeTableViewCell.swift in Sources */,
-				8F1AFF072ADCD6E700972CFC /* SearchAllResultsView.swift in Sources */,
 				9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */,
 				8F33E92F2AD4E01D00B7AD21 /* UILabel+setup.swift in Sources */,
 				9AB92BE52ACC4A10002C4B0A /* SettingsViewController.swift in Sources */,
@@ -927,6 +919,7 @@
 				9A00CD952AD12FC300E9813F /* Response.swift in Sources */,
 				8F4FEA2B2AEB49E100443701 /* Login.swift in Sources */,
 				9AB92BDC2ACC4921002C4B0A /* HomeViewModel.swift in Sources */,
+				8FCC36052AF9BDEE00F08B48 /* TopMusicalsViewController.swift in Sources */,
 				9AB92BD62ACC48FE002C4B0A /* LoginViewController.swift in Sources */,
 				9AB92BED2ACC4A40002C4B0A /* SettingsViewModel.swift in Sources */,
 				8FAC38872AE217FB00F26558 /* AlarmConfigureViewController.swift in Sources */,
@@ -941,9 +934,10 @@
 				8F411EEE2AF0A9B600C801BA /* PresentationManager.swift in Sources */,
 				8FA0349D2AD3E521001FEC71 /* MusicalDetailViewController.swift in Sources */,
 				A95CEE862ACE8CA100DED768 /* HomeCollectionViewCell.swift in Sources */,
+				8FCC360D2AFA052700F08B48 /* AllSearchResultsViewController.swift in Sources */,
 				8F4FEA2E2AEB516D00443701 /* KakaoLoginService.swift in Sources */,
 				8FAC38962AE5F95200F26558 /* AlarmService.swift in Sources */,
-				8FA034972AD3E258001FEC71 /* SearchResultView.swift in Sources */,
+				8FCC36072AF9C52400F08B48 /* SearchResultsViewController.swift in Sources */,
 				8FA0349B2AD3E36D001FEC71 /* RecentlyResearchedTableViewCell.swift in Sources */,
 				8F4FEA3B2AF06F1F00443701 /* SocialLogin.swift in Sources */,
 				9AB92BDA2ACC4917002C4B0A /* TabBarViewController.swift in Sources */,
@@ -955,10 +949,8 @@
 				658C86572A78E04D002C65F0 /* SceneDelegate.swift in Sources */,
 				8F33E92D2AD4D81000B7AD21 /* UIColor+HexColor.swift in Sources */,
 				8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */,
-				8FA034952AD3E258001FEC71 /* SearchReadyView.swift in Sources */,
 				9AB92BFF2ACC51CE002C4B0A /* Protocol.swift in Sources */,
 				8FAC38892AE218BD00F26558 /* UseInfoViewController.swift in Sources */,
-				8FA034962AD3E258001FEC71 /* SearchInactiveView.swift in Sources */,
 				8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */,
 				8FAC388B2AE2294900F26558 /* ChangeUsernameViewController.swift in Sources */,
 				8F411EF12AF0F7CE00C801BA /* PrivacyPolicyViewController.swift in Sources */,

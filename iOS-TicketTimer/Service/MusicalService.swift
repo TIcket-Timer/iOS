@@ -98,7 +98,7 @@ class MusicalService {
     }
     
     //MARK: - 인기 뮤지컬 조회
-    func getPopularMusicals(platform: Platform) -> Observable<[Musicals]> {
+    func getTopMusicals(platform: Platform) -> Observable<[Musicals]> {
         var urlComponents = URLComponents(string: baseUrl)
         let path = "/api/musicals/ranking"
         urlComponents?.path = path

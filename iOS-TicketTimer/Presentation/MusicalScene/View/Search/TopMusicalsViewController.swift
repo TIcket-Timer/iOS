@@ -1,8 +1,8 @@
 //
-//  SearchInactiveView.swift
+//  MusicalSearchResultViewController.swift
 //  iOS-TicketTimer
 //
-//  Created by 심현석 on 2023/10/09.
+//  Created by 심현석 on 2023/11/07.
 //
 
 import UIKit
@@ -11,11 +11,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-protocol SearchInactiveViewDelegate: AnyObject {
-    func didTapCell(_: SearchInactiveView)
-}
-
-class SearchInactiveView: UIView {
+class TopMusicalsViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
     var viewModel: MusicalViewModel
@@ -35,21 +31,25 @@ class SearchInactiveView: UIView {
     
     private let popularTableView = UITableView()
     private let popularTableViewRowHeight: CGFloat = 200
-    
-    weak var delegate: SearchInactiveViewDelegate?
-    
+        
     init(viewModel: MusicalViewModel) {
         self.viewModel = viewModel
-        super.init(frame: .zero)
-        setUI()
-        setAutoLayout()
-        selectPlatformButton(interparkButton)
-        
-        input.getPopularMusicals.onNext(.interpark)
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUI()
+        setAutoLayout()
+        selectPlatformButton(interparkButton)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        input.getTopMusicals.onNext(.interpark)
     }
 
     private func setUI() {
@@ -80,19 +80,19 @@ class SearchInactiveView: UIView {
         
         interparkButton.rx.tap
             .subscribe(onNext:  { [weak self] in
-                self?.input.getPopularMusicals.onNext(.interpark)
+                self?.input.getTopMusicals.onNext(.interpark)
             })
             .disposed(by: disposeBag)
         
         melonButton.rx.tap
             .subscribe(onNext:  { [weak self] in
-                self?.input.getPopularMusicals.onNext(.melon)
+                self?.input.getTopMusicals.onNext(.melon)
             })
             .disposed(by: disposeBag)
         
         yes24Button.rx.tap
             .subscribe(onNext:  { [weak self] in
-                self?.input.getPopularMusicals.onNext(.yes24)
+                self?.input.getTopMusicals.onNext(.yes24)
             })
             .disposed(by: disposeBag)
         
@@ -111,34 +111,21 @@ class SearchInactiveView: UIView {
             .bind(to: popularTableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
-//        popularTableView.rx.itemSelected
-//            .subscribe(onNext: { [weak self] indexPath in
-//                self?.delegate?.didTapCell(self!, indexPath: indexPath)
-//                self?.popularTableView.deselectRow(at: indexPath, animated: true)
-//            })
-//            .disposed(by: disposeBag)
-//
-//        popularTableView.rx.modelSelected(Musicals.self)
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] musical in
-//                self?.viewModel.selectedMusical = musical
-//            })
-//            .disposed(by: disposeBag)
-        
         Observable.zip(
             popularTableView.rx.itemSelected,
             popularTableView.rx.modelSelected(Musicals.self)
         )
         .subscribe(onNext: { [weak self] indexPath, item in
-            self?.viewModel.selectedMusical = item
-            self?.delegate?.didTapCell(self!)
-            self?.popularTableView.deselectRow(at: indexPath, animated: true)
+            guard let self = self else { return }
+            self.popularTableView.deselectRow(at: indexPath, animated: true)
+            
+            self.viewModel.showMusicalDetail(self, with: item)
         })
         .disposed(by: disposeBag)
     }
 
     private func setAutoLayout() {
-        self.addSubview(scrollView)
+        self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews([popularMusicalLabel, platformButtonContainer, popularTableView])
         platformButtonContainer.addSubviews([interparkButton, melonButton, yes24Button])
@@ -163,20 +150,17 @@ class SearchInactiveView: UIView {
             make.width.equalTo(240)
             make.height.equalTo(32)
         }
-
         interparkButton.snp.makeConstraints { make in
             make.width.equalTo(240 / 3)
             make.height.equalToSuperview()
             make.top.leading.equalToSuperview()
         }
-
         melonButton.snp.makeConstraints { make in
             make.width.equalTo(240 / 3)
             make.height.equalToSuperview()
             make.top.equalToSuperview()
             make.leading.equalTo(interparkButton.snp.trailing)
         }
-
         yes24Button.snp.makeConstraints { make in
             make.width.equalTo(240 / 3)
             make.height.equalToSuperview()
