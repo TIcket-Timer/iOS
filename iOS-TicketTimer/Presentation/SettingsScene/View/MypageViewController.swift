@@ -62,7 +62,21 @@ class MypageViewController: UIViewController {
             .subscribe { [weak self] _ in
                 guard let self = self else { return }
                 let vc = ChangeUsernameViewController(viewModel: self.viewModel)
-                let nav = BottomSheetNavigationController(rootViewController: vc, heigth: 260)
+                let nav = UINavigationController(rootViewController: vc)
+                
+                if #available(iOS 16.0, *) {
+                    if let sheet = nav.sheetPresentationController {
+                        sheet.prefersGrabberVisible = true
+                        sheet.detents = [.custom(resolver: { context in
+                            return context.maximumDetentValue * 0.2
+                        })]
+                    }
+                } else {
+                    if let sheet = nav.sheetPresentationController {
+                        sheet.prefersGrabberVisible = true
+                        sheet.detents = [.medium()]
+                    }
+                }
                 self.present(nav, animated: true)
             }
             .disposed(by: disposeBag)
