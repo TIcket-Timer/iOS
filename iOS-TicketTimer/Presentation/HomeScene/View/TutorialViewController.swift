@@ -29,14 +29,17 @@ class TutorialViewController: UIViewController {
     
     let tabBar: UITabBar
     
+    private let homeLabel = UILabel()
     private let homeIcon = UIImageView()
     private let homeArrow = UIImageView()
     private let homeText = UILabel()
     
+    private let ticketLabel = UILabel()
     private let ticketIcon = UIImageView()
     private let ticketArrow = UIImageView()
     private let ticketText = UILabel()
     
+    private let calendarLabel = UILabel()
     private let calendarIcon = UIImageView()
     private let calendarArrow = UIImageView()
     private let calendarText = UILabel()
@@ -66,6 +69,10 @@ class TutorialViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
+        homeLabel.setup(text: "홈", color: .white, size: 10, weight: .medium)
+        ticketLabel.setup(text: "공연", color: .white, size: 10, weight: .medium)
+        calendarLabel.setup(text: "캘린더", color: .white, size: 10, weight: .medium)
+        
         homeIcon.image = UIImage(named: "houseWhite")
         ticketIcon.image = UIImage(named: "ticketWhite")
         calendarIcon.image = UIImage(named: "calendarWhite")
@@ -93,7 +100,7 @@ class TutorialViewController: UIViewController {
         let ticketAtt = NSMutableAttributedString(string: "예매하려는 공연을 검색하고\n", attributes: baseAtt)
         ticketAtt.append(NSAttributedString(string: "예매일정 알람을 추가", attributes: colorAtt))
         ticketAtt.append(NSAttributedString(string: "할 수 있어요.", attributes: baseAtt))
-        ticketText.attributedText = homeAtt
+        ticketText.attributedText = ticketAtt
         ticketText.numberOfLines = 0
         ticketText.textAlignment = .left
         
@@ -113,9 +120,9 @@ class TutorialViewController: UIViewController {
     
     private func setLayout() {
         view.addSubviews([
-            homeIcon, homeArrow, homeText,
-            ticketIcon, ticketArrow, ticketText,
-            calendarIcon, calendarArrow, calendarText
+            homeLabel, homeIcon, homeArrow, homeText,
+            ticketLabel, ticketIcon, ticketArrow, ticketText,
+            calendarLabel, calendarIcon, calendarArrow, calendarText
         ])
         
         let tabBarHeight = tabBar.frame.height
@@ -145,6 +152,18 @@ class TutorialViewController: UIViewController {
             make.width.height.equalTo(iconHeight)
         }
         
+        homeLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview().offset(HomeCenterX)
+            make.top.equalTo(homeIcon.snp.bottom).offset(4)
+        }
+        ticketLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview().offset(ticketCenterX)
+            make.top.equalTo(ticketIcon.snp.bottom).offset(4)
+        }
+        calendarLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview().offset(calendarCenterX)
+            make.top.equalTo(calendarIcon.snp.bottom).offset(4)
+        }
         
         homeArrow.snp.makeConstraints { make in
             make.centerX.equalTo(homeIcon.snp.centerX)
