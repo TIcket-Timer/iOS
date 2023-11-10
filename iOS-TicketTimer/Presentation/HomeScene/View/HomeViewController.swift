@@ -76,6 +76,33 @@ class HomeViewController: UIViewController {
 		super.viewWillAppear(animated)
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !TutorialService.shared.checkTutorial() {
+            showTutorial()
+        }
+    }
+    
+    //MARK: - 튜토리얼
+    private func showTutorial() {
+        scrollView.setContentOffset(CGPoint(x: 0, y: -topSafeAreaInsets), animated: false)
+        
+        let vc = TutorialViewController(self.tabBarController!.tabBar)
+        let nav = TutorialNavigationController(rootViewController: vc)
+        
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.addSubview(nav.view)
+        }
+        
+        vc.cancleButton.rx.tap
+            .subscribe { _ in
+                nav.view.removeFromSuperview()
+                TutorialService.shared.saveTutorial(isCompleted: true)
+            }
+            .disposed(by: bag)
+    }
 
     private func setUI() {
         self.view.backgroundColor = .white

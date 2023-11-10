@@ -22,6 +22,8 @@
 		8F1AFF0A2ADE16D200972CFC /* SearchHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */; };
 		8F1AFF0C2ADF68C700972CFC /* String+toDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */; };
 		8F1AFF0E2ADF68CD00972CFC /* String+toTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */; };
+		8F2DABA72AFE170D00E04476 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2DABA62AFE170D00E04476 /* TutorialViewController.swift */; };
+		8F2DABA92AFE177000E04476 /* TutorialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2DABA82AFE177000E04476 /* TutorialService.swift */; };
 		8F33E9252AD4D30C00B7AD21 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */; };
 		8F33E9282AD4D55500B7AD21 /* SiteLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E9272AD4D55500B7AD21 /* SiteLabel.swift */; };
 		8F33E92B2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F33E92A2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift */; };
@@ -132,6 +134,8 @@
 		8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHistoryService.swift; sourceTree = "<group>"; };
 		8F1AFF0B2ADF68C700972CFC /* String+toDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toDate.swift"; sourceTree = "<group>"; };
 		8F1AFF0D2ADF68CD00972CFC /* String+toTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toTime.swift"; sourceTree = "<group>"; };
+		8F2DABA62AFE170D00E04476 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		8F2DABA82AFE177000E04476 /* TutorialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialService.swift; sourceTree = "<group>"; };
 		8F33E9242AD4D30C00B7AD21 /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		8F33E9272AD4D55500B7AD21 /* SiteLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteLabel.swift; sourceTree = "<group>"; };
 		8F33E92A2AD4D7EE00B7AD21 /* UIColor+ColorAssests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorAssests.swift"; sourceTree = "<group>"; };
@@ -449,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				8F15F6012AF479F000813199 /* Utils */,
+				8F2DABA82AFE177000E04476 /* TutorialService.swift */,
 				9A00CD922AD12BDA00E9813F /* MusicalService.swift */,
 				8FAC38952AE5F95200F26558 /* AlarmService.swift */,
 				8F1AFF092ADE16D200972CFC /* SearchHistoryService.swift */,
@@ -525,6 +530,7 @@
 			children = (
 				9A16AC022ACD99A1007C5570 /* Cell */,
 				9AB92BDD2ACC492A002C4B0A /* HomeViewController.swift */,
+				8F2DABA62AFE170D00E04476 /* TutorialViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -902,6 +908,7 @@
 				8F33E9282AD4D55500B7AD21 /* SiteLabel.swift in Sources */,
 				8FF52FB32AE8C436009F1907 /* User.swift in Sources */,
 				8F4FEA272AEA1B3E00443701 /* UILabel+lineSpacing.swift in Sources */,
+				8F2DABA72AFE170D00E04476 /* TutorialViewController.swift in Sources */,
 				8FC9751B2AE7B47D00DC654C /* ActorInfoCollectionViewCell.swift in Sources */,
 				9AB92BD42ACC48E9002C4B0A /* LoginViewModel.swift in Sources */,
 				8F4FEA292AEB49D800443701 /* AuthService.swift in Sources */,
@@ -918,6 +925,7 @@
 				9AB92BE92ACC4A2C002C4B0A /* CalendarViewController.swift in Sources */,
 				8F33E92F2AD4E01D00B7AD21 /* UILabel+setup.swift in Sources */,
 				9AB92BE52ACC4A10002C4B0A /* SettingsViewController.swift in Sources */,
+				8F2DABA92AFE177000E04476 /* TutorialService.swift in Sources */,
 				8FA0347F2AD0F324001FEC71 /* PaddingLabel.swift in Sources */,
 				8FAC38982AE6223C00F26558 /* AlarmTimePickerViewController.swift in Sources */,
 				8F4FEA1D2AE9F2A700443701 /* String+toSiteType.swift in Sources */,
