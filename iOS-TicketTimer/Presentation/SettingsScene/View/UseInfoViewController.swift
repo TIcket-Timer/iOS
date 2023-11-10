@@ -30,7 +30,9 @@ class UseInfoViewController: UIViewController {
         tutorialLabel.rx.tapGesture()
             .when(.recognized)
             .subscribe { [weak self] _ in
-                
+                TutorialService.shared.saveTutorial(isCompleted: false)
+
+                self?.tabBarController?.selectedIndex = 0
             }
             .disposed(by: disposeBag)
         
