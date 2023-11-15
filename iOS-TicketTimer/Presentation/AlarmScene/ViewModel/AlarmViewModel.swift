@@ -33,6 +33,53 @@ class AlarmViewModel {
             }
             .disposed(by: disposeBag)
         
+        //MARK: - 캘린더
+        input.getCalendarAllEvent
+            .flatMap { _ -> Observable<[Alarm]> in
+                return self.alarmService.getAllAlarms()
+            }
+            .subscribe(onNext: { [weak self] alarms in
+                var dates = [Date]()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyyMMddHHmm"
+                
+                alarms.forEach { alarm in
+                    if let openDateTimeStr = alarm.musicalNotice.openDateTime,
+                       let date = dateFormatter.date(from: openDateTimeStr) {
+                        dates.append(date)
+                    }
+                }
+                self?.output.bindCalendarAllEvent.accept(dates)
+            })
+            .disposed(by: disposeBag)
+        
+        input.getCalendarAlarmSections
+            .flatMap { date in
+                self.alarmService.getAllAlarms()
+                    .map { alarms in
+                        alarms.filter { alarm in
+                            if let openDateTimeStr = alarm.musicalNotice.openDateTime {
+                               let alarmDate = openDateTimeStr.toDateType()
+                                return Calendar.current.isDate(alarmDate, inSameDayAs: date)
+                            } else {
+                                return false
+                            }
+                        }
+                    }
+            }
+            .subscribe(onNext: { [weak self] alarms in
+                var sections: [AlarmSection] = []
+                
+                let sortedAlarms = alarms.sorted {
+                    $0.musicalNotice.openDateTime ?? "" < $1.musicalNotice.openDateTime ?? ""
+                }
+                let section = AlarmSection(items: sortedAlarms, header: "")
+                sections.append(section)
+                
+                self?.output.bindCalendarAlarmSections.accept(sections)
+            })
+            .disposed(by: disposeBag)
+        
         //MARK: - 알람 리스트
         
         input.getAlarmSections
@@ -42,7 +89,6 @@ class AlarmViewModel {
             .subscribe{ [weak self] alarms in
                 var sections: [AlarmSection] = []
                 var groupedAlarms = [String: [Alarm]]()
-                print("[전체 알람: \(alarms)]")
                 let sortedAlarms = alarms.sorted {
                     $0.musicalNotice.openDateTime ?? "" < $1.musicalNotice.openDateTime ?? ""
                 }
@@ -116,6 +162,9 @@ class AlarmViewModel {
 extension AlarmViewModel {
     struct Input {
         var getAllAlarms = PublishSubject<Void>()
+        // 캘린더
+        var getCalendarAllEvent = PublishSubject<Void>()
+        var getCalendarAlarmSections = PublishSubject<Date>()
         // 알람 리스트
         var getAlarmSections = PublishSubject<Void>()
         // 알람 세팅
@@ -126,6 +175,9 @@ extension AlarmViewModel {
     }
     struct Output {
         var alarms = PublishRelay<[Alarm]>()
+        // 캘린더
+        var bindCalendarAllEvent = PublishRelay<[Date]>()
+        var bindCalendarAlarmSections = PublishRelay<[AlarmSection]>()
         // 알람 리스트
         var alarmSections = PublishRelay<[AlarmSection]>()
         // 알람 세팅
