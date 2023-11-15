@@ -76,6 +76,33 @@ class HomeViewController: UIViewController {
 		super.viewWillAppear(animated)
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
 	}
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !TutorialService.shared.checkTutorial() {
+            showTutorial()
+        }
+    }
+    
+    //MARK: - 튜토리얼
+    private func showTutorial() {
+        scrollView.setContentOffset(CGPoint(x: 0, y: -topSafeAreaInsets), animated: false)
+        
+        let vc = TutorialViewController(self.tabBarController!.tabBar)
+        let nav = TutorialNavigationController(rootViewController: vc)
+        
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = sceneDelegate.window {
+            window.addSubview(nav.view)
+        }
+        
+        vc.cancleButton.rx.tap
+            .subscribe { _ in
+                nav.view.removeFromSuperview()
+                TutorialService.shared.saveTutorial(isCompleted: true)
+            }
+            .disposed(by: bag)
+    }
 
     private func setUI() {
         self.view.backgroundColor = .white
@@ -127,7 +154,8 @@ class HomeViewController: UIViewController {
         calendar.appearance.selectionColor = .gray60
 		calendar.appearance.titleTodayColor = .white
 		calendar.appearance.todayColor = .mainColor
-		calendar.appearance.todaySelectionColor = .none
+        calendar.appearance.selectionColor = .subGreenColor
+        calendar.appearance.titleSelectionColor = .mainColor
 		
 		prevButton.setImage(UIImage(named: "prev"), for: .normal)
 		nextButton.setImage(UIImage(named: "next"), for: .normal)
@@ -142,6 +170,7 @@ class HomeViewController: UIViewController {
 		tableView.rx.setDelegate(self).disposed(by: bag)
 		tableView.rowHeight = 42
 		tableView.showsVerticalScrollIndicator = false
+        tableView.isScrollEnabled = false
 		
 		showOpenLabel.text = "공연 오픈 소식"
         showOpenLabel.font = .systemFont(ofSize: 17, weight: .bold)
@@ -168,8 +197,8 @@ class HomeViewController: UIViewController {
 		}
 		
 		shadowView.snp.makeConstraints {
-			$0.top.leading.trailing.equalToSuperview()
-			$0.bottom.equalTo(tableView.snp.bottom).offset(30)
+        $0.top.leading.trailing.equalToSuperview()
+			$0.bottom.equalTo(tableView.snp.bottom).offset(15)
 		}
 		
         topBgView.snp.makeConstraints {
@@ -218,10 +247,10 @@ class HomeViewController: UIViewController {
 		}
 		
 		tableView.snp.makeConstraints {
-			$0.top.equalTo(ticketLabel.snp.bottom)
+            $0.top.equalTo(ticketLabel.snp.bottom).offset(10)
 			$0.leading.equalToSuperview().offset(24)
 			$0.trailing.equalToSuperview().offset(-24)
-			$0.height.equalTo(42 * 2)
+			$0.height.equalTo(42 * 2 - 1)
 		}
 		
 		showOpenLabel.snp.makeConstraints {
@@ -230,7 +259,7 @@ class HomeViewController: UIViewController {
 		}
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(showOpenLabel.snp.bottom).offset(18)
+            $0.top.equalTo(showOpenLabel.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview()
             $0.height.equalTo(180)
@@ -292,7 +321,7 @@ extension HomeViewController: FSCalendarDelegate, FSCalendarDataSource {
 	
 	// 날짜 선택 시 콜백 메소드
 	func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-		print("\(date) 날짜가 선택되었습니다.")
+        
 	}
 }
 

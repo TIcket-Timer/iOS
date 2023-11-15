@@ -43,7 +43,7 @@ class AlarmListViewController: UIViewController {
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         
-        emptyLabel.setup(text: "등록된 알람이 없습니다.", color: .gray100, size: 17, weight: .medium)
+        emptyLabel.setup(text: "등록된 예매 알람이 없습니다.", color: .gray100, size: 17, weight: .medium)
         
         tableView.register(
             AlarmListTableViewCell.self,
@@ -91,8 +91,6 @@ class AlarmListViewController: UIViewController {
         })
         .disposed(by: disposeBag)
     }
-    
-    
 }
 
 extension AlarmListViewController {

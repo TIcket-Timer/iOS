@@ -15,6 +15,7 @@ class AuthInterceptor: RequestInterceptor {
         let accessToken = UserDefaults.standard.string(forKey: "accessToken") ?? ""
         urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         completion(.success(urlRequest))
+        print("[accessToken: \(accessToken)]")
     }
 
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
