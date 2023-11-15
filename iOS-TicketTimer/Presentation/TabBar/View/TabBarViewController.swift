@@ -40,14 +40,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		self.navigationController?.setNavigationBarHidden(true, animated: false)
-        print("viewwillappear")
 	}
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-    }
     	
 	// MARK: - 탭바 세팅
 	private func setTabBar() {
@@ -60,7 +53,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 		
 		let homeTab = UINavigationController(rootViewController: HomeViewController())
 		let showTab = UINavigationController(rootViewController: MusicalViewController())
-		let calendarTab = UINavigationController(rootViewController: AlarmListViewController())
+		let calendarTab = UINavigationController(rootViewController: CalendarViewController())
 		let settingsTab = UINavigationController(rootViewController: SettingsViewController())
 		
 		homeTab.tabBarItem = tabBarItems[.Home]
