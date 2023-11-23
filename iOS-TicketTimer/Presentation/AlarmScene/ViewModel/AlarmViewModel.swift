@@ -18,6 +18,7 @@ class AlarmViewModel {
     var alarmId: String?
     var notice: MusicalNotice?
     var savedLocalAlarms = [LocalAlarm]()
+    var savedDate: Date?
     
     let input = Input()
     let output = Output()
@@ -153,6 +154,8 @@ class AlarmViewModel {
                 guard let notice = self.notice else { return }
                 self.alarmService.updateNoticeAlarms(savedLocalAlarms: self.savedLocalAlarms, notice: notice, newAlarmTimes: newTimes) {
                     self.input.getAlarmSections.onNext(())
+                    self.input.getCalendarAlarmSections.onNext(self.savedDate ?? Date())
+                    self.input.getCalendarAllEvent.onNext(())
                 }
             }
             .disposed(by: disposeBag)
