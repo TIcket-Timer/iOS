@@ -37,13 +37,13 @@ class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setAtt()
         setLayout()
-        
-        input.getCalendarAllEvent.onNext(())
-        input.getCalendarAlarmSections.onNext(Date())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationItem.title = "캘린더"
+        
+        input.getCalendarAllEvent.onNext(())
+        input.getCalendarAlarmSections.onNext(Date())
     }
     
     private func setAtt() {
@@ -243,7 +243,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
         monthlyCalendar.snp.updateConstraints {
-            $0.height.equalTo(320)
+            $0.height.equalTo(300)
         }
         weeklyCalendar.snp.updateConstraints {
             $0.height.equalTo(80)
@@ -253,6 +253,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         input.getCalendarAlarmSections.onNext(date)
+        viewModel.savedDate = date
     }
     
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
